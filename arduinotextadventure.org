@@ -1,0 +1,3 @@
+* Tasks
+** TODO Create function to position the cursor on LCD
+** TODO Add functionality to write string at a specified position
