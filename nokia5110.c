@@ -101,22 +101,46 @@ static const byte ASCII[][5] = {
 ,{0x78, 0x46, 0x41, 0x46, 0x78}	//	7f	right arrow
 };
 
+/* Send a command to the LCD */
+void lcdCmd(byte cmd) {
+	digitalWrite(LCD_PIN_DC, LCD_C);
+	digitalWrite(LCD_PIN_SCE, LOW);
+	shiftOut(LCD_PIN_SDIN, LCD_PIN_SCLK, MSBFIRST, cmd);
+	digitalWrite(LCD_PIN_SCE, HIGH);
+}
+
+/* Send a data byte to the LCD */
+void lcdData(byte data) {
+	digitalWrite(LCD_PIN_DC, LCD_D);
+	digitalWrite(LCD_PIN_SCE, LOW);
+	shiftOut(LCD_PIN_SDIN, LCD_PIN_SCLK, MSBFIRST, data);
+	digitalWrite(LCD_PIN_SCE, HIGH);
+}
+
 /* Write a single character to the LCD */
 void lcdCharacter(char character) {
 	int index;
 	for (index = 0; index < ASCII_CHAR_WIDTH; index++) {
-		lcdWrite(LCD_D, ASCII[character - 0x20][index]);
+		lcdData(ASCII[character - 0x20][index]);
 	}
-	lcdWrite(LCD_D, 0x00);
+	lcdData(0x00);
+}
+
+/* Set cursor position (X and Y address of RAM) on LCD */
+void lcdSetPos(byte x, byte y) {
+	if (x >= LCD_MAX_X) x = 0;
+	if (y >= LCD_MAX_Y) y = 0;
+
+	lcdCmd(LCD_SET_X | x);
+	lcdCmd(LCD_SET_Y | y);
 }
 
 /* Clear the LCD and leave cursor at 0,0 */
 void lcdClear(void) {
-	lcdWrite(LCD_C, 0x40);
-	lcdWrite(LCD_C, 0x80);
+	lcdSetPos(0, 0);
 	int index;
 	for (index = 0; index < (LCD_MAX_X * LCD_MAX_Y); index++) {
-		lcdWrite(LCD_D, 0x00);
+		lcdData(0x00);
 	}
 }
 
@@ -125,25 +149,18 @@ void lcdInitialize(void) {
 	digitalWrite(LCD_PIN_RESET, LOW);
 	digitalWrite(LCD_PIN_RESET, HIGH);
 
-	lcdWrite(LCD_C, 0x21);  // LCD Extended Commands
-	lcdWrite(LCD_C, 0xB1);  // Set LCD Vop (Contrast)
-	lcdWrite(LCD_C, 0x04);  // Set Temp coefficent
-	lcdWrite(LCD_C, 0x13);  // LCD bias mode 1:48
-	lcdWrite(LCD_C, 0x20);  // LCD Basic Commands
-	lcdWrite(LCD_C, 0x0C);  // LCD in normal mode
+	lcdCmd(0x21);  // LCD Extended Commands
+	lcdCmd(0xAC);  // Set LCD Vop (Contrast)
+	lcdCmd(0x04);  // Set Temp coefficent
+	lcdCmd(0x13);  // LCD bias mode 1:48
+	lcdCmd(0x20);  // LCD Basic Commands
+	lcdCmd(0x0C);  // LCD in normal mode
 }
 
 /* Write a string to the LCD */
-void lcdString(char const *characters) {
+void lcdString(char const *characters, byte x_pos, byte y_pos) {
+	lcdSetPos(x_pos, y_pos);
 	while (*characters) {
 		lcdCharacter(*characters++);
 	}
-}
-
-/* Send a command or data byte to the LCD */
-void lcdWrite(byte dc, byte data) {
-	digitalWrite(LCD_PIN_DC, dc);
-	digitalWrite(LCD_PIN_SCE, LOW);
-	shiftOut(LCD_PIN_SDIN, LCD_PIN_SCLK, MSBFIRST, data);
-	digitalWrite(LCD_PIN_SCE, HIGH);
 }

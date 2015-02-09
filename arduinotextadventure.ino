@@ -15,10 +15,10 @@ void setup(void) {
 
 	lcdInitialize();
 	lcdClear();
-	lcdString("Hello World!");
-	delay(1000);
+	lcdString("Hello World!", 0, 0);
+	delay(3000);
 	lcdClear();
-	lcdString("Test");
+	lcdString("Test", 30, 0);
 }
 
 void loop(void) {

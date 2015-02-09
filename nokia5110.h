@@ -21,13 +21,20 @@ enum screen {
 
 enum char_info {
 	ASCII_CHAR_WIDTH = 5,
-}
+};
+
+enum lcd_instructions {
+	LCD_SET_Y = 0x40,
+	LCD_SET_X = 0x80,
+};
 
 void lcdCharacter(char);
+void lcdSetPos(byte x, byte y);
 void lcdClear(void);
 void lcdInitialize(void);
-void lcdString(char const *);
-void lcdWrite(byte, byte);
+void lcdString(char const *, byte, byte);
+void lcdCmd(byte);
+void lcdData(byte);
 
 #ifdef __cplusplus
 }
