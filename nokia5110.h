@@ -13,9 +13,15 @@ enum {
 };
 
 enum screen {
-	LCD_MAX_X = 84,
-	LCD_MAX_Y = 48,
+	LCD_WIDTH = 84,
+	LCD_HEIGHT = 48,
+	LCD_MAX_X = LCD_WIDTH,
+	LCD_MAX_Y = LCD_HEIGHT / 8,
 };
+
+enum char_info {
+	ASCII_CHAR_WIDTH = 5,
+}
 
 void lcdCharacter(char);
 void lcdClear(void);

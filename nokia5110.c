@@ -104,7 +104,7 @@ static const byte ASCII[][5] = {
 /* Write a single character to the LCD */
 void lcdCharacter(char character) {
 	int index;
-	for (index = 0; index < 5; index++) {
+	for (index = 0; index < ASCII_CHAR_WIDTH; index++) {
 		lcdWrite(LCD_D, ASCII[character - 0x20][index]);
 	}
 	lcdWrite(LCD_D, 0x00);
@@ -115,7 +115,7 @@ void lcdClear(void) {
 	lcdWrite(LCD_C, 0x40);
 	lcdWrite(LCD_C, 0x80);
 	int index;
-	for (index = 0; index < (LCD_MAX_X * LCD_MAX_Y) / 8; index++) {
+	for (index = 0; index < (LCD_MAX_X * LCD_MAX_Y); index++) {
 		lcdWrite(LCD_D, 0x00);
 	}
 }
