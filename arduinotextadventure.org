@@ -1,3 +1,6 @@
 * Tasks
-** TODO Create function to position the cursor on LCD
-** TODO Add functionality to write string at a specified position
+** TODO Create function lcdParagraph() to write a string with word wrapping
+** DONE Create function to position the cursor on LCD
+   CLOSED: [2015-02-09 Mon 16:27]
+** DONE Add functionality to write string at a specified position
+   CLOSED: [2015-02-09 Mon 16:27]
