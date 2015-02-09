@@ -150,7 +150,7 @@ void lcdInitialize(void) {
 	digitalWrite(LCD_PIN_RESET, HIGH);
 
 	lcdCmd(0x21);  // LCD Extended Commands
-	lcdCmd(0xAC);  // Set LCD Vop (Contrast)
+	lcdCmd(0xA8);  // Set LCD Vop (Contrast)
 	lcdCmd(0x04);  // Set Temp coefficent
 	lcdCmd(0x13);  // LCD bias mode 1:48
 	lcdCmd(0x20);  // LCD Basic Commands
