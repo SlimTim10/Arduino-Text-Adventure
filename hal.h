@@ -1,5 +1,5 @@
-#ifndef _HAL_H
-#define _HAL_H
+#ifndef HAL_H
+#define HAL_H
 
 enum pins {
 	LCD_PIN_RESET = 6,

@@ -1,5 +1,5 @@
-#ifndef _NOKIA5110_H
-#define _NOKIA5110_H
+#ifndef NOKIA5110_H
+#define NOKIA5110_H
 
 #include <Arduino.h>
 
@@ -7,33 +7,11 @@
 extern "C" {	// Use C library with Arduino
 #endif
 
-enum {
-	LCD_C = LOW,
-	LCD_D = HIGH,
-};
-
-enum char_info {
-	ASCII_CHAR_WIDTH = 5,
-};
-
-enum screen {
-	LCD_WIDTH = 84,
-	LCD_HEIGHT = 48,
-	LCD_MAX_X = LCD_WIDTH,
-	LCD_MAX_Y = LCD_HEIGHT / 8,
-	LCD_WIDTH_CHARS = LCD_WIDTH / (ASCII_CHAR_WIDTH + 1),
-};
-
-enum lcd_instructions {
-	LCD_SET_Y = 0x40,
-	LCD_SET_X = 0x80,
-};
-
-void lcdClear(void);
-void lcdInitialize(void);
-void lcdLight(byte);
-void lcdString(char const *, byte, byte);
-void lcdParagraph(char const *, byte, byte);
+void lcd_clear(void);
+void lcd_init(void);
+void lcd_light(byte);
+void lcd_write(char const *, byte, byte);
+void lcd_write_wrap(char const *, byte, byte);
 
 #ifdef __cplusplus
 }

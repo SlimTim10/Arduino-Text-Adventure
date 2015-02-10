@@ -1,3 +1,4 @@
+#include "const.h"
 #include "hal.h"
 #include "nokia5110.h"
 
@@ -11,28 +12,27 @@ void setup_pins(void) {
 
 void setup(void) {
 	setup_pins();
-	lcdInitialize();
+	lcd_init();
 
-	lcdLight(1);	// Turn light on dimly
+	lcd_light(1);
 
-	lcdClear();
+	lcd_clear();
 
-	lcdParagraph("Welcome to the text adventure", 0, 0);
-
-	lcdString(" Up", 0, 3);
-	lcdString(" Down", 40, 3);
-	lcdString(" Left", 0, 4);
-	lcdString(" Right", 40, 4);
-	lcdString(">", 0, 3);
+	lcd_write_wrap("Welcome to the text adventure", 0, 0);
+	lcd_write(" Up", 0, 3);
+	lcd_write(" Down", 40, 3);
+	lcd_write(" Left", 0, 4);
+	lcd_write(" Right", 40, 4);
+	lcd_write(">", 0, 3);
 	delay(2000);
-	lcdString(" ", 0, 3);
-	lcdString(">", 40, 3);
+	lcd_write(" ", 0, 3);
+	lcd_write(">", 40, 3);
 	delay(2000);
-	lcdString(" ", 40, 3);
-	lcdString(">", 0, 4);
+	lcd_write(" ", 40, 3);
+	lcd_write(">", 0, 4);
 	delay(2000);
-	lcdString(" ", 0, 4);
-	lcdString(">", 40, 4);
+	lcd_write(" ", 0, 4);
+	lcd_write(">", 40, 4);
 }
 
 void loop(void) {
