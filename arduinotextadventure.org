@@ -1,4 +1,10 @@
 * Tasks
+** TODO Create game library
+- game.h, game.c
+- game_intro()
+- game_text("Welcome to SlimQuest")
+- >Start (short delay instead of button press for now)
+- struct game_map
 ** DONE Create function lcdParagraph() to write a string with word wrapping
    CLOSED: [2015-02-10 Tue 02:01]
 ** DONE Write README
