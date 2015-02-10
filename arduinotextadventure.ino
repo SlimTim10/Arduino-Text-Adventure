@@ -13,8 +13,15 @@ void setup(void) {
 	setup_pins();
 	lcdInitialize();
 
+	lcdLight(1);	// Turn light on dimly
+
 	lcdClear();
-	lcdString("Welcome to thetext adventure", 0, 0);
+
+	lcdParagraph("1234567890 1234567890", 0, 0);
+	//	lcdParagraph("Test test test test test test.", 0, 0);
+	delay(10000);
+
+	lcdParagraph("Welcome to the text adventure", 0, 0);
 
 	lcdString(" Up", 0, 3);
 	lcdString(" Down", 40, 3);

@@ -12,15 +12,16 @@ enum {
 	LCD_D = HIGH,
 };
 
+enum char_info {
+	ASCII_CHAR_WIDTH = 5,
+};
+
 enum screen {
 	LCD_WIDTH = 84,
 	LCD_HEIGHT = 48,
 	LCD_MAX_X = LCD_WIDTH,
 	LCD_MAX_Y = LCD_HEIGHT / 8,
-};
-
-enum char_info {
-	ASCII_CHAR_WIDTH = 5,
+	LCD_WIDTH_CHARS = LCD_WIDTH / (ASCII_CHAR_WIDTH + 1),
 };
 
 enum lcd_instructions {
@@ -30,7 +31,9 @@ enum lcd_instructions {
 
 void lcdClear(void);
 void lcdInitialize(void);
+void lcdLight(byte);
 void lcdString(char const *, byte, byte);
+void lcdParagraph(char const *, byte, byte);
 
 #ifdef __cplusplus
 }

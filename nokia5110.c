@@ -1,5 +1,6 @@
 #include "hal.h"
 #include "nokia5110.h"
+#include <string.h>
 
 /* ASCII characters for LCD */
 static const byte ASCII[][5] = {
@@ -157,6 +158,11 @@ void lcdInitialize(void) {
 	lcdCmd(0x0C);  // LCD in normal mode
 }
 
+/* Control the brightness of the backlight (0: off, 255: full brightness) */
+void lcdLight(byte brightness) {
+	analogWrite(LCD_PIN_LIGHT, ~brightness);
+}
+
 /* Write a string to the LCD */
 void lcdString(char const *characters, byte x_pos, byte y_pos) {
 	lcdSetPos(x_pos, y_pos);
@@ -164,3 +170,28 @@ void lcdString(char const *characters, byte x_pos, byte y_pos) {
 		lcdCharacter(*characters++);
 	}
 }
+
+/* Write a string to the LCD with word wrapping */
+void lcdParagraph(char const *characters, byte x_pos, byte y_pos) {
+	lcdSetPos(x_pos, y_pos);
+
+	int length = strlen(characters);
+
+	if (length <= LCD_WIDTH_CHARS) {
+		lcdString(characters, x_pos, y_pos);
+	}
+
+	int right_margin = LCD_WIDTH_CHARS;
+	int wraploc = right_margin;
+	while (characters[wraploc] != ' ') {
+		wraploc--;
+	}
+
+	int index;
+	for (index = 0; index < wraploc; index++) {
+		lcdCharacter(characters[index]);
+	}
+}
+
+// 1234567890 1234567890
+// Test test test test test test.
