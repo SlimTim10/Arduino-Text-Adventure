@@ -28,13 +28,9 @@ enum lcd_instructions {
 	LCD_SET_X = 0x80,
 };
 
-void lcdCharacter(char);
-void lcdSetPos(byte x, byte y);
 void lcdClear(void);
 void lcdInitialize(void);
 void lcdString(char const *, byte, byte);
-void lcdCmd(byte);
-void lcdData(byte);
 
 #ifdef __cplusplus
 }

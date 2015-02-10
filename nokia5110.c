@@ -102,7 +102,7 @@ static const byte ASCII[][5] = {
 };
 
 /* Send a command to the LCD */
-void lcdCmd(byte cmd) {
+static void lcdCmd(byte cmd) {
 	digitalWrite(LCD_PIN_DC, LCD_C);
 	digitalWrite(LCD_PIN_SCE, LOW);
 	shiftOut(LCD_PIN_SDIN, LCD_PIN_SCLK, MSBFIRST, cmd);
@@ -110,7 +110,7 @@ void lcdCmd(byte cmd) {
 }
 
 /* Send a data byte to the LCD */
-void lcdData(byte data) {
+static void lcdData(byte data) {
 	digitalWrite(LCD_PIN_DC, LCD_D);
 	digitalWrite(LCD_PIN_SCE, LOW);
 	shiftOut(LCD_PIN_SDIN, LCD_PIN_SCLK, MSBFIRST, data);
@@ -118,7 +118,7 @@ void lcdData(byte data) {
 }
 
 /* Write a single character to the LCD */
-void lcdCharacter(char character) {
+static void lcdCharacter(char character) {
 	int index;
 	for (index = 0; index < ASCII_CHAR_WIDTH; index++) {
 		lcdData(ASCII[character - 0x20][index]);
@@ -127,7 +127,7 @@ void lcdCharacter(char character) {
 }
 
 /* Set cursor position (X and Y address of RAM) on LCD */
-void lcdSetPos(byte x, byte y) {
+static void lcdSetPos(byte x, byte y) {
 	if (x >= LCD_MAX_X) x = 0;
 	if (y >= LCD_MAX_Y) y = 0;
 
