@@ -173,25 +173,41 @@ void lcdString(char const *characters, byte x_pos, byte y_pos) {
 
 /* Write a string to the LCD with word wrapping */
 void lcdParagraph(char const *characters, byte x_pos, byte y_pos) {
-	lcdSetPos(x_pos, y_pos);
+	while (*characters) {
+		int wraploc = LCD_WIDTH_CHARS;
 
-	int length = strlen(characters);
+		/* Check if it's short enough to write */
+		if (strlen(characters) <= wraploc) {
+			lcdString(characters, x_pos, y_pos);
+			return;
+		}
 
-	if (length <= LCD_WIDTH_CHARS) {
-		lcdString(characters, x_pos, y_pos);
-	}
+		/* Find wrap location (first space character backwards from right margin) */
+		while (characters[wraploc] != ' ' && wraploc > 0) {
+			wraploc--;
+		}
 
-	int right_margin = LCD_WIDTH_CHARS;
-	int wraploc = right_margin;
-	while (characters[wraploc] != ' ') {
-		wraploc--;
-	}
+		if (wraploc > 0) {
+			/* Write characters up until wrap location */
+			lcdSetPos(x_pos, y_pos);
+			int index;
+			for (index = 0; index < wraploc; index++) {
+				lcdCharacter(*characters++);
+			}
+			/* Skip over trailing space */
+			characters++;
+			index++;
+		} else {
+			/* No space to wrap at */
+			lcdSetPos(x_pos, y_pos);
+			int index;
+			for (index = 0; index < LCD_WIDTH_CHARS; index++) {
+				lcdCharacter(*characters++);
+			}
+		}
 
-	int index;
-	for (index = 0; index < wraploc; index++) {
-		lcdCharacter(characters[index]);
+		/* Move cursor to next line */
+		x_pos = 0;
+		y_pos = (y_pos + 1) % LCD_MAX_Y;
 	}
 }
-
-// 1234567890 1234567890
-// Test test test test test test.

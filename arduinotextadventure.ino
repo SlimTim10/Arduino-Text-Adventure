@@ -17,10 +17,6 @@ void setup(void) {
 
 	lcdClear();
 
-	lcdParagraph("1234567890 1234567890", 0, 0);
-	//	lcdParagraph("Test test test test test test.", 0, 0);
-	delay(10000);
-
 	lcdParagraph("Welcome to the text adventure", 0, 0);
 
 	lcdString(" Up", 0, 3);

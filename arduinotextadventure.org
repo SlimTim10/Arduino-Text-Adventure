@@ -1,5 +1,6 @@
 * Tasks
-** TODO Create function lcdParagraph() to write a string with word wrapping
+** DONE Create function lcdParagraph() to write a string with word wrapping
+   CLOSED: [2015-02-10 Tue 02:01]
 ** DONE Write README
    CLOSED: [2015-02-09 Mon 23:15]
 ** DONE Create function to position the cursor on LCD
