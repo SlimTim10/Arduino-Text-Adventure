@@ -12,4 +12,8 @@ enum {
 	BIT7 = 0x80,
 };
 
+enum {
+	TEXT_SPEED = 100,	/* Delay in ms for each letter */
+};
+
 #endif

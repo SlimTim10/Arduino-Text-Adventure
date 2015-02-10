@@ -202,6 +202,15 @@ void lcd_write(char const *str, byte xpos, byte ypos) {
 	}
 }
 
+/* Write a string to the LCD, with writing animation */
+void lcd_write_anim(char const *str, byte xpos, byte ypos) {
+	setpos(xpos, ypos);
+	while (*str) {
+		sendchar(*str++);
+		delay(TEXT_SPEED);
+	}
+}
+
 /* Write a string to the LCD with word wrapping */
 void lcd_write_wrap(char const *str, byte xpos, byte ypos) {
 	while (*str) {
@@ -234,6 +243,49 @@ void lcd_write_wrap(char const *str, byte xpos, byte ypos) {
 			int i;
 			for (i = 0; i < LCD_WIDTH_CHARS; i++) {
 				sendchar(*str++);
+			}
+		}
+
+		/* Move cursor to next line */
+		xpos = 0;
+		ypos = (ypos + 1) % LCD_MAX_Y;
+	}
+}
+
+/* Write a string to the LCD with word wrapping, with writing animation */
+void lcd_write_wrap_anim(char const *str, byte xpos, byte ypos) {
+	while (*str) {
+		int wraploc = LCD_WIDTH_CHARS;
+
+		/* Check if it's short enough to write */
+		if (strlen(str) <= wraploc) {
+			lcd_write_anim(str, xpos, ypos);
+			return;
+		}
+
+		/* Find wrap location (first space character backwards from right margin) */
+		while (str[wraploc] != ' ' && wraploc > 0) {
+			wraploc--;
+		}
+
+		if (wraploc > 0) {
+			/* Write characters up until wrap location */
+			setpos(xpos, ypos);
+			int i;
+			for (i = 0; i < wraploc; i++) {
+				sendchar(*str++);
+				delay(TEXT_SPEED);
+			}
+			/* Skip over trailing space */
+			str++;
+			i++;
+		} else {
+			/* No space character to wrap at */
+			setpos(xpos, ypos);
+			int i;
+			for (i = 0; i < LCD_WIDTH_CHARS; i++) {
+				sendchar(*str++);
+				delay(TEXT_SPEED);
 			}
 		}
 

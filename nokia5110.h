@@ -11,7 +11,9 @@ void lcd_clear(void);
 void lcd_init(void);
 void lcd_light(byte);
 void lcd_write(char const *, byte, byte);
+void lcd_write_anim(char const *, byte, byte);
 void lcd_write_wrap(char const *, byte, byte);
+void lcd_write_wrap_anim(char const *, byte, byte);
 
 #ifdef __cplusplus
 }

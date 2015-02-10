@@ -1,6 +1,7 @@
 #include "const.h"
 #include "hal.h"
 #include "nokia5110.h"
+#include "game.h"
 
 void setup_pins(void) {
 	pinMode(LCD_PIN_SCE, OUTPUT);
@@ -12,27 +13,26 @@ void setup_pins(void) {
 
 void setup(void) {
 	setup_pins();
-	lcd_init();
 
-	lcd_light(1);
+   	lcd_light(0);
 
-	lcd_clear();
+	game_intro();
 
-	lcd_write_wrap("Welcome to the text adventure", 0, 0);
-	lcd_write(" Up", 0, 3);
-	lcd_write(" Down", 40, 3);
-	lcd_write(" Left", 0, 4);
-	lcd_write(" Right", 40, 4);
-	lcd_write(">", 0, 3);
-	delay(2000);
-	lcd_write(" ", 0, 3);
-	lcd_write(">", 40, 3);
-	delay(2000);
-	lcd_write(" ", 40, 3);
-	lcd_write(">", 0, 4);
-	delay(2000);
-	lcd_write(" ", 0, 4);
-	lcd_write(">", 40, 4);
+	/* lcd_write_wrap("Welcome to the text adventure", 0, 0); */
+	/* lcd_write(" Up", 0, 3); */
+	/* lcd_write(" Down", 40, 3); */
+	/* lcd_write(" Left", 0, 4); */
+	/* lcd_write(" Right", 40, 4); */
+	/* lcd_write(">", 0, 3); */
+	/* delay(2000); */
+	/* lcd_write(" ", 0, 3); */
+	/* lcd_write(">", 40, 3); */
+	/* delay(2000); */
+	/* lcd_write(" ", 40, 3); */
+	/* lcd_write(">", 0, 4); */
+	/* delay(2000); */
+	/* lcd_write(" ", 0, 4); */
+	/* lcd_write(">", 40, 4); */
 }
 
 void loop(void) {
