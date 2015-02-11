@@ -1,4 +1,5 @@
 * Tasks
+** TODO Make sure each function has a description comment
 ** DONE Create game library
    CLOSED: [2015-02-10 Tue 17:30]
 ** DONE Create function lcdParagraph() to write a string with word wrapping

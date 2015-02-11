@@ -110,7 +110,7 @@ void game_intro(void) {
 	game_text("Welcome to SlimQuest");
 	lcd_write(">Start", 20, 4);
 
-	delay(1000);	///DEBUG (in place of button press)
+	delay(2000);	///DEBUG (in place of button press)
 
 	setup_map();
 

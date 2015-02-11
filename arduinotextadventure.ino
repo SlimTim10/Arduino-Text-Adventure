@@ -14,7 +14,7 @@ void setup_pins(void) {
 void setup(void) {
 	setup_pins();
 
-   	lcd_light(0);
+   	lcd_light(5);
 
 	game_intro();
 }

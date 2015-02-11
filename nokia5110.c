@@ -182,7 +182,7 @@ void lcd_init(void) {
 	digitalWrite(LCD_PIN_RESET, HIGH);
 
 	sendcmd(LCD_INST_EXT);
-	sendcmd(LCD_CONTRAST | 0x28);
+	sendcmd(LCD_CONTRAST | 0x24);
 	sendcmd(LCD_TEMP);
 	sendcmd(LCD_MUX_1_48);
 	sendcmd(LCD_INST_BASIC);
