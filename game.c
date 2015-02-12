@@ -9,30 +9,30 @@ enum game_info {
 enum text_loc {
 	NORTH_X = 30,
 	NORTH_Y = 3,
-	WEST_X = 6,
-	WEST_Y = 4,
 	EAST_X = 60,
 	EAST_Y = 4,
 	SOUTH_X = 30,
 	SOUTH_Y = 5,
+	WEST_X = 6,
+	WEST_Y = 4,
 };
 
 enum curs_loc {
 	CURS_NORTH_X = NORTH_X - 6,
 	CURS_NORTH_Y = NORTH_Y,
-	CURS_WEST_X = WEST_X - 6,
-	CURS_WEST_Y = WEST_Y,
 	CURS_EAST_X = EAST_X - 6,
 	CURS_EAST_Y = EAST_Y,
 	CURS_SOUTH_X = SOUTH_X - 6,
 	CURS_SOUTH_Y = SOUTH_Y,
+	CURS_WEST_X = WEST_X - 6,
+	CURS_WEST_Y = WEST_Y,
 };
 
 enum directions {
 	NORTH,
-	WEST,
 	EAST,
 	SOUTH,
+	WEST,
 };
 
 struct game_map {
@@ -59,9 +59,9 @@ static void setup_map(void) {
 /* Show the available direction choices */
 static void show_directions(void) {
 	lcd_write("North", NORTH_X, NORTH_Y);
-	lcd_write("West", WEST_X, WEST_Y);
 	lcd_write("East", EAST_X, EAST_Y);
 	lcd_write("South", SOUTH_X, SOUTH_Y);
+	lcd_write("West", WEST_X, WEST_Y);
 }
 
 /* Draw the cursor at the current direction choice */
@@ -75,14 +75,14 @@ static void curs_dir_choice(enum directions choice) {
 	case NORTH:
 		lcd_write(">", CURS_NORTH_X, CURS_NORTH_Y);
 		break;
-	case WEST:
-		lcd_write(">", CURS_WEST_X, CURS_WEST_Y);
-		break;
 	case EAST:
 		lcd_write(">", CURS_EAST_X, CURS_EAST_Y);
 		break;
 	case SOUTH:
 		lcd_write(">", CURS_SOUTH_X, CURS_SOUTH_Y);
+		break;
+	case WEST:
+		lcd_write(">", CURS_WEST_X, CURS_WEST_Y);
 		break;
 	}
 }
