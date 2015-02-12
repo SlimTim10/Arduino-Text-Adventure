@@ -4,7 +4,7 @@
 #include <Arduino.h>
 
 #ifdef __cplusplus
-extern "C" {	// Use C library with Arduino
+extern "C" {	/* Use C library with Arduino */
 #endif
 
 void lcd_clear(void);
