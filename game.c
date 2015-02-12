@@ -28,11 +28,11 @@ enum curs_loc {
 	CURS_SOUTH_Y = SOUTH_Y,
 };
 
-enum curs_choice {
-	CURS_NORTH,
-	CURS_WEST,
-	CURS_EAST,
-	CURS_SOUTH,
+enum walk_choice {
+	NORTH,
+	WEST,
+	EAST,
+	SOUTH,
 };
 
 struct game_map {
@@ -65,23 +65,23 @@ static void show_walk_choice(void) {
 }
 
 /* Draw the cursor at the current walking choice */
-static void curs_walk_choice(enum curs_choice choice) {
+static void curs_walk_choice(enum walk_choice choice) {
 	lcd_write(" ", CURS_NORTH_X, CURS_NORTH_Y);
 	lcd_write(" ", CURS_WEST_X, CURS_WEST_Y);
 	lcd_write(" ", CURS_EAST_X, CURS_EAST_Y);
 	lcd_write(" ", CURS_SOUTH_X, CURS_SOUTH_Y);
 
 	switch (choice) {
-	case CURS_NORTH:
+	case NORTH:
 		lcd_write(">", CURS_NORTH_X, CURS_NORTH_Y);
 		break;
-	case CURS_WEST:
+	case WEST:
 		lcd_write(">", CURS_WEST_X, CURS_WEST_Y);
 		break;
-	case CURS_EAST:
+	case EAST:
 		lcd_write(">", CURS_EAST_X, CURS_EAST_Y);
 		break;
-	case CURS_SOUTH:
+	case SOUTH:
 		lcd_write(">", CURS_SOUTH_X, CURS_SOUTH_Y);
 		break;
 	}
@@ -101,14 +101,7 @@ static void display_walk_choice(void) {
 	lcd_clear();
 	game_text("Where do you want to walk?");
 	show_walk_choice();
-	curs_walk_choice(CURS_NORTH);
-}
-
-/* Display text for the current room */
-void game_room_text(void) {
-	lcd_clear();
-	game_text_anim(gm.text[gm.xloc][gm.yloc]);
-	delay(2000);
+	curs_walk_choice(NORTH);
 }
 
 /* Intro for the game */
@@ -125,6 +118,13 @@ void game_intro(void) {
 	game_text_anim("Here's some basic story plot. Exciting, isn't it?!");
 	delay(2000);
 
-	game_room_text();
+	show_room_text();
 	display_walk_choice();
+}
+
+/* Display text for the current room */
+void show_room_text(void) {
+	lcd_clear();
+	game_text_anim(gm.text[gm.xloc][gm.yloc]);
+	delay(2000);
 }
