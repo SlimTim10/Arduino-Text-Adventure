@@ -65,7 +65,7 @@ static void show_walk_choice(void) {
 }
 
 /* Draw the cursor at the current walking choice */
-static void curs_walk_choice(uint8_t choice) {
+static void curs_walk_choice(enum curs_choice choice) {
 	lcd_write(" ", CURS_NORTH_X, CURS_NORTH_Y);
 	lcd_write(" ", CURS_WEST_X, CURS_WEST_Y);
 	lcd_write(" ", CURS_EAST_X, CURS_EAST_Y);
