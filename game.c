@@ -28,7 +28,7 @@ enum curs_loc {
 	CURS_SOUTH_Y = SOUTH_Y,
 };
 
-enum walk_choice {
+enum directions {
 	NORTH,
 	WEST,
 	EAST,
@@ -56,16 +56,16 @@ static void setup_map(void) {
 	gm.text[2][2] = "";
 }
 
-/* Show the available walking choices */
-static void show_walk_choice(void) {
+/* Show the available direction choices */
+static void show_directions(void) {
 	lcd_write("North", NORTH_X, NORTH_Y);
 	lcd_write("West", WEST_X, WEST_Y);
 	lcd_write("East", EAST_X, EAST_Y);
 	lcd_write("South", SOUTH_X, SOUTH_Y);
 }
 
-/* Draw the cursor at the current walking choice */
-static void curs_walk_choice(enum walk_choice choice) {
+/* Draw the cursor at the current direction choice */
+static void curs_dir_choice(enum directions choice) {
 	lcd_write(" ", CURS_NORTH_X, CURS_NORTH_Y);
 	lcd_write(" ", CURS_WEST_X, CURS_WEST_Y);
 	lcd_write(" ", CURS_EAST_X, CURS_EAST_Y);
@@ -97,11 +97,12 @@ static void game_text_anim(char const *str) {
 	lcd_write_wrap_anim(str, 0, 0);
 }
 
-static void display_walk_choice(void) {
+/* Display message asking which direction to go and show options */
+static void travel_screen(void) {
 	lcd_clear();
 	game_text("Where do you want to walk?");
-	show_walk_choice();
-	curs_walk_choice(NORTH);
+	show_directions();
+	curs_dir_choice(NORTH);
 }
 
 /* Intro for the game */
@@ -119,7 +120,7 @@ void game_intro(void) {
 	delay(2000);
 
 	show_room_text();
-	display_walk_choice();
+	travel_screen();
 }
 
 /* Display text for the current room */
