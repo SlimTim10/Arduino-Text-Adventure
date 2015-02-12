@@ -1,4 +1,9 @@
 * Tasks
+** TODO Create [[file:game.c::106][next_dir_choice()]] public function
+- add MAX_DIRECTION to enum directions
+- change current direction by (current direction + 1) % MAX_DIRECTION
+** TODO Create [[file:game.c::106][walk()]] public function
+- arg: enum directions dir
 ** DONE Make sure each function has a description comment
    CLOSED: [2015-02-12 Thu 09:26]
 ** DONE Create game library
