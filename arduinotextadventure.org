@@ -1,5 +1,6 @@
 * Tasks
-** TODO Make sure each function has a description comment
+** DONE Make sure each function has a description comment
+   CLOSED: [2015-02-12 Thu 09:26]
 ** DONE Create game library
    CLOSED: [2015-02-10 Tue 17:30]
 ** DONE Create function lcdParagraph() to write a string with word wrapping

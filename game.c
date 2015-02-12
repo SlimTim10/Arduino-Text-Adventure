@@ -41,6 +41,7 @@ struct game_map {
 	char *text[MAP_WIDTH][MAP_HEIGHT];
 } gm;
 
+/* Set up the rooms in the game map */
 static void setup_map(void) {
 	gm.xloc = 1;
 	gm.yloc = 1;
@@ -55,6 +56,7 @@ static void setup_map(void) {
 	gm.text[2][2] = "";
 }
 
+/* Show the available walking choices */
 static void show_walk_choice(void) {
 	lcd_write("North", NORTH_X, NORTH_Y);
 	lcd_write("West", WEST_X, WEST_Y);
@@ -62,7 +64,13 @@ static void show_walk_choice(void) {
 	lcd_write("South", SOUTH_X, SOUTH_Y);
 }
 
+/* Draw the cursor at the current walking choice */
 static void curs_walk_choice(uint8_t choice) {
+	lcd_write(" ", CURS_NORTH_X, CURS_NORTH_Y);
+	lcd_write(" ", CURS_WEST_X, CURS_WEST_Y);
+	lcd_write(" ", CURS_EAST_X, CURS_EAST_Y);
+	lcd_write(" ", CURS_SOUTH_X, CURS_SOUTH_Y);
+
 	switch (choice) {
 	case CURS_NORTH:
 		lcd_write(">", CURS_NORTH_X, CURS_NORTH_Y);
