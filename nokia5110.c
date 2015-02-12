@@ -182,11 +182,17 @@ void lcd_init(void) {
 	digitalWrite(LCD_PIN_RESET, HIGH);
 
 	sendcmd(LCD_INST_EXT);
-	sendcmd(LCD_CONTRAST | 0x24);
 	sendcmd(LCD_TEMP);
 	sendcmd(LCD_MUX_1_48);
 	sendcmd(LCD_INST_BASIC);
 	sendcmd(LCD_DISP_NORM);
+}
+
+/* Control the contrast of the LCD */
+void lcd_contrast(byte contrast) {
+	sendcmd(LCD_INST_EXT);
+	sendcmd(LCD_CONTRAST | contrast);
+	sendcmd(LCD_INST_BASIC);
 }
 
 /* Control the brightness of the backlight (0: off, 255: full brightness) */

@@ -36,8 +36,8 @@ enum curs_choice {
 };
 
 struct game_map {
-	uint8_t xloc;
-	uint8_t yloc;
+	byte xloc;
+	byte yloc;
 	char *text[MAP_WIDTH][MAP_HEIGHT];
 } gm;
 
@@ -113,7 +113,6 @@ void game_room_text(void) {
 
 /* Intro for the game */
 void game_intro(void) {
-	lcd_init();
 	lcd_clear();
 	game_text("Welcome to SlimQuest");
 	lcd_write(">Start", 20, 4);
