@@ -15,12 +15,24 @@ void setup(void) {
 	setup_pins();
 
 	lcd_init();
-	lcd_contrast(0x26);
-   	lcd_light(0);
+	lcd_contrast(0x1E);
+   	lcd_light(1);
 
 	game_intro();
 }
 
 void loop(void) {
-	;
+	///TESTING
+	delay(1000);
+
+	/* Simulate button 1 presses */
+	int i;
+	int r = random(0, 4);
+	for (i = 0; i < r; i++) {
+		next_dir_choice();
+		delay(1000);
+	}
+	/* Simulate button 2 press */
+	walk();
+	delay(1000);
 }
