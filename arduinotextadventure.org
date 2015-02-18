@@ -1,4 +1,12 @@
 * Tasks
+** TODO Add struct room_info (to be used in game struct)
+- Contains text and enemy information
+- Change "game_map" to "game_info"
+- Change "gm" to "game"
+- Change "setup_map()" to "setup_game()"
+- Change "walk()" to "travel()"
+** TODO Add struct player_info
+- Move xloc and yloc to player
 ** TODO Add buttons to D2 and D3 (for external interrupts)
 ** DONE Move LCD pin in D3 and update README
    CLOSED: [2015-02-18 Wed 07:04]
