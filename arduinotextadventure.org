@@ -1,5 +1,6 @@
 * Tasks
-** TODO Add buttons to D2 and D3 (for external interrupts)
+** DONE Add buttons to D2 and D3 (for external interrupts)
+   CLOSED: [2015-02-18 Wed 18:28]
 ** DONE Add struct room_info (to be used in game struct)
    CLOSED: [2015-02-18 Wed 18:09]
 ** DONE Add struct player_info
