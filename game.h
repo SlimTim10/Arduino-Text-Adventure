@@ -7,7 +7,7 @@ extern "C" {	/* Use C library with Arduino */
 
 void game_intro(void);
 void next_dir_choice(void);
-void walk(void);
+void travel(void);
 
 #ifdef __cplusplus
 }

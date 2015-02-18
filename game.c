@@ -1,7 +1,7 @@
 #include "game.h"
 #include "nokia5110.h"
 
-enum game_info {
+enum map_info {
 	MAP_WIDTH = 3,
 	MAP_HEIGHT = 3,
 };
@@ -36,27 +36,35 @@ enum directions {
 	MAX_DIRECTION,
 };
 
-struct game_map {
+struct room_info {
+	char *text;
+};
+
+struct game_info {
+	struct room_info room[MAP_WIDTH][MAP_HEIGHT];
+} game;
+
+struct player_info {
 	byte xloc;
 	byte yloc;
-	char *text[MAP_WIDTH][MAP_HEIGHT];
-} gm;
+} player;
 
 static enum directions direction_choice;
 
 /* Set up the rooms in the game map */
-static void setup_map(void) {
-	gm.xloc = 1;
-	gm.yloc = 1;
-	gm.text[0][0] = "Northwest room.";
-	gm.text[1][0] = "North room.";
-	gm.text[2][0] = "Northeast room.";
-	gm.text[0][1] = "West room.";
-	gm.text[1][1] = "Middle room.";
-	gm.text[2][1] = "East room.";
-	gm.text[0][2] = "Southwest room.";
-	gm.text[1][2] = "South room.";
-	gm.text[2][2] = "Southeast room.";
+static void setup_game(void) {
+	game.room[0][0].text = "Northwest room.";
+	game.room[1][0].text = "North room.";
+	game.room[2][0].text = "Northeast room.";
+	game.room[0][1].text = "West room.";
+	game.room[1][1].text = "Middle room.";
+	game.room[2][1].text = "East room.";
+	game.room[0][2].text = "Southwest room.";
+	game.room[1][2].text = "South room.";
+	game.room[2][2].text = "Southeast room.";
+
+	player.xloc = 1;
+	player.yloc = 1;
 }
 
 /* Show the available direction choices */
@@ -112,7 +120,7 @@ static void travel_screen(void) {
 /* Display text for the current room */
 static void show_room_text(void) {
 	lcd_clear();
-	game_text_anim(gm.text[gm.xloc][gm.yloc]);
+	game_text_anim(game.room[player.xloc][player.yloc].text);
 	delay(2000);
 }
 
@@ -131,7 +139,7 @@ void game_intro(void) {
 
 	delay(2000);	///DEBUG (in place of button press)
 
-	setup_map();
+	setup_game();
 
 	lcd_clear();
 	game_text_anim("Here's some basic story plot. Exciting, isn't it?!");
@@ -148,37 +156,37 @@ void next_dir_choice(void) {
 }
 
 /* Walk in the direction of the current choice and display the new room's text */
-void walk(void) {
+void travel(void) {
 	boolean valid = true;
 
 	switch (direction_choice) {
 	case NORTH:
-		if (gm.yloc == 0) {
+		if (player.yloc == 0) {
 			valid = false;
 			break;
 		}
-		gm.yloc--;
+		player.yloc--;
 		break;
 	case EAST:
-		if (gm.xloc >= MAP_WIDTH - 1) {
+		if (player.xloc >= MAP_WIDTH - 1) {
 			valid = false;
 			break;
 		}
-		gm.xloc++;
+		player.xloc++;
 		break;
 	case SOUTH:
-		if (gm.yloc >= MAP_HEIGHT - 1) {
+		if (player.yloc >= MAP_HEIGHT - 1) {
 			valid = false;
 			break;
 		}
-		gm.yloc++;
+		player.yloc++;
 		break;
 	case WEST:
-		if (gm.xloc == 0) {
+		if (player.xloc == 0) {
 			valid = false;
 			break;
 		}
-		gm.xloc--;
+		player.xloc--;
 		break;
 	}
 

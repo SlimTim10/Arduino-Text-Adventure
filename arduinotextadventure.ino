@@ -15,7 +15,7 @@ void setup(void) {
 	setup_pins();
 
 	lcd_init();
-	lcd_contrast(0x1E);
+	lcd_contrast(0x1F);
    	lcd_light(1);
 
 	game_intro();
@@ -33,6 +33,6 @@ void loop(void) {
 		delay(1000);
 	}
 	/* Simulate button 2 press */
-	walk();
+	travel();
 	delay(1000);
 }
