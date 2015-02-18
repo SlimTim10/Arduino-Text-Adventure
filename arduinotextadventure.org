@@ -1,6 +1,7 @@
 * Tasks
 ** TODO Add buttons to D2 and D3 (for external interrupts)
-- Move LCD pin in D3 and update README
+** DONE Move LCD pin in D3 and update README
+   CLOSED: [2015-02-18 Wed 07:04]
 ** DONE Create [[file:game.c::106][next_dir_choice()]] public function
    CLOSED: [2015-02-17 Tue 20:05]
 ** DONE Create [[file:game.c::106][walk()]] public function

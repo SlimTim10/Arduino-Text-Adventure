@@ -19,7 +19,7 @@ A text adventure game for the Arduino Uno.
 | Digital 7 | 2 (CE) |
 | Digital 5 | 3 (DC) |
 | Digital 4 | 4 (DIN) |
-| Digital 3 | 5 (CLK) |
+| Digital 8 | 5 (CLK) |
 | 5V | 6 (VCC) |
 | Digital 9 | 7 (LIGHT) |
 | GND | 8 (GND) |
