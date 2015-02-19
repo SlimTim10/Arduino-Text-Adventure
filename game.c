@@ -1,5 +1,6 @@
 #include "game.h"
 #include "nokia5110.h"
+#include "control.h"
 
 enum map_info {
 	MAP_WIDTH = 3,
@@ -50,22 +51,6 @@ struct player_info {
 } player;
 
 static enum directions direction_choice;
-
-/* Set up the rooms in the game map */
-static void setup_game(void) {
-	game.room[0][0].text = "Northwest room.";
-	game.room[1][0].text = "North room.";
-	game.room[2][0].text = "Northeast room.";
-	game.room[0][1].text = "West room.";
-	game.room[1][1].text = "Middle room.";
-	game.room[2][1].text = "East room.";
-	game.room[0][2].text = "Southwest room.";
-	game.room[1][2].text = "South room.";
-	game.room[2][2].text = "Southeast room.";
-
-	player.xloc = 1;
-	player.yloc = 1;
-}
 
 /* Show the available direction choices */
 static void show_directions(void) {
@@ -131,15 +116,29 @@ static void bad_choice(void) {
 	delay(2000);
 }
 
+/* Initialize the game settings */
+void setup_game(void) {
+	game.room[0][0].text = "Northwest room.";
+	game.room[1][0].text = "North room.";
+	game.room[2][0].text = "Northeast room.";
+	game.room[0][1].text = "West room.";
+	game.room[1][1].text = "Middle room.";
+	game.room[2][1].text = "East room.";
+	game.room[0][2].text = "Southwest room.";
+	game.room[1][2].text = "South room.";
+	game.room[2][2].text = "Southeast room.";
+
+	player.xloc = 1;
+	player.yloc = 1;
+}
+
 /* Intro for the game */
 void game_intro(void) {
 	lcd_clear();
 	game_text("Welcome to SlimQuest");
 	lcd_write(">Start", 20, 4);
 
-	delay(2000);	///DEBUG (in place of button press)
-
-	setup_game();
+	while (get_user_input() != B_SELECT);
 
 	lcd_clear();
 	game_text_anim("Here's some basic story plot. Exciting, isn't it?!");

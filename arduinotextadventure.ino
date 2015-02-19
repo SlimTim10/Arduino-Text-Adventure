@@ -17,10 +17,11 @@ void setup_pins(void) {
 void setup(void) {
 	setup_pins();
 	setup_control();
+	setup_game();
 
 	lcd_init();
-	lcd_contrast(0x1F);
-   	lcd_light(1);
+	lcd_contrast(0x27);
+   	lcd_light(0);
 
 	game_intro();
 }
