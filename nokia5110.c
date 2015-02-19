@@ -1,7 +1,8 @@
+#include <string.h>
+
+#include "nokia5110.h"
 #include "const.h"
 #include "hal.h"
-#include "nokia5110.h"
-#include <string.h>
 
 enum {
 	LCD_C = LOW,

@@ -14,6 +14,7 @@ enum {
 
 enum {
 	TEXT_SPEED = 100,	/* Delay in ms for each letter */
+	TEXT_DELAY = 2000,	/* Delay in ms after text is displayed */
 };
 
 #endif
