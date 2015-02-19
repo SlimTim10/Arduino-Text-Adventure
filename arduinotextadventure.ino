@@ -1,11 +1,8 @@
 #include "const.h"
 #include "hal.h"
 #include "nokia5110.h"
-#include "simple_buttons.h"
 #include "game.h"
-
-volatile boolean button1_pressed;
-volatile boolean button2_pressed;
+#include "control.h"
 
 void setup_pins(void) {
 	pinMode(LCD_PIN_SCE, OUTPUT);
@@ -25,23 +22,17 @@ void setup(void) {
    	lcd_light(1);
 
 	game_intro();
-
-	button1_pressed = false;
-	button2_pressed = false;
-	simple_interrupt(BUTTON1, RISING, &button1_pressed);
-	simple_interrupt(BUTTON2, RISING, &button2_pressed);
 }
 
 void loop(void) {
-	if (button1_pressed) {
+	switch (get_user_input()) {
+	case B_CHANGE:
 		next_dir_choice();
-		simple_debounce(BUTTON1, LOW);
-		button1_pressed = false;
-	}
-
-	if (button2_pressed) {
+		debounce_button1();
+		break;
+	case B_SELECT:
 		travel();
-		simple_debounce(BUTTON2, LOW);
-		button2_pressed = false;
+		debounce_button2();
+		break;
 	}
 }
