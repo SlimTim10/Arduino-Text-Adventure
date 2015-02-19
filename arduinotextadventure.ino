@@ -16,6 +16,7 @@ void setup_pins(void) {
 
 void setup(void) {
 	setup_pins();
+	setup_control();
 
 	lcd_init();
 	lcd_contrast(0x1F);

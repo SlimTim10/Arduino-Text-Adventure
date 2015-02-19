@@ -10,6 +10,7 @@ enum user_input {
 	B_CHANGE,
 };
 
+void setup_control(void);
 enum user_input get_user_input(void);
 void debounce_button1(void);
 void debounce_button2(void);

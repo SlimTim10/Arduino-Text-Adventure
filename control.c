@@ -5,13 +5,18 @@
 volatile boolean button1_pressed;
 volatile boolean button2_pressed;
 
+void setup_control(void) {
+	simple_interrupt(BUTTON1, RISING, &button1_pressed);
+	simple_interrupt(BUTTON2, RISING, &button2_pressed);
+
+	button1_pressed = false;
+	button2_pressed = false;
+}
+
 enum user_input get_user_input(void) {
 	enum user_input b;
 	button1_pressed = false;
 	button2_pressed = false;
-
-	simple_interrupt(BUTTON1, RISING, &button1_pressed);
-	simple_interrupt(BUTTON2, RISING, &button2_pressed);
 
 	while (!button1_pressed && !button2_pressed);
 
