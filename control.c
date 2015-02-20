@@ -14,19 +14,18 @@ void setup_control(void) {
 }
 
 enum user_input get_user_input(void) {
-	enum user_input b;
 	button1_pressed = false;
 	button2_pressed = false;
 
 	while (!button1_pressed && !button2_pressed);
 
 	if (button1_pressed) {
-		b = B_CHANGE;
+		return B_CHANGE;
 	} else if (button2_pressed) {
-		b = B_SELECT;
+		return B_SELECT;
+	} else {
+		return 0;
 	}
-
-	return b;
 }
 
 void debounce_button1(void) {
