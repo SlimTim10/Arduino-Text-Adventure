@@ -28,3 +28,7 @@ A text adventure game for the Arduino Uno.
 | ---: | :--- |
 | Digital 2 | Button 1 (CHANGE) |
 | Digital 3 | Button 2 (SELECT) |
+
+| Arduino Uno | Potentiometer |
+| ---: | :--- |
+| Analog 0 | Potentiometer |
