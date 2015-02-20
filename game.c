@@ -130,6 +130,9 @@ void setup_game(void) {
 
 	player.xloc = 1;
 	player.yloc = 1;
+	player.prev_xloc = player.xloc;
+	player.prev_yloc = player.yloc;
+	player.run = false;
 	player.hp = 100;
 	player.lvl = 1;
 }
@@ -166,6 +169,7 @@ void travel(void) {
 			valid = false;
 			break;
 		}
+		player.prev_yloc = player.yloc;
 		player.yloc--;
 		break;
 	case EAST:
@@ -173,6 +177,7 @@ void travel(void) {
 			valid = false;
 			break;
 		}
+		player.prev_xloc = player.xloc;
 		player.xloc++;
 		break;
 	case SOUTH:
@@ -180,6 +185,7 @@ void travel(void) {
 			valid = false;
 			break;
 		}
+		player.prev_yloc = player.yloc;
 		player.yloc++;
 		break;
 	case WEST:
@@ -187,24 +193,27 @@ void travel(void) {
 			valid = false;
 			break;
 		}
+		player.prev_xloc = player.xloc;
 		player.xloc--;
 		break;
 	}
 
 	if (valid) {
 		show_room_text();
+		/* Battle all the enemies in the current room before moving on */
+		uint8_t i;
+		for (i = 0; i < MAX_ENEMIES_PER_ROOM && !player.run; i++) {
+			battle_enemy(&player, &game.room[player.xloc][player.yloc].enemies[0]);
+		}
+		if (player.run) {
+			player.xloc = player.prev_xloc;
+			player.yloc = player.prev_yloc;
+			show_room_text();
+			player.run = false;
+		}
 	} else {
 		invalid_travel();
 	}
-
-	/* Battle all the enemies in the current room before moving on */
-	uint8_t i;
-	for (i = 0; i < MAX_ENEMIES_PER_ROOM; i++) {
-		battle_enemy(&player, &game.room[player.xloc][player.yloc].enemies[0]);
-	}
-
-	///TODO fix battle_enemies()
-	/* battle_enemies(&player, &game.room[player.xloc][player.yloc].enemies); */
 
 	travel_screen();
 }

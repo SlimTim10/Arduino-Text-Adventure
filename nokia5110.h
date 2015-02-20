@@ -22,12 +22,12 @@ enum screen_info {
 
 void lcd_clear(void);
 void lcd_init(void);
-void lcd_contrast(byte);
-void lcd_light(byte);
-void lcd_write(char const *, byte, byte);
-void lcd_write_anim(char const *, byte, byte);
-void lcd_write_wrap(char const *, byte, byte);
-void lcd_write_wrap_anim(char const *, byte, byte);
+void lcd_contrast(uint8_t);
+void lcd_light(uint8_t);
+void lcd_write(char const *, uint8_t, uint8_t);
+void lcd_write_anim(char const *, uint8_t, uint8_t);
+void lcd_write_wrap(char const *, uint8_t, uint8_t);
+void lcd_write_wrap_anim(char const *, uint8_t, uint8_t);
 
 #ifdef __cplusplus
 }
