@@ -86,7 +86,7 @@ static void player_attacks(struct player *pl, struct enemy *en) {
 }
 
 /* Perform the currently selected choice against the enemy */
-static void do_action(struct player *pl, struct enemy *en, boolean *ran) {
+static void do_action(struct player *pl, struct enemy *en) {
 	switch (battle_choice) {
 	case ATTACK:
 		player_attacks(pl, en);
@@ -103,7 +103,7 @@ static void do_action(struct player *pl, struct enemy *en, boolean *ran) {
 			escape_chance = 100;
 		}
 		if (rand() % (100 / escape_chance) == 0) {
-			*ran = true;
+			pl->run = true;
 		} else {
 			game_text("Can't escape!");
 			delay(TEXT_DELAY);
@@ -124,21 +124,19 @@ static void battle_screen(struct player *pl, struct enemy *en) {
 
 /* Battle an enemy until one of you dies or you run away */
 static void battle(struct player *pl, struct enemy *en) {
-	boolean ran = false;
-
 	battle_screen(pl, en);
 
-	while (pl->hp > 0 && en->hp > 0 && !ran) {
+	while (pl->hp > 0 && en->hp > 0 && !pl->run) {
 		switch (get_user_input()) {
 		case B_CHANGE:
 			next_battle_choice();
 			break;
 		case B_SELECT:
-			do_action(pl, en, &ran);
-			if (en->hp > 0 && !ran) {
+			do_action(pl, en);
+			if (en->hp > 0 && !pl->run) {
 				enemy_attacks(pl, en);
 			}
-			if (pl->hp > 0 && en->hp > 0 && !ran) {
+			if (pl->hp > 0 && en->hp > 0 && !pl->run) {
 				battle_screen(pl, en);
 			}
 			break;
@@ -153,7 +151,7 @@ static void battle(struct player *pl, struct enemy *en) {
 		sprintf(msg, "You defeated the %s!", en->name);
 		game_text(msg);
 		delay(TEXT_DELAY);
-	} else if (ran) {
+	} else if (pl->run) {
 		game_text("Got away safely!");
 		delay(TEXT_DELAY);
 	}

@@ -14,10 +14,13 @@ enum game_constants {
 };
 
 struct player {
-	uint8_t xloc;
-	uint8_t yloc;
-	int8_t hp;
-	uint8_t lvl;
+	uint8_t xloc;				/* Current X location */
+	uint8_t yloc;				/* Current Y location */
+	uint8_t prev_xloc;			/* Previous X location */
+	uint8_t prev_yloc;			/* Previous Y location */
+	boolean run;				/* Currently running from enemy */
+	int8_t hp;					/* Hit points */
+	uint8_t lvl;				/* Level */
 };
 
 struct enemy {
