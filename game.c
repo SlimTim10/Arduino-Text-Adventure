@@ -139,7 +139,11 @@ void game_intro(void) {
 	game_text("Welcome to SlimQuest");
 	lcd_write(">Start", 20, 4);
 
+	unsigned long m = micros();
+
 	while (get_user_input() != B_SELECT);
+
+	srand(micros() - m);
 
 	game_text_anim("You are in a dungeon.");
 	delay(TEXT_DELAY);
@@ -201,7 +205,7 @@ void travel(void) {
 		battle_enemy(&player, &game.room[player.xloc][player.yloc].enemies[0]);
 	}
 
-	///TODO
+	///TODO fix battle_enemies()
 	/* battle_enemies(&player, &game.room[player.xloc][player.yloc].enemies); */
 
 	travel_screen();
