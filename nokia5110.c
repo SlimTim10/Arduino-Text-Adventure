@@ -22,7 +22,7 @@ enum lcd_instructions {
 };
 
 /* ASCII characters for LCD */
-static const byte ASCII[][5] = {
+static const char ASCII[][5] = {
  {0x00, 0x00, 0x00, 0x00, 0x00}	/* 0x20	  */
 ,{0x00, 0x00, 0x5f, 0x00, 0x00}	/* 0x21	! */
 ,{0x00, 0x07, 0x00, 0x07, 0x00}	/* 0x22	" */
@@ -122,15 +122,15 @@ static const byte ASCII[][5] = {
 };
 
 /* Send a command to the LCD */
-static void sendcmd(byte cmd) {
+static void sendcmd(uint8_t cmd) {
 	digitalWrite(LCD_PIN_DC, LCD_C);
 	digitalWrite(LCD_PIN_SCE, LOW);
 	shiftOut(LCD_PIN_SDIN, LCD_PIN_SCLK, MSBFIRST, cmd);
 	digitalWrite(LCD_PIN_SCE, HIGH);
 }
 
-/* Send a data byte to the LCD */
-static void senddata(byte data) {
+/* Send a data uint8_t to the LCD */
+static void senddata(uint8_t data) {
 	digitalWrite(LCD_PIN_DC, LCD_D);
 	digitalWrite(LCD_PIN_SCE, LOW);
 	shiftOut(LCD_PIN_SDIN, LCD_PIN_SCLK, MSBFIRST, data);
@@ -147,7 +147,7 @@ static void sendchar(char c) {
 }
 
 /* Set cursor position (X and Y address of RAM) on LCD */
-static void setpos(byte x, byte y) {
+static void setpos(uint8_t x, uint8_t y) {
 	if (x >= LCD_MAX_X) x = 0;
 	if (y >= LCD_MAX_Y) y = 0;
 
@@ -177,19 +177,19 @@ void lcd_init(void) {
 }
 
 /* Control the contrast of the LCD */
-void lcd_contrast(byte contrast) {
+void lcd_contrast(uint8_t contrast) {
 	sendcmd(LCD_INST_EXT);
 	sendcmd(LCD_CONTRAST | contrast);
 	sendcmd(LCD_INST_BASIC);
 }
 
 /* Control the brightness of the backlight (0: off, 255: full brightness) */
-void lcd_light(byte b) {
+void lcd_light(uint8_t b) {
 	analogWrite(LCD_PIN_LIGHT, ~b);
 }
 
 /* Write a string to the LCD */
-void lcd_write(char const *str, byte xpos, byte ypos) {
+void lcd_write(char const *str, uint8_t xpos, uint8_t ypos) {
 	setpos(xpos, ypos);
 	while (*str) {
 		sendchar(*str++);
@@ -197,7 +197,7 @@ void lcd_write(char const *str, byte xpos, byte ypos) {
 }
 
 /* Write a string to the LCD, with writing animation */
-void lcd_write_anim(char const *str, byte xpos, byte ypos) {
+void lcd_write_anim(char const *str, uint8_t xpos, uint8_t ypos) {
 	setpos(xpos, ypos);
 	while (*str) {
 		sendchar(*str++);
@@ -206,7 +206,7 @@ void lcd_write_anim(char const *str, byte xpos, byte ypos) {
 }
 
 /* Write a string to the LCD with word wrapping */
-void lcd_write_wrap(char const *str, byte xpos, byte ypos) {
+void lcd_write_wrap(char const *str, uint8_t xpos, uint8_t ypos) {
 	while (*str) {
 		int wraploc = LCD_WIDTH_CHARS;
 
@@ -247,7 +247,7 @@ void lcd_write_wrap(char const *str, byte xpos, byte ypos) {
 }
 
 /* Write a string to the LCD with word wrapping, with writing animation */
-void lcd_write_wrap_anim(char const *str, byte xpos, byte ypos) {
+void lcd_write_wrap_anim(char const *str, uint8_t xpos, uint8_t ypos) {
 	while (*str) {
 		int wraploc = LCD_WIDTH_CHARS;
 
