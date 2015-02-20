@@ -8,18 +8,6 @@ enum {
 	LCD_D = HIGH,
 };
 
-enum char_info {
-	ASCII_CHAR_WIDTH = 5,
-};
-
-enum screen_info {
-	LCD_WIDTH = 84,
-	LCD_HEIGHT = 48,
-	LCD_MAX_X = LCD_WIDTH,
-	LCD_MAX_Y = LCD_HEIGHT / 8,
-	LCD_WIDTH_CHARS = LCD_WIDTH / (ASCII_CHAR_WIDTH + 1),
-};
-
 enum lcd_instructions {
 	LCD_INST_BASIC = BIT5,	/* Use basic instruction set */
 	LCD_INST_EXT = BIT5 | BIT0,	/* Use extended instruction set */

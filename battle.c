@@ -15,6 +15,10 @@ enum text_loc {
 	ATTACK_Y = 3,
 	RUN_X = 6,
 	RUN_Y = 4,
+	PLAYER_HP_X = 0,
+	PLAYER_HP_Y = 0,
+	ENEMY_HP_X = 0,
+	ENEMY_HP_Y = 1,
 };
 
 enum curs_loc {
@@ -23,8 +27,6 @@ enum curs_loc {
 	CURS_RUN_X = RUN_X - 6,
 	CURS_RUN_Y = RUN_Y,
 };
-
-struct player_info player;
 
 static enum battle_choices battle_choice;
 
@@ -55,69 +57,130 @@ static void next_battle_choice(void) {
 	curs_battle_choice();
 }
 
+static void show_healths(struct player *pl, struct enemy *en) {
+	char msg[LCD_MAX_TEXT];
+	sprintf(msg, "You: %dHP", pl->hp);
+	lcd_write(msg, PLAYER_HP_X, PLAYER_HP_Y);
+	sprintf(msg, "%s: %dHP", en->name, en->hp);
+	lcd_write(msg, ENEMY_HP_X, ENEMY_HP_Y);
+}
+
+/* Enemy attacks the player */
+static void enemy_attacks(struct player *pl, struct enemy *en) {
+	uint8_t dmg = random() % (en->lvl * 10);
+	pl->hp -= dmg;
+	char msg[LCD_MAX_TEXT];
+	sprintf(msg, "The %s attacks for %d damage!", en->name, dmg);
+	game_text(msg);
+	delay(TEXT_DELAY);
+}
+
+/* Player attacks the enemy */
+static void player_attacks(struct player *pl, struct enemy *en) {
+	uint8_t dmg = random() % (pl->lvl * 10);
+	en->hp -= dmg;
+	char msg[LCD_MAX_TEXT];
+	sprintf(msg, "You attack viciously for %d damage!", dmg);
+	game_text(msg);
+	delay(TEXT_DELAY);
+}
+
 /* Perform the currently selected choice against the enemy */
-static void do_action(uint8_t en) {
+static void do_action(struct player *pl, struct enemy *en, boolean *ran) {
 	switch (battle_choice) {
 	case ATTACK:
-		player.hp -= 10;
-		game_text("You got hit!");
+		player_attacks(pl, en);
 		break;
 	case RUN: {
 		int escape_chance;
-		if (en == 1) {
+		if (en->lvl == 1) {
 			escape_chance = 50;
-		} else if (en == 2) {
+		} else if (en->lvl == 2) {
 			escape_chance = 33;
-		} else if (en == 3) {
+		} else if (en->lvl == 3) {
 			escape_chance = 25;
 		} else {
 			escape_chance = 100;
 		}
 		if (random() % (100 / escape_chance) == 0) {
-			game_text("Got away safely!");
+			*ran = true;
 		} else {
 			game_text("Can't escape!");
+			delay(TEXT_DELAY);
 		}
 		break;
 	}
 	}
-	delay(TEXT_DELAY);
-
 }
 
-/* Display message asking what to do and show options */
-static void battle_screen(void) {
-	game_text("What do you want to do?");
+/* Display healths and show action options */
+static void battle_screen(struct player *pl, struct enemy *en) {
+	lcd_clear();
+	show_healths(pl, en);
 	show_battle_choices();
 	battle_choice = ATTACK;
 	curs_battle_choice();
 }
 
 /* Battle an enemy until one of you dies or you run away */
-static void battle(uint8_t en) {
-	battle_screen();
+static void battle(struct player *pl, struct enemy *en) {
+	boolean ran = false;
 
-	while (player.hp > 0) {
+	battle_screen(pl, en);
+
+	while (pl->hp > 0 && en->hp > 0 && !ran) {
 		switch (get_user_input()) {
 		case B_CHANGE:
 			next_battle_choice();
 			break;
 		case B_SELECT:
-			do_action(en);
-			battle_screen();
+			do_action(pl, en, &ran);
+			if (en->hp > 0 && !ran) {
+				enemy_attacks(pl, en);
+			}
+			if (pl->hp > 0 && en->hp > 0 && !ran) {
+				battle_screen(pl, en);
+			}
 			break;
 		}
+	}
+
+	if (pl->hp <= 0) {
+		game_text("You died.");
+		delay(TEXT_DELAY);
+	} else if (en->hp <= 0) {
+		char msg[LCD_MAX_TEXT];
+		sprintf(msg, "You defeated the %s!", en->name);
+		game_text(msg);
+		delay(TEXT_DELAY);
+	} else if (ran) {
+		game_text("Got away safely!");
+		delay(TEXT_DELAY);
 	}
 }
 
 /* Battle all the enemies in the current room before moving on */
-void battle_enemies(uint8_t *en) {
+void battle_enemies(struct player *pl, struct enemy *enemies[]) {
+	char msg[LCD_MAX_TEXT];
 	uint8_t i;
 	for (i = 0; i < MAX_ENEMIES_PER_ROOM; i++) {
-		if (en[i] != 0) {
-			game_text("There's an enemy!");
+		if (enemies[i]->hp > 0) {
+			sprintf(msg, "There's a %s!", enemies[i]->name);
+			game_text(msg);
 			delay(TEXT_DELAY);
-			battle(en[i]);
+			battle(pl, enemies[i]);
 		}
+	}
+}
+
+/* Engage in battle with an enemy */
+void battle_enemy(struct player *pl, struct enemy *en) {
+	char msg[LCD_MAX_TEXT];
+	uint8_t i;
+	if (en->hp > 0) {
+		sprintf(msg, "There's a %s!", en->name);
+		game_text(msg);
+		delay(TEXT_DELAY);
+		battle(pl, en);
 	}
 }

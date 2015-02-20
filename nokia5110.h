@@ -7,6 +7,19 @@
 extern "C" {	/* Use C library with Arduino */
 #endif
 
+enum char_info {
+	ASCII_CHAR_WIDTH = 5,
+};
+
+enum screen_info {
+	LCD_WIDTH = 84,
+	LCD_HEIGHT = 48,
+	LCD_MAX_X = LCD_WIDTH,
+	LCD_MAX_Y = LCD_HEIGHT / 8,
+	LCD_WIDTH_CHARS = LCD_WIDTH / (ASCII_CHAR_WIDTH + 1),
+	LCD_MAX_TEXT = LCD_WIDTH_CHARS * LCD_MAX_Y,
+};
+
 void lcd_clear(void);
 void lcd_init(void);
 void lcd_contrast(byte);

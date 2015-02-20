@@ -20,7 +20,7 @@ void setup(void) {
 	setup_game();
 
 	lcd_init();
-	lcd_contrast(0x23);
+	lcd_contrast(0x2F);
    	lcd_light(0);
 
 	game_intro();

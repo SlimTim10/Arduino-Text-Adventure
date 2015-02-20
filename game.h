@@ -13,13 +13,18 @@ enum game_constants {
 	MAX_ENEMIES_PER_ROOM = 3,
 };
 
-struct player_info {
+struct player {
 	uint8_t xloc;
 	uint8_t yloc;
 	int8_t hp;
+	uint8_t lvl;
 };
 
-extern struct player_info player;
+struct enemy {
+	int8_t hp;
+	uint8_t lvl;
+	char *name;
+};
 
 void game_text(char const *str);
 void game_text_anim(char const *str);

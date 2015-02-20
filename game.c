@@ -34,13 +34,15 @@ enum direction_choices {
 	MAX_DIRECTION_CHOICE,
 };
 
-struct room_info {
+struct player player;
+
+struct room {
 	char *text;
-	uint8_t enemies[MAX_ENEMIES_PER_ROOM];
+	struct enemy enemies[MAX_ENEMIES_PER_ROOM];
 };
 
-struct game_info {
-	struct room_info room[MAP_WIDTH][MAP_HEIGHT];
+struct game {
+	struct room room[MAP_WIDTH][MAP_HEIGHT];
 } game;
 
 static enum direction_choices direction_choice;
@@ -122,12 +124,14 @@ void setup_game(void) {
 	game.room[1][2].text = "South room.";
 	game.room[2][2].text = "Southeast room.";
 
-	game.room[2][1].enemies[0] = 1;
+	game.room[2][1].enemies[0].name = "rat";
+	game.room[2][1].enemies[0].hp = 3;
+	game.room[2][1].enemies[0].lvl = 1;
 
 	player.xloc = 1;
 	player.yloc = 1;
-
 	player.hp = 100;
+	player.lvl = 1;
 }
 
 /* Intro for the game */
@@ -137,7 +141,7 @@ void game_intro(void) {
 
 	while (get_user_input() != B_SELECT);
 
-	game_text_anim("Here's some basic story plot. Exciting, isn't it?!");
+	game_text_anim("You are in a dungeon.");
 	delay(TEXT_DELAY);
 
 	show_room_text();
@@ -191,7 +195,14 @@ void travel(void) {
 		invalid_travel();
 	}
 
-	battle_enemies(game.room[player.xloc][player.yloc].enemies);
+	/* Battle all the enemies in the current room before moving on */
+	uint8_t i;
+	for (i = 0; i < MAX_ENEMIES_PER_ROOM; i++) {
+		battle_enemy(&player, &game.room[player.xloc][player.yloc].enemies[0]);
+	}
+
+	///TODO
+	/* battle_enemies(&player, &game.room[player.xloc][player.yloc].enemies); */
 
 	travel_screen();
 }
