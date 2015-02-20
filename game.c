@@ -139,11 +139,9 @@ void game_intro(void) {
 	game_text("Welcome to SlimQuest");
 	lcd_write(">Start", 20, 4);
 
-	unsigned long m = micros();
-
 	while (get_user_input() != B_SELECT);
 
-	srand(micros() - m);
+	srand(millis());
 
 	game_text_anim("You are in a dungeon.");
 	delay(TEXT_DELAY);
