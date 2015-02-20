@@ -67,7 +67,7 @@ static void show_healths(struct player *pl, struct enemy *en) {
 
 /* Enemy attacks the player */
 static void enemy_attacks(struct player *pl, struct enemy *en) {
-	uint8_t dmg = random() % (en->lvl * 10);
+	uint8_t dmg = rand() % (en->lvl * 10);
 	pl->hp -= dmg;
 	char msg[LCD_MAX_TEXT];
 	sprintf(msg, "The %s attacks for %d damage!", en->name, dmg);
@@ -77,7 +77,7 @@ static void enemy_attacks(struct player *pl, struct enemy *en) {
 
 /* Player attacks the enemy */
 static void player_attacks(struct player *pl, struct enemy *en) {
-	uint8_t dmg = random() % (pl->lvl * 10);
+	uint8_t dmg = rand() % (pl->lvl * 10);
 	en->hp -= dmg;
 	char msg[LCD_MAX_TEXT];
 	sprintf(msg, "You attack viciously for %d damage!", dmg);
@@ -102,7 +102,7 @@ static void do_action(struct player *pl, struct enemy *en, boolean *ran) {
 		} else {
 			escape_chance = 100;
 		}
-		if (random() % (100 / escape_chance) == 0) {
+		if (rand() % (100 / escape_chance) == 0) {
 			*ran = true;
 		} else {
 			game_text("Can't escape!");
@@ -159,6 +159,7 @@ static void battle(struct player *pl, struct enemy *en) {
 	}
 }
 
+///TODO fix this
 /* Battle all the enemies in the current room before moving on */
 void battle_enemies(struct player *pl, struct enemy *enemies[]) {
 	char msg[LCD_MAX_TEXT];
