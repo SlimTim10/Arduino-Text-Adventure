@@ -23,3 +23,8 @@ A text adventure game for the Arduino Uno.
 | 5V | 6 (VCC) |
 | Digital 9 | 7 (LIGHT) |
 | GND | 8 (GND) |
+
+| Arduino Uno | Buttons (pull-down) |
+| ---: | :--- |
+| Digital 2 | Button 1 (CHANGE) |
+| Digital 3 | Button 2 (SELECT) |
