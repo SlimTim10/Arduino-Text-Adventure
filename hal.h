@@ -10,6 +10,7 @@ enum pins {
 	LCD_PIN_LIGHT = 9,
 	BUTTON1 = 2,
 	BUTTON2 = 3,
+	POT_PIN = 0,
 };
 
 #endif

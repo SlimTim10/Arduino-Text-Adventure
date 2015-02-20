@@ -17,7 +17,9 @@ enum user_input get_user_input(void) {
 	button1_pressed = false;
 	button2_pressed = false;
 
-	while (!button1_pressed && !button2_pressed);
+	while (!button1_pressed && !button2_pressed) {
+		lcd_contrast((uint8_t) (analogRead(POT_PIN) * (255.0 / 1023.0)));
+	}
 
 	if (button1_pressed) {
 		return B_CHANGE;
