@@ -24,6 +24,7 @@ RSRC STR_ROOM_02 = "Southwest room.";
 RSRC STR_ROOM_12 = "South room.";
 RSRC STR_ROOM_22 = "Southeast room.";
 
+RSRC STR_SNAIL = "snail";
 RSRC STR_RAT = "rat";
 
 #endif
