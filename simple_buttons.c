@@ -70,6 +70,33 @@ void simple_interrupt(uint8_t pin, uint8_t trig, volatile void *flag) {
 	interrupts();
 }
 
+/* Check for a true button press (discard false positive) */
+boolean simple_button_press(uint8_t pin) {
+	switch (pin) {
+	case 2:
+		/* D2 */
+		if (*d2flag == true) {
+			delay(DEBOUNCE_MS);
+			if (digitalRead(pin)) {
+				*d2flag = false;
+				return true;
+			}
+		}
+		break;
+	case 3:
+		/* D3 */
+		if (*d3flag == true) {
+			delay(DEBOUNCE_MS);
+			if (digitalRead(pin)) {
+				*d3flag = false;
+				return true;
+			}
+		}
+		break;
+	}
+	return false;
+}
+
 /* Wait until button has settled at the desired state */
 void simple_button_wait(uint8_t pin, boolean state) {
 	while (digitalRead(pin) != state);
