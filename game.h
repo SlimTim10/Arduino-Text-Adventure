@@ -11,6 +11,10 @@ enum game_constants {
 	MAP_WIDTH = 3,
 	MAP_HEIGHT = 3,
 	MAX_ENEMIES_PER_ROOM = 3,
+	MAX_HP = 100,
+	MAX_LVL = 10,
+	XP_NEXT_INC = 20,			/* XP to next level increase */
+	XP_GAIN = 10,				/* Multiply enemy level by this for player XP gain */
 };
 
 struct player {
@@ -21,6 +25,8 @@ struct player {
 	boolean run;				/* Currently running from enemy */
 	int8_t hp;					/* Hit points */
 	uint8_t lvl;				/* Level */
+	uint16_t xp;					/* Experience */
+	uint16_t xp_next_lvl;			/* Required experience to gain next level */
 };
 
 struct enemy {

@@ -123,9 +123,12 @@ void setup_game(void) {
 	game.room[1][2].text = STR_ROOM_12;
 	game.room[2][2].text = STR_ROOM_22;
 
-	game.room[2][1].enemies[0].name = STR_RAT;
+	game.room[2][1].enemies[0].name = STR_SNAIL;
 	game.room[2][1].enemies[0].hp = 3;
 	game.room[2][1].enemies[0].lvl = 1;
+	game.room[2][1].enemies[1].name = STR_RAT;
+	game.room[2][1].enemies[1].hp = 5;
+	game.room[2][1].enemies[1].lvl = 1;
 
 	player.xloc = 1;
 	player.yloc = 1;
@@ -134,6 +137,8 @@ void setup_game(void) {
 	player.run = false;
 	player.hp = 100;
 	player.lvl = 1;
+	player.xp = 0;
+	player.xp_next_lvl = 20;
 }
 
 /* Intro for the game */
@@ -202,7 +207,7 @@ void travel(void) {
 		/* Battle all the enemies in the current room before moving on */
 		uint8_t i;
 		for (i = 0; i < MAX_ENEMIES_PER_ROOM && !player.run; i++) {
-			battle_enemy(&player, &game.room[player.xloc][player.yloc].enemies[0]);
+			battle_enemy(&player, &game.room[player.xloc][player.yloc].enemies[i]);
 		}
 		if (player.run) {
 			player.xloc = player.prev_xloc;

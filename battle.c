@@ -57,6 +57,7 @@ static void next_battle_choice(void) {
 	curs_battle_choice();
 }
 
+/* Show health of player and enemy */
 static void show_healths(struct player *pl, struct enemy *en) {
 	char msg[LCD_MAX_TEXT];
 	sprintf(msg, "You: %dHP", pl->hp);
@@ -122,6 +123,41 @@ static void battle_screen(struct player *pl, struct enemy *en) {
 	curs_battle_choice();
 }
 
+/* Player wins the battle */
+static void battle_win(struct player *pl, struct enemy *en) {
+	char msg[LCD_MAX_TEXT];
+	sprintf(msg, "You defeated the %s!", en->name);
+	game_text(msg);
+	delay(TEXT_DELAY);
+
+	uint8_t xp = en->lvl * XP_GAIN;
+	pl->xp += xp;
+	sprintf(msg, "You gained %dXP!", xp);
+	game_text(msg);
+	delay(TEXT_DELAY);
+
+	if (pl->xp >= pl->xp_next_lvl) {
+		if (pl->lvl < MAX_LVL) {
+			pl->lvl++;
+		}
+		pl->hp = MAX_HP;
+		pl->xp_next_lvl += XP_NEXT_INC;
+		game_text_anim("You gained a level! You feel stronger...");
+		delay(TEXT_DELAY);
+	}
+
+	lcd_clear();
+	sprintf(msg, "Level: %d", pl->lvl);
+	lcd_write(msg, 0, 0);
+	sprintf(msg, "HP: %d", pl->hp);
+	lcd_write(msg, 0, 1);
+	sprintf(msg, "XP: %d", pl->xp);
+	lcd_write(msg, 0, 2);
+	sprintf(msg, "Next: %dXP", pl->xp_next_lvl);
+	lcd_write(msg, 0, 3);
+	while (get_user_input() != B_SELECT);
+}
+
 /* Battle an enemy until one of you dies or you run away */
 static void battle(struct player *pl, struct enemy *en) {
 	battle_screen(pl, en);
@@ -147,10 +183,7 @@ static void battle(struct player *pl, struct enemy *en) {
 		game_text("You died.");
 		delay(TEXT_DELAY);
 	} else if (en->hp <= 0) {
-		char msg[LCD_MAX_TEXT];
-		sprintf(msg, "You defeated the %s!", en->name);
-		game_text(msg);
-		delay(TEXT_DELAY);
+		battle_win(pl, en);
 	} else if (pl->run) {
 		game_text("Got away safely!");
 		delay(TEXT_DELAY);
@@ -164,8 +197,8 @@ void battle_enemies(struct player *pl, struct enemy *enemies[]) {
 	uint8_t i;
 	for (i = 0; i < MAX_ENEMIES_PER_ROOM; i++) {
 		if (enemies[i]->hp > 0) {
-			sprintf(msg, "There's a %s!", enemies[i]->name);
-			game_text(msg);
+			sprintf(msg, "There's a level %d %s!", enemies[i]->lvl, enemies[i]->name);
+			game_text_anim(msg);
 			delay(TEXT_DELAY);
 			battle(pl, enemies[i]);
 		}
@@ -177,8 +210,8 @@ void battle_enemy(struct player *pl, struct enemy *en) {
 	char msg[LCD_MAX_TEXT];
 	uint8_t i;
 	if (en->hp > 0) {
-		sprintf(msg, "There's a %s!", en->name);
-		game_text(msg);
+		sprintf(msg, "There's a level %d %s!", en->lvl, en->name);
+		game_text_anim(msg);
 		delay(TEXT_DELAY);
 		battle(pl, en);
 	}
