@@ -1,4 +1,5 @@
 #include "game.h"
+#include "resources.h"
 #include "const.h"
 #include "nokia5110.h"
 #include "control.h"
@@ -49,38 +50,38 @@ static enum direction_choices direction_choice;
 
 /* Show the available direction choices */
 static void show_dir_choices(void) {
-	lcd_write("North", NORTH_X, NORTH_Y);
-	lcd_write("East", EAST_X, EAST_Y);
-	lcd_write("South", SOUTH_X, SOUTH_Y);
-	lcd_write("West", WEST_X, WEST_Y);
+	lcd_write(STR_NORTH, NORTH_X, NORTH_Y);
+	lcd_write(STR_EAST, EAST_X, EAST_Y);
+	lcd_write(STR_SOUTH, SOUTH_X, SOUTH_Y);
+	lcd_write(STR_WEST, WEST_X, WEST_Y);
 }
 
 /* Draw the cursor at the current direction choice */
 static void curs_dir_choice(void) {
-	lcd_write(" ", CURS_NORTH_X, CURS_NORTH_Y);
-	lcd_write(" ", CURS_EAST_X, CURS_EAST_Y);
-	lcd_write(" ", CURS_SOUTH_X, CURS_SOUTH_Y);
-	lcd_write(" ", CURS_WEST_X, CURS_WEST_Y);
+	lcd_write(STR_SPACE, CURS_NORTH_X, CURS_NORTH_Y);
+	lcd_write(STR_SPACE, CURS_EAST_X, CURS_EAST_Y);
+	lcd_write(STR_SPACE, CURS_SOUTH_X, CURS_SOUTH_Y);
+	lcd_write(STR_SPACE, CURS_WEST_X, CURS_WEST_Y);
 
 	switch (direction_choice) {
 	case NORTH:
-		lcd_write(">", CURS_NORTH_X, CURS_NORTH_Y);
+		lcd_write(STR_CURS, CURS_NORTH_X, CURS_NORTH_Y);
 		break;
 	case EAST:
-		lcd_write(">", CURS_EAST_X, CURS_EAST_Y);
+		lcd_write(STR_CURS, CURS_EAST_X, CURS_EAST_Y);
 		break;
 	case SOUTH:
-		lcd_write(">", CURS_SOUTH_X, CURS_SOUTH_Y);
+		lcd_write(STR_CURS, CURS_SOUTH_X, CURS_SOUTH_Y);
 		break;
 	case WEST:
-		lcd_write(">", CURS_WEST_X, CURS_WEST_Y);
+		lcd_write(STR_CURS, CURS_WEST_X, CURS_WEST_Y);
 		break;
 	}
 }
 
 /* Display message asking which direction to go and show options */
 static void travel_screen(void) {
-	game_text("Where do you want to walk?");
+	game_text(STR_TRAVEL_SCREEN);
 	show_dir_choices();
 	direction_choice = NORTH;
 	curs_dir_choice();
@@ -94,7 +95,7 @@ static void show_room_text(void) {
 
 /* The player cannot move in the current chosen direction */
 static void invalid_travel(void) {
-	game_text("You can't go that way.");
+	game_text(STR_INVALID_TRAVEL);
 	delay(TEXT_DELAY);
 }
 
@@ -110,21 +111,19 @@ void game_text_anim(char const *str) {
 	lcd_write_wrap_anim(str, 0, 0);
 }
 
-
-
 /* Initialize the game settings */
 void setup_game(void) {
-	game.room[0][0].text = "Northwest room.";
-	game.room[1][0].text = "North room.";
-	game.room[2][0].text = "Northeast room.";
-	game.room[0][1].text = "West room.";
-	game.room[1][1].text = "Middle room.";
-	game.room[2][1].text = "East room.";
-	game.room[0][2].text = "Southwest room.";
-	game.room[1][2].text = "South room.";
-	game.room[2][2].text = "Southeast room.";
+	game.room[0][0].text = STR_ROOM_00;
+	game.room[1][0].text = STR_ROOM_10;
+	game.room[2][0].text = STR_ROOM_20;
+	game.room[0][1].text = STR_ROOM_01;
+	game.room[1][1].text = STR_ROOM_11;
+	game.room[2][1].text = STR_ROOM_21;
+	game.room[0][2].text = STR_ROOM_02;
+	game.room[1][2].text = STR_ROOM_12;
+	game.room[2][2].text = STR_ROOM_22;
 
-	game.room[2][1].enemies[0].name = "rat";
+	game.room[2][1].enemies[0].name = STR_RAT;
 	game.room[2][1].enemies[0].hp = 3;
 	game.room[2][1].enemies[0].lvl = 1;
 
@@ -139,14 +138,14 @@ void setup_game(void) {
 
 /* Intro for the game */
 void game_intro(void) {
-	game_text("Welcome to SlimQuest");
+	game_text(STR_WELCOME);
 	lcd_write(">Start", 20, 4);
 
 	while (get_user_input() != B_SELECT);
 
 	srand(millis());
 
-	game_text_anim("You are in a dungeon.");
+	game_text_anim(STR_INTRO);
 	delay(TEXT_DELAY);
 
 	show_room_text();
