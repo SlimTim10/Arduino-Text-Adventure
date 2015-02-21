@@ -10,8 +10,8 @@ void setup_pins(void) {
 	pinMode(LCD_PIN_DC, OUTPUT);
 	pinMode(LCD_PIN_SDIN, OUTPUT);
 	pinMode(LCD_PIN_SCLK, OUTPUT);
-	pinMode(BUTTON1, INPUT);
-	pinMode(BUTTON2, INPUT);
+	pinMode(BUTTON1_PIN, INPUT);
+	pinMode(BUTTON2_PIN, INPUT);
 }
 
 void setup(void) {
@@ -29,11 +29,11 @@ void loop(void) {
 	switch (get_user_input()) {
 	case B_CHANGE:
 		next_dir_choice();
-		debounce_button1();
+		button1_wait();
 		break;
 	case B_SELECT:
 		travel();
-		debounce_button2();
+		button2_wait();
 		break;
 	}
 }

@@ -1,5 +1,5 @@
-#ifndef SIMPLE_INTERRUPTS_H
-#define SIMPLE_INTERRUPTS_H
+#ifndef SIMPLE_BUTTONS_H
+#define SIMPLE_BUTTONS_H
 
 #include <Arduino.h>
 
@@ -7,8 +7,8 @@
 extern "C" {	/* Use C library with Arduino */
 #endif
 
-	void simple_interrupt(uint8_t pin, uint8_t trig, volatile void (*flag));
-void simple_debounce(uint8_t, boolean);
+void simple_interrupt(uint8_t, uint8_t, volatile void (*));
+void simple_button_wait(uint8_t, boolean);
 
 #ifdef __cplusplus
 }
