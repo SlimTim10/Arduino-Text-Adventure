@@ -1,5 +1,6 @@
 * Tasks
-** TODO Move battle functions into their own library
+** DONE Move battle functions into their own library
+   CLOSED: [2015-02-21 Sat 09:46]
 ** DONE Add buttons to D2 and D3 (for external interrupts)
    CLOSED: [2015-02-18 Wed 18:28]
 ** DONE Add struct room_info (to be used in game struct)
