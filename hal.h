@@ -8,8 +8,8 @@ enum pins {
 	LCD_PIN_SDIN = 4,
 	LCD_PIN_SCLK = 8,
 	LCD_PIN_LIGHT = 9,
-	BUTTON1 = 2,
-	BUTTON2 = 3,
+	BUTTON1_PIN = 2,
+	BUTTON2_PIN = 3,
 	POT_PIN = 0,
 };
 

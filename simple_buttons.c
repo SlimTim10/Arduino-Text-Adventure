@@ -7,7 +7,7 @@
 */
 
 enum constants {
-	DEBOUNCE_MS = 20,
+	DEBOUNCE_MS = 10,
 };
 
 volatile boolean *d2flag = false;
@@ -70,8 +70,9 @@ void simple_interrupt(uint8_t pin, uint8_t trig, volatile void *flag) {
 	interrupts();
 }
 
-/* Debounce and wait until button has settled at the desired state */
-void simple_debounce(uint8_t pin, boolean state) {
+/* Wait until button has settled at the desired state */
+void simple_button_wait(uint8_t pin, boolean state) {
+	while (digitalRead(pin) != state);
 	delay(DEBOUNCE_MS);
 	while (digitalRead(pin) != state);
 }
