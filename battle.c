@@ -71,7 +71,11 @@ static void enemy_attacks(struct player *pl, struct enemy *en) {
 	uint8_t dmg = rand() % (en->lvl * 10);
 	pl->hp -= dmg;
 	char msg[LCD_MAX_TEXT];
-	sprintf(msg, "The %s attacks for %d damage!", en->name, dmg);
+	if (dmg == 0) {
+		sprintf(msg, "The %s misses!", en->name);
+	} else {
+		sprintf(msg, "The %s attacks for %d damage!", en->name, dmg);
+	}
 	game_text(msg);
 	delay(TEXT_DELAY);
 }
@@ -81,7 +85,11 @@ static void player_attacks(struct player *pl, struct enemy *en) {
 	uint8_t dmg = rand() % (pl->lvl * 10);
 	en->hp -= dmg;
 	char msg[LCD_MAX_TEXT];
-	sprintf(msg, "You attack viciously for %d damage!", dmg);
+	if (dmg == 0) {
+		sprintf(msg, "Your attack misses...");
+	} else {
+		sprintf(msg, "You attack viciously for %d damage!", dmg);
+	}
 	game_text(msg);
 	delay(TEXT_DELAY);
 }
