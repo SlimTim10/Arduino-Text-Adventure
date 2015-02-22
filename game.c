@@ -35,14 +35,14 @@ enum direction_choices {
 	MAX_DIRECTION_CHOICE,
 };
 
-struct player player;
+static struct player player;
 
-struct room {
+static struct room {
 	char *text;
 	struct enemy enemies[MAX_ENEMIES_PER_ROOM];
 };
 
-struct game {
+static struct game {
 	struct room room[MAP_WIDTH][MAP_HEIGHT];
 } game;
 

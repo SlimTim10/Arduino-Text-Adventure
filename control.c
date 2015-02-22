@@ -2,8 +2,8 @@
 #include "simple_buttons.h"
 #include "hal.h"
 
-volatile boolean button1_pressed;
-volatile boolean button2_pressed;
+static volatile boolean button1_pressed;
+static volatile boolean button2_pressed;
 
 void setup_control(void) {
 	simple_interrupt(BUTTON1_PIN, RISING, &button1_pressed);
