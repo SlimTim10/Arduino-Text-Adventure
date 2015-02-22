@@ -173,7 +173,6 @@ void travel(void) {
 			valid = false;
 			break;
 		}
-		player.prev_yloc = player.yloc;
 		player.yloc--;
 		break;
 	case EAST:
@@ -181,7 +180,6 @@ void travel(void) {
 			valid = false;
 			break;
 		}
-		player.prev_xloc = player.xloc;
 		player.xloc++;
 		break;
 	case SOUTH:
@@ -189,7 +187,6 @@ void travel(void) {
 			valid = false;
 			break;
 		}
-		player.prev_yloc = player.yloc;
 		player.yloc++;
 		break;
 	case WEST:
@@ -197,7 +194,6 @@ void travel(void) {
 			valid = false;
 			break;
 		}
-		player.prev_xloc = player.xloc;
 		player.xloc--;
 		break;
 	}
@@ -215,6 +211,8 @@ void travel(void) {
 			show_room_text();
 			player.run = false;
 		}
+		player.prev_xloc = player.xloc;
+		player.prev_yloc = player.yloc;
 	} else {
 		invalid_travel();
 	}
