@@ -99,6 +99,18 @@ static void invalid_travel(void) {
 	delay(TEXT_DELAY);
 }
 
+static void add_enemy(uint8_t xloc, uint8_t yloc, char *name, int8_t hp, uint8_t lvl) {
+	uint8_t i;
+	for (i = 0; i < MAX_ENEMIES_PER_ROOM; i++) {
+		if (game.room[xloc][yloc].enemies[i].hp == 0) {
+			game.room[xloc][yloc].enemies[i].name = name;
+			game.room[xloc][yloc].enemies[i].hp = hp;
+			game.room[xloc][yloc].enemies[i].lvl = lvl;
+			break;
+		}
+	}
+}
+
 /* Display text on the screen starting from the top */
 void game_text(char const *str) {
 	lcd_clear();
@@ -123,12 +135,8 @@ void setup_game(void) {
 	game.room[1][2].text = STR_ROOM_12;
 	game.room[2][2].text = STR_ROOM_22;
 
-	game.room[2][1].enemies[0].name = STR_SNAIL;
-	game.room[2][1].enemies[0].hp = 3;
-	game.room[2][1].enemies[0].lvl = 1;
-	game.room[2][1].enemies[1].name = STR_RAT;
-	game.room[2][1].enemies[1].hp = 5;
-	game.room[2][1].enemies[1].lvl = 1;
+	add_enemy(2, 1, STR_SNAIL, 3, 1);
+	add_enemy(2, 1, STR_RAT, 5, 1);
 
 	player.xloc = 1;
 	player.yloc = 1;
