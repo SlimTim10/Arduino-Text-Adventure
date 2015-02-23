@@ -152,7 +152,7 @@ void setup_game(void) {
 /* Intro for the game */
 void game_intro(void) {
 	game_text(STR_WELCOME);
-	lcd_write(">Start", 20, 4);
+	lcd_write(STR_START, 20, 4);
 
 	while (get_user_input() != B_SELECT);
 

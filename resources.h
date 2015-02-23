@@ -1,30 +1,57 @@
 #ifndef RESOURCES_H
 #define RESOURCES_H
 
-typedef const PROGMEM char * RSRC;
+#include <Arduino.h>
 
-RSRC STR_WELCOME = "Welcome to SlimQuest";
-RSRC STR_INTRO = "You are in a dungeon.";
-RSRC STR_NORTH = "North";
-RSRC STR_EAST = "East";
-RSRC STR_SOUTH = "South";
-RSRC STR_WEST = "West";
-RSRC STR_SPACE = " ";
-RSRC STR_CURS = ">";
-RSRC STR_TRAVEL_SCREEN = "Where do you want to walk?";
-RSRC STR_INVALID_TRAVEL = "You can't go that way.";
+/* General */
+extern const char STR_WELCOME[];
+extern const char STR_START[];
+extern const char STR_INTRO[];
+extern const char STR_SPACE[];
+extern const char STR_CURS[];
 
-RSRC STR_ROOM_00 = "Northwest room.";
-RSRC STR_ROOM_10 = "North room.";
-RSRC STR_ROOM_20 = "Northeast room.";
-RSRC STR_ROOM_01 = "West room.";
-RSRC STR_ROOM_11 = "Middle room.";
-RSRC STR_ROOM_21 = "East room.";
-RSRC STR_ROOM_02 = "Southwest room.";
-RSRC STR_ROOM_12 = "South room.";
-RSRC STR_ROOM_22 = "Southeast room.";
+/* Travel */
+extern const char STR_NORTH[];
+extern const char STR_EAST[];
+extern const char STR_SOUTH[];
+extern const char STR_WEST[];
+extern const char STR_TRAVEL_SCREEN[];
+extern const char STR_INVALID_TRAVEL[];
 
-RSRC STR_SNAIL = "snail";
-RSRC STR_RAT = "rat";
+/* Map */
+extern const char STR_ROOM_00[];
+extern const char STR_ROOM_10[];
+extern const char STR_ROOM_20[];
+extern const char STR_ROOM_01[];
+extern const char STR_ROOM_11[];
+extern const char STR_ROOM_21[];
+extern const char STR_ROOM_02[];
+extern const char STR_ROOM_12[];
+extern const char STR_ROOM_22[];
+
+/* Battle */
+extern const char STR_ENEMY[];
+extern const char STR_ATTACK[];
+extern const char STR_RUN[];
+extern const char STR_PLAYER_HP[];
+extern const char STR_ENEMY_HP[];
+extern const char STR_ENEMY_MISS[];
+extern const char STR_ENEMY_ATTACK[];
+extern const char STR_PLAYER_MISS[];
+extern const char STR_PLAYER_ATTACK[];
+extern const char STR_CANT_ESCAPE[];
+extern const char STR_ESCAPE[];
+extern const char STR_BATTLE_WIN[];
+extern const char STR_XP_GAIN[];
+extern const char STR_LVL_GAIN[];
+extern const char STR_LVL[];
+extern const char STR_HP[];
+extern const char STR_XP[];
+extern const char STR_NEXT[];
+extern const char STR_PLAYER_DEATH[];
+
+/* Enemies */
+extern const char STR_SNAIL[];
+extern const char STR_RAT[];
 
 #endif
