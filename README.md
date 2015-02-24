@@ -23,6 +23,12 @@ A text adventure game for the Arduino Uno.
 
 The text that accompanies each room is chosen at random from a set list of strings in the `resources` library.
 
+#### Battle
+
+The damage range when attacking is from `(attacker's level * 10) - ((attacker's level - opponent's level) * 10)` to `(attacker's level * 10) - ((attacker's level - opponent's level) * 10) + 10`. An attack of 0 damage is a miss.
+
+For example: a level 3 player attacking a level 4 enemy can do 10 to 20 damage. A level 3 player attacking a level 3-or-below enemy can do 20 to 30 damage.
+
 ## Hardware
 
 - [Arduino Uno](http://arduino.cc/en/Main/arduinoBoardUno)
