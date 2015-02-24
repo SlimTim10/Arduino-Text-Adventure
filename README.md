@@ -72,25 +72,25 @@ To customize the game, edit the `setup_world()` function in `arduinotextadventur
   * Make room [2,2] into a wall
     * `make_wall(2, 2);`
   * Make room [3,2] into a wall
-    * make_wall(3, 2);
+    * `make_wall(3, 2);`
 
 * Add enemies (there can be at most 3 enemies in a room)
   * Add a level 1 snail to room [2,1] with 3 HP
-  * `add_enemy(2, 1, "snail", 3, 1);`
+    * `add_enemy(2, 1, "snail", 3, 1);`
   * Add a level 1 rat to room [2,1] with 5 HP
-  * `add_enemy(2, 1, "rat", 5, 1);`
+    * `add_enemy(2, 1, "rat", 5, 1);`
   * Add a level 4 Tim to room [2,3] with 20 HP
-  * `add_enemy(2, 3, "Tim", 20, 4);`
+    * `add_enemy(2, 3, "Tim", 20, 4);`
   * Add a level 5 Chris to room [2,3] with 30 HP
-  * `add_enemy(2, 3, "Chris", 30, 5);`
+    * `add_enemy(2, 3, "Chris", 30, 5);`
   * Add a level 10 David to room [3,3] with 20 HP
-  * `add_enemy(3, 3, "David", 50, 10);`
+    * `add_enemy(3, 3, "David", 50, 10);`
 
 * Set up the player (starting location, HP, and level).
   * Start the player in room [0,0] with 100 HP and level 1
-  * `set_player_location(0, 0);`
-  * `set_player_hp(100);`
-  * `set_player_level(1);`
+    * `set_player_location(0, 0);`
+    * `set_player_hp(100);`
+    * `set_player_level(1);`
 
 ## Notes
 
