@@ -44,7 +44,9 @@ static struct room {
 };
 
 static struct game {
-	struct room room[MAP_WIDTH][MAP_HEIGHT];
+	struct room room[MAX_MAP_WIDTH][MAX_MAP_HEIGHT];
+	uint8_t map_width;
+	uint8_t map_height;
 } game;
 
 static enum direction_choices direction_choice;
@@ -104,6 +106,16 @@ static void invalid_travel(void) {
 	delay(TEXT_DELAY);
 }
 
+/* Set the width of the map */
+void set_map_width(uint8_t w) {
+	game.map_width = w;
+}
+
+/* Set the height of the map */
+void set_map_height(uint8_t h) {
+	game.map_height = h;
+}
+
 /* Make a room into a wall */
 void make_wall(uint8_t xloc, uint8_t yloc) {
 	game.room[xloc][yloc].iswall = true;
@@ -158,25 +170,17 @@ void game_text_anim(char const *str) {
 }
 
 /* Initialize the game settings */
-void setup_game(void) {
+void game_init(void) {
 	uint8_t x, y;
 	char text[LCD_MAX_TEXT];
-	for (y = 0; y < MAP_HEIGHT; y++) {
-		for (x = 0; x < MAP_WIDTH; x++) {
+	for (y = 0; y < game.map_height; y++) {
+		for (x = 0; x < game.map_width; x++) {
 			game.room[x][y].text = pgm_read_word(&STR_ROOM_TEXT[rand() % STR_ROOM_TEXT_NUM]);
-			game.room[x][y].iswall = false;
 		}
 	}
 
-	player.xloc = 1;
-	player.yloc = 1;
-	player.prev_xloc = player.xloc;
-	player.prev_yloc = player.yloc;
 	player.run = false;
-	player.hp = 100;
-	player.lvl = 1;
-	player.xp = 0;
-	player.xp_next_lvl = 20;
+	player.xp_next_lvl = XP_NEXT_INC;
 }
 
 /* Intro for the game */
@@ -207,14 +211,14 @@ void travel(void) {
 		player.yloc--;
 		break;
 	case EAST:
-		if (player.xloc >= MAP_WIDTH - 1) {
+		if (player.xloc >= game.map_width - 1) {
 			valid = false;
 			break;
 		}
 		player.xloc++;
 		break;
 	case SOUTH:
-		if (player.yloc >= MAP_HEIGHT - 1) {
+		if (player.yloc >= game.map_height - 1) {
 			valid = false;
 			break;
 		}

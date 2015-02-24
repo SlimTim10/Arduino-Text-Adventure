@@ -7,6 +7,10 @@
 
 /* Edit this function to customize the game */
 void setup_world(void) {
+	/* Set map dimensions */
+	set_map_width(4);
+	set_map_height(4);
+
 	/* Map */
 	/* [0,0] [1,0] [2,0] [3,0] */
 	/* [0,1] [1,1] [2,1] [3,1]  */
@@ -64,8 +68,8 @@ void setup(void) {
 
 	srand(millis());
 
-	setup_game();
 	setup_world();
+	setup_game();
 	game_intro();
 }
 

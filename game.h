@@ -8,8 +8,8 @@ extern "C" {	/* Use C library with Arduino */
 #endif
 
 enum game_constants {
-	MAP_WIDTH = 4,
-	MAP_HEIGHT = 4,
+	MAX_MAP_WIDTH = 8,
+	MAX_MAP_HEIGHT = 8,
 	MAX_ENEMIES_PER_ROOM = 3,
 	MAX_HP = 100,
 	MAX_LVL = 10,
@@ -35,6 +35,8 @@ struct enemy {
 	char *name;
 };
 
+void set_map_width(uint8_t);
+void set_map_height(uint8_t);
 void make_wall(uint8_t, uint8_t);
 void add_enemy(uint8_t, uint8_t, char *, int8_t, uint8_t);
 boolean is_player_dead(void);
@@ -43,7 +45,7 @@ void set_player_hp(int8_t);
 void set_player_level(uint8_t);
 void game_text(char const *);
 void game_text_anim(char const *);
-void setup_game(void);
+void game_init(void);
 void game_intro(void);
 void next_dir_choice(void);
 void travel(void);
