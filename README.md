@@ -14,16 +14,12 @@ A text adventure game for the Arduino Uno.
 
 #### Map
 
-| Rooms | Rooms | Rooms | Rooms | Rooms | Rooms | Rooms | Rooms |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| [0,0] | [1,0] | [2,0] | [3,0] | [4,0] | [5,0] | [6,0] | [7,0] |
-| [0,1] | [1,1] | [2,1] | [3,1] | [4,1] | [5,1] | [6,1] | [7,1] |
-| [0,2] | [1,2] | [2,2] | [3,2] | [4,2] | [5,2] | [6,2] | [7,2] |
-| [0,3] | [1,3] | [2,3] | [3,3] | [4,3] | [5,3] | [6,3] | [7,3] |
-| [0,4] | [1,4] | [2,4] | [3,4] | [4,4] | [5,4] | [6,4] | [7,4] |
-| [0,5] | [1,5] | [2,5] | [3,5] | [4,5] | [5,5] | [6,5] | [7,5] |
-| [0,6] | [1,6] | [2,6] | [3,6] | [4,6] | [5,6] | [6,6] | [7,6] |
-| [0,7] | [1,7] | [2,7] | [3,7] | [4,7] | [5,7] | [6,7] | [7,7] |
+| Rooms | Rooms | Rooms | Rooms |
+| :---: | :---: | :---: | :---: |
+| [0,0] | [1,0] | [2,0] | [3,0]
+| [0,1] | [1,1] | [2,1] | [3,1]
+| [0,2] | [1,2] | [2,2] | [3,2]
+| [0,3] | [1,3] | [2,3] | [3,3]
 
 The map width and height can be customized (maximum 8 by 8). The text that accompanies each room is chosen at random from a set list of strings in the `resources` library.
 
@@ -64,7 +60,49 @@ For example: a level 3 player attacking a level 4 enemy can do 10 to 20 damage. 
 
 ## Development
 
-To customize the game, edit the `setup_world()` function in `arduinotextadventure.ino`. You can set the map dimensions, make walls, add enemies, and set up the player (starting location, HP, and level).
+To customize the game, edit the `setup_world()` function in `arduinotextadventure.ino`.
+
+* Set the map dimensions (maximum 8 by 8)
+
+```
+set_map_width(4);
+set_map_height(4);
+```
+
+* Make walls (rooms that the player can't enter)
+
+```
+/* Make room [1,0] into a wall */
+make_wall(1, 0);
+/* Make room [2,2] into a wall */
+make_wall(2, 2);
+/* Make room [3,2] into a wall */
+make_wall(3, 2);
+```
+
+* Add enemies (there can be at most 3 enemies in a room)
+
+```
+/* Add a level 1 snail to room [2,1] with 3 HP */
+add_enemy(2, 1, "snail", 3, 1);
+/* Add a level 1 rat to room [2,1] with 5 HP */
+add_enemy(2, 1, "rat", 5, 1);
+/* Add a level 4 Tim to room [2,3] with 20 HP */
+add_enemy(2, 3, "Tim", 20, 4);
+/* Add a level 5 Chris to room [2,3] with 30 HP */
+add_enemy(2, 3, "Chris", 30, 5);
+/* Add a level 10 David to room [3,3] with 20 HP */
+add_enemy(3, 3, "David", 50, 10);
+```
+
+* Set up the player (starting location, HP, and level).
+
+```
+/* Start the player in room [0,0] with 100 HP and level 1 */
+set_player_location(0, 0);
+set_player_hp(100);
+set_player_level(1);
+```
 
 ## Notes
 
