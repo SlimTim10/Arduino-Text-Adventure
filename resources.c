@@ -6,7 +6,7 @@ typedef const char RSRC;
 char str_buffer[LCD_MAX_TEXT];
 
 /* General */
-RSRC STR_WELCOME[] PROGMEM = "Welcome to SlimQuest";
+RSRC STR_WELCOME[] PROGMEM = "Welcome to IcewireQuest";
 RSRC STR_START[] PROGMEM = ">Start";
 RSRC STR_INTRO[] PROGMEM = "You wake up in a dungeon.";
 RSRC STR_SPACE[] PROGMEM = " ";
