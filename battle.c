@@ -33,21 +33,21 @@ static enum battle_choices battle_choice;
 
 /* Show the available battle choices */
 static void show_battle_choices(void) {
-	lcd_write(STR_ATTACK, ATTACK_X, ATTACK_Y);
-	lcd_write(STR_RUN, RUN_X, RUN_Y);
+	lcd_write(STR_TO_RAM(STR_ATTACK), ATTACK_X, ATTACK_Y);
+	lcd_write(STR_TO_RAM(STR_RUN), RUN_X, RUN_Y);
 }
 
 /* Draw the cursor at the current battle choice */
 static void curs_battle_choice(void) {
-	lcd_write(STR_SPACE, CURS_ATTACK_X, CURS_ATTACK_Y);
-	lcd_write(STR_SPACE, CURS_RUN_X, CURS_RUN_Y);
+	lcd_write(STR_TO_RAM(STR_SPACE), CURS_ATTACK_X, CURS_ATTACK_Y);
+	lcd_write(STR_TO_RAM(STR_SPACE), CURS_RUN_X, CURS_RUN_Y);
 
 	switch (battle_choice) {
 	case ATTACK:
-		lcd_write(STR_CURS, CURS_ATTACK_X, CURS_ATTACK_Y);
+		lcd_write(STR_TO_RAM(STR_CURS), CURS_ATTACK_X, CURS_ATTACK_Y);
 		break;
 	case RUN:
-		lcd_write(STR_CURS, CURS_RUN_X, CURS_RUN_Y);
+		lcd_write(STR_TO_RAM(STR_CURS), CURS_RUN_X, CURS_RUN_Y);
 		break;
 	}
 }
@@ -61,9 +61,9 @@ static void next_battle_choice(void) {
 /* Show health of player and enemy */
 static void show_healths(struct player *pl, struct enemy *en) {
 	char msg[LCD_MAX_TEXT];
-	sprintf(msg, STR_PLAYER_HP, pl->hp);
+	sprintf(msg, STR_TO_RAM(STR_PLAYER_HP), pl->hp);
 	lcd_write(msg, PLAYER_HP_X, PLAYER_HP_Y);
-	sprintf(msg, STR_ENEMY_HP, en->name, en->hp);
+	sprintf(msg, STR_TO_RAM(STR_ENEMY_HP), en->name, en->hp);
 	lcd_write(msg, ENEMY_HP_X, ENEMY_HP_Y);
 }
 
@@ -73,9 +73,9 @@ static void enemy_attacks(struct player *pl, struct enemy *en) {
 	pl->hp -= dmg;
 	char msg[LCD_MAX_TEXT];
 	if (dmg == 0) {
-		sprintf(msg, STR_ENEMY_MISS, en->name);
+		sprintf(msg, STR_TO_RAM(STR_ENEMY_MISS), en->name);
 	} else {
-		sprintf(msg, STR_ENEMY_ATTACK, en->name, dmg);
+		sprintf(msg, STR_TO_RAM(STR_ENEMY_ATTACK), en->name, dmg);
 	}
 	game_text(msg);
 	delay(TEXT_DELAY);
@@ -87,9 +87,9 @@ static void player_attacks(struct player *pl, struct enemy *en) {
 	en->hp -= dmg;
 	char msg[LCD_MAX_TEXT];
 	if (dmg == 0) {
-		sprintf(msg, STR_PLAYER_MISS);
+		sprintf(msg, STR_TO_RAM(STR_PLAYER_MISS));
 	} else {
-		sprintf(msg, STR_PLAYER_ATTACK, dmg);
+		sprintf(msg, STR_TO_RAM(STR_PLAYER_ATTACK), dmg);
 	}
 	game_text(msg);
 	delay(TEXT_DELAY);
@@ -115,7 +115,7 @@ static void do_action(struct player *pl, struct enemy *en) {
 		if (rand() % (100 / escape_chance) == 0) {
 			pl->run = true;
 		} else {
-			game_text(STR_CANT_ESCAPE);
+			game_text(STR_TO_RAM(STR_CANT_ESCAPE));
 			delay(TEXT_DELAY);
 		}
 		break;
@@ -135,13 +135,13 @@ static void battle_screen(struct player *pl, struct enemy *en) {
 /* Player wins the battle */
 static void battle_win(struct player *pl, struct enemy *en) {
 	char msg[LCD_MAX_TEXT];
-	sprintf(msg, STR_BATTLE_WIN, en->name);
+	sprintf(msg, STR_TO_RAM(STR_BATTLE_WIN), en->name);
 	game_text(msg);
 	delay(TEXT_DELAY);
 
 	uint8_t xp = en->lvl * XP_GAIN;
 	pl->xp += xp;
-	sprintf(msg, STR_XP_GAIN, xp);
+	sprintf(msg, STR_TO_RAM(STR_XP_GAIN), xp);
 	game_text(msg);
 	delay(TEXT_DELAY);
 
@@ -151,18 +151,18 @@ static void battle_win(struct player *pl, struct enemy *en) {
 		}
 		pl->hp = MAX_HP;
 		pl->xp_next_lvl += XP_NEXT_INC;
-		game_text_anim(STR_LVL_GAIN);
+		game_text_anim(STR_TO_RAM(STR_LVL_GAIN));
 		delay(TEXT_DELAY);
 	}
 
 	lcd_clear();
-	sprintf(msg, STR_LVL, pl->lvl);
+	sprintf(msg, STR_TO_RAM(STR_LVL), pl->lvl);
 	lcd_write(msg, 0, 0);
-	sprintf(msg, STR_HP, pl->hp);
+	sprintf(msg, STR_TO_RAM(STR_HP), pl->hp);
 	lcd_write(msg, 0, 1);
-	sprintf(msg, STR_XP, pl->xp);
+	sprintf(msg, STR_TO_RAM(STR_XP), pl->xp);
 	lcd_write(msg, 0, 2);
-	sprintf(msg, STR_NEXT, pl->xp_next_lvl);
+	sprintf(msg, STR_TO_RAM(STR_NEXT), pl->xp_next_lvl);
 	lcd_write(msg, 0, 3);
 	while (get_user_input() != B_SELECT);
 }
@@ -189,12 +189,12 @@ static void battle(struct player *pl, struct enemy *en) {
 	}
 
 	if (pl->hp <= 0) {
-		game_text(STR_PLAYER_DEATH);
+		game_text(STR_TO_RAM(STR_PLAYER_DEATH));
 		delay(TEXT_DELAY);
 	} else if (en->hp <= 0) {
 		battle_win(pl, en);
 	} else if (pl->run) {
-		game_text(STR_ESCAPE);
+		game_text(STR_TO_RAM(STR_ESCAPE));
 		delay(TEXT_DELAY);
 	}
 }
@@ -206,7 +206,7 @@ void battle_enemies(struct player *pl, struct enemy *enemies[]) {
 	uint8_t i;
 	for (i = 0; i < MAX_ENEMIES_PER_ROOM; i++) {
 		if (enemies[i]->hp > 0) {
-			sprintf(msg, STR_ENEMY, enemies[i]->lvl, enemies[i]->name);
+			sprintf(msg, STR_TO_RAM(STR_ENEMY), enemies[i]->lvl, enemies[i]->name);
 			game_text_anim(msg);
 			delay(TEXT_DELAY);
 			battle(pl, enemies[i]);
@@ -219,7 +219,7 @@ void battle_enemy(struct player *pl, struct enemy *en) {
 	char msg[LCD_MAX_TEXT];
 	uint8_t i;
 	if (en->hp > 0) {
-		sprintf(msg, STR_ENEMY, en->lvl, en->name);
+		sprintf(msg, STR_TO_RAM(STR_ENEMY), en->lvl, en->name);
 		game_text_anim(msg);
 		delay(TEXT_DELAY);
 		battle(pl, en);

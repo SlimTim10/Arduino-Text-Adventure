@@ -35,6 +35,7 @@ struct enemy {
 	char *name;
 };
 
+void make_wall(uint8_t, uint8_t);
 void add_enemy(uint8_t, uint8_t, char *, int8_t, uint8_t);
 void set_player_location(uint8_t, uint8_t);
 void set_player_hp(int8_t);
