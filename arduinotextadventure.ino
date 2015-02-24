@@ -69,7 +69,7 @@ void setup(void) {
 	srand(millis());
 
 	setup_world();
-	setup_game();
+	game_init();
 	game_intro();
 }
 
@@ -91,8 +91,8 @@ void loop(void) {
 		lcd_write(STR_TO_RAM(STR_START), 20, 4);
 		while (get_user_input() != B_SELECT);
 
-		setup_game();
 		setup_world();
+		game_init();
 		game_intro();
 	}
 }
