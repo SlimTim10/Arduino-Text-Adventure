@@ -99,7 +99,8 @@ static void invalid_travel(void) {
 	delay(TEXT_DELAY);
 }
 
-static void add_enemy(uint8_t xloc, uint8_t yloc, char *name, int8_t hp, uint8_t lvl) {
+/* Add an enemy in room at [xloc,yloc] with name, HP, and level */
+void add_enemy(uint8_t xloc, uint8_t yloc, char *name, int8_t hp, uint8_t lvl) {
 	uint8_t i;
 	for (i = 0; i < MAX_ENEMIES_PER_ROOM; i++) {
 		if (game.room[xloc][yloc].enemies[i].hp == 0) {
@@ -109,6 +110,24 @@ static void add_enemy(uint8_t xloc, uint8_t yloc, char *name, int8_t hp, uint8_t
 			break;
 		}
 	}
+}
+
+/* Put the player in room [xloc,yloc] */
+void set_player_location(uint8_t xloc, uint8_t yloc) {
+	player.xloc = xloc;
+	player.yloc = yloc;
+	player.prev_xloc = player.xloc;
+	player.prev_yloc = player.yloc;
+}
+
+/* Set the player's HP */
+void set_player_hp(int8_t hp) {
+	player.hp  = hp;
+}
+
+/* Set the player's level */
+void set_player_level(uint8_t lvl) {
+	player.lvl = lvl;
 }
 
 /* Display text on the screen starting from the top */
@@ -128,15 +147,19 @@ void setup_game(void) {
 	game.room[0][0].text = STR_ROOM_00;
 	game.room[1][0].text = STR_ROOM_10;
 	game.room[2][0].text = STR_ROOM_20;
+	game.room[3][0].text = STR_ROOM_30;
 	game.room[0][1].text = STR_ROOM_01;
 	game.room[1][1].text = STR_ROOM_11;
 	game.room[2][1].text = STR_ROOM_21;
+	game.room[3][1].text = STR_ROOM_31;
 	game.room[0][2].text = STR_ROOM_02;
 	game.room[1][2].text = STR_ROOM_12;
 	game.room[2][2].text = STR_ROOM_22;
-
-	add_enemy(2, 1, STR_SNAIL, 3, 1);
-	add_enemy(2, 1, STR_RAT, 5, 1);
+	game.room[3][2].text = STR_ROOM_32;
+	game.room[0][3].text = STR_ROOM_03;
+	game.room[1][3].text = STR_ROOM_13;
+	game.room[2][3].text = STR_ROOM_23;
+	game.room[3][3].text = STR_ROOM_33;
 
 	player.xloc = 1;
 	player.yloc = 1;

@@ -5,7 +5,7 @@ typedef const PROGMEM char RSRC;
 /* General */
 RSRC STR_WELCOME[] = "Welcome to SlimQuest";
 RSRC STR_START[] = ">Start";
-RSRC STR_INTRO[] = "You are in a dungeon.";
+RSRC STR_INTRO[] = "You wake up in a dungeon.";
 RSRC STR_SPACE[] = " ";
 RSRC STR_CURS[] = ">";
 
@@ -18,15 +18,22 @@ RSRC STR_TRAVEL_SCREEN[] = "Where do you want to walk?";
 RSRC STR_INVALID_TRAVEL[] = "You can't go that way.";
 
 /* Map */
-RSRC STR_ROOM_00[] = "Northwest room.";
-RSRC STR_ROOM_10[] = "North room.";
-RSRC STR_ROOM_20[] = "Northeast room.";
-RSRC STR_ROOM_01[] = "West room.";
-RSRC STR_ROOM_11[] = "Middle room.";
-RSRC STR_ROOM_21[] = "East room.";
-RSRC STR_ROOM_02[] = "Southwest room.";
-RSRC STR_ROOM_12[] = "South room.";
-RSRC STR_ROOM_22[] = "Southeast room.";
+RSRC STR_ROOM_00[] = "Room [0,0].";
+RSRC STR_ROOM_10[] = "Room [1,0].";
+RSRC STR_ROOM_20[] = "Room [2,0].";
+RSRC STR_ROOM_30[] = "Room [3,0].";
+RSRC STR_ROOM_01[] = "Room [0,1].";
+RSRC STR_ROOM_11[] = "Room [1,1].";
+RSRC STR_ROOM_21[] = "Room [2,1].";
+RSRC STR_ROOM_31[] = "Room [3,1].";
+RSRC STR_ROOM_02[] = "Room [0,2].";
+RSRC STR_ROOM_12[] = "Room [1,2].";
+RSRC STR_ROOM_22[] = "Room [2,2].";
+RSRC STR_ROOM_32[] = "Room [3,2].";
+RSRC STR_ROOM_03[] = "Room [0,3].";
+RSRC STR_ROOM_13[] = "Room [1,3].";
+RSRC STR_ROOM_23[] = "Room [2,3].";
+RSRC STR_ROOM_33[] = "Room [3,3].";
 
 /* Battle */
 RSRC STR_ENEMY[] = "There's an angry level %d %s!";
@@ -48,7 +55,3 @@ RSRC STR_HP[] = "HP: %d";
 RSRC STR_XP[] = "XP: %d";
 RSRC STR_NEXT[] = "Next: %dXP";
 RSRC STR_PLAYER_DEATH[] = "You died.";
-
-/* Enemies */
-RSRC STR_SNAIL[] = "snail";
-RSRC STR_RAT[] = "rat";

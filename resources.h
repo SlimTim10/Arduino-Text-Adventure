@@ -22,12 +22,19 @@ extern const char STR_INVALID_TRAVEL[];
 extern const char STR_ROOM_00[];
 extern const char STR_ROOM_10[];
 extern const char STR_ROOM_20[];
+extern const char STR_ROOM_30[];
 extern const char STR_ROOM_01[];
 extern const char STR_ROOM_11[];
 extern const char STR_ROOM_21[];
+extern const char STR_ROOM_31[];
 extern const char STR_ROOM_02[];
 extern const char STR_ROOM_12[];
 extern const char STR_ROOM_22[];
+extern const char STR_ROOM_32[];
+extern const char STR_ROOM_03[];
+extern const char STR_ROOM_13[];
+extern const char STR_ROOM_23[];
+extern const char STR_ROOM_33[];
 
 /* Battle */
 extern const char STR_ENEMY[];
@@ -49,9 +56,5 @@ extern const char STR_HP[];
 extern const char STR_XP[];
 extern const char STR_NEXT[];
 extern const char STR_PLAYER_DEATH[];
-
-/* Enemies */
-extern const char STR_SNAIL[];
-extern const char STR_RAT[];
 
 #endif
