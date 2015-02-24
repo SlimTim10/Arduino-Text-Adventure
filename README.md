@@ -14,6 +14,8 @@ A text adventure game for the Arduino Uno.
 
 #### Map
 
+| Map |
+| --- | --- | --- | --- |
 | [0,0] | [1,0] | [2,0] | [3,0] |
 | [0,1] | [1,1] | [2,1] | [3,1] |
 | [0,2] | [1,2] | [2,2] | [3,2] |
@@ -56,7 +58,7 @@ To customize the game, edit the `setup_world()` function in `arduinotextadventur
 
 ## Notes
 
-The strings in the `resources` library are stored in flash memory due to RAM being only 2 kB on the Arduino Uno. The following macro is for using the strings
+The strings in the `resources` library are stored in flash memory due to RAM being only 2 kB on the Arduino Uno. The following macro is for using the strings.
 
 ```
 #define STR_TO_RAM(S)	(strcpy_P(str_buffer, S))
@@ -64,6 +66,6 @@ The strings in the `resources` library are stored in flash memory due to RAM bei
 
 For example: `game_text(STR_TO_RAM(STR_WELCOME));`
 
-For more information:
+For more information on using flash memory:
 * http://www.gammon.com.au/progmem
 * http://arduino.cc/en/Reference/PROGMEM
