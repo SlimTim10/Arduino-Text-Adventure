@@ -27,21 +27,21 @@ RSRC STR_ROOM_TEXT01[] PROGMEM = "It's hard to breathe in here.";
 RSRC STR_ROOM_TEXT02[] PROGMEM = "It's cold in here.";
 RSRC STR_ROOM_TEXT03[] PROGMEM = "You feel scared.";
 RSRC STR_ROOM_TEXT04[] PROGMEM = "It is very dark.";
-RSRC STR_ROOM_TEXT05[] PROGMEM = "It's wet in here.";
+RSRC STR_ROOM_TEXT05[] PROGMEM = "The floor is wet and slippery."
 RSRC STR_ROOM_TEXT06[] PROGMEM = "There's an odd green glow.";
-RSRC STR_ROOM_TEXT07[] PROGMEM = "There's a strange sound.";
+RSRC STR_ROOM_TEXT07[] PROGMEM = "There's a strange deep sound.";
 RSRC STR_ROOM_TEXT08[] PROGMEM = "You feel something watching you.";
-RSRC STR_ROOM_TEXT09[] PROGMEM = "You hear water.";
-RSRC STR_ROOM_TEXT10[] PROGMEM = "You hear footsteps.";
+RSRC STR_ROOM_TEXT09[] PROGMEM = "You hear water nearby.";
+RSRC STR_ROOM_TEXT10[] PROGMEM = "You hear footsteps behind you.";
 RSRC STR_ROOM_TEXT11[] PROGMEM = "You feel alone.";
 RSRC STR_ROOM_TEXT12[] PROGMEM = "You feel invigorated.";
 RSRC STR_ROOM_TEXT13[] PROGMEM = "Where's the way out?";
 RSRC STR_ROOM_TEXT14[] PROGMEM = "A mouse runs by your feet.";
-RSRC STR_ROOM_TEXT15[] PROGMEM = "There's a loud crash.";
+RSRC STR_ROOM_TEXT15[] PROGMEM = "There's a loud crash in the distance.";
 RSRC STR_ROOM_TEXT16[] PROGMEM = "You hear laughter in the distance.";
 RSRC STR_ROOM_TEXT17[] PROGMEM = "You hear chains clanging.";
 RSRC STR_ROOM_TEXT18[] PROGMEM = "The wind is moaning.";
-RSRC STR_ROOM_TEXT19[] PROGMEM = "You've lost your way.";
+RSRC STR_ROOM_TEXT19[] PROGMEM = "Where are you going?";
 RSRC  *STR_ROOM_TEXT[STR_ROOM_TEXT_NUM] PROGMEM = {
 	STR_ROOM_TEXT00,
 	STR_ROOM_TEXT01,
