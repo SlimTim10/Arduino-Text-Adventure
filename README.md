@@ -14,7 +14,7 @@ A text adventure game for the Arduino Uno.
 
 #### Map
 
-| Rooms | | | |
+| Rooms | Rooms | Rooms | Rooms |
 | --- | --- | --- | --- |
 | [0,0] | [1,0] | [2,0] | [3,0] |
 | [0,1] | [1,1] | [2,1] | [3,1] |
