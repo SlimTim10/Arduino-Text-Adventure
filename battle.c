@@ -120,7 +120,7 @@ static void do_action(struct player *pl, struct enemy *en) {
 		} else if (en->lvl == 3) {
 			escape_chance = 25;
 		} else {
-			escape_chance = 100;
+			escape_chance = 10;
 		}
 		if (rand() % (100 / escape_chance) == 0) {
 			pl->run = true;
