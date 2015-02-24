@@ -15,15 +15,21 @@ void setup_world(void) {
 
 	/* Make room [1,0] into a wall (player can't enter this room) */
 	make_wall(1, 0);
+	/* Make room [2,2] into a wall */
+	make_wall(2, 2);
+	/* Make room [3,2] into a wall */
+	make_wall(3, 2);
 
 	/* There can be at most 3 enemies in a room */
 	/* Add a level 1 snail to room [2,1] with 3 HP */
 	add_enemy(2, 1, "snail", 3, 1);
 	/* Add a level 1 rat to room [2,1] with 5 HP */
 	add_enemy(2, 1, "rat", 5, 1);
-
+	/* Add a level 4 Tim to room [2,3] with 20 HP */
 	add_enemy(2, 3, "Tim", 20, 4);
+	/* Add a level 5 Chris to room [2,3] with 30 HP */
 	add_enemy(2, 3, "Chris", 30, 5);
+	/* Add a level 10 David to room [3,3] with 20 HP */
 	add_enemy(3, 3, "David", 50, 10);
 
 	/* Start the player in room [0,0] */
