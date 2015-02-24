@@ -64,7 +64,7 @@ For example: a level 3 player attacking a level 4 enemy can do 10 to 20 damage. 
 
 ## Development
 
-To customize the game, edit the `setup_world()` function in `arduinotextadventure.ino`. You can make walls, add enemies, and set up the player (starting location, HP, and level).
+To customize the game, edit the `setup_world()` function in `arduinotextadventure.ino`. You can set the map dimensions, make walls, add enemies, and set up the player (starting location, HP, and level).
 
 ## Notes
 
