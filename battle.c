@@ -67,9 +67,19 @@ static void show_healths(struct player *pl, struct enemy *en) {
 	lcd_write(msg, ENEMY_HP_X, ENEMY_HP_Y);
 }
 
+/* Given attacker level and opponent level, calculate damage made by attacker */
+static uint8_t calc_dmg(uint8_t attacker_lvl, uint8_t opponent_lvl) {
+	int8_t diff = max(0, (int8_t) (opponent_lvl - attacker_lvl));
+	uint8_t range = 10;
+	int8_t max_dmg = max(0, (int8_t) ((attacker_lvl * 10) - (diff * 10)));
+	int8_t min_dmg = max(0, (int8_t) (max_dmg - range));
+	uint8_t dmg = min_dmg + (rand() % range);
+	return dmg;
+}
+
 /* Enemy attacks the player */
 static void enemy_attacks(struct player *pl, struct enemy *en) {
-	uint8_t dmg = rand() % (en->lvl * 10);
+	uint8_t dmg = calc_dmg(en->lvl, pl->lvl);
 	pl->hp -= dmg;
 	char msg[LCD_MAX_TEXT];
 	if (dmg == 0) {
@@ -83,7 +93,7 @@ static void enemy_attacks(struct player *pl, struct enemy *en) {
 
 /* Player attacks the enemy */
 static void player_attacks(struct player *pl, struct enemy *en) {
-	uint8_t dmg = rand() % (pl->lvl * 10);
+	uint8_t dmg = calc_dmg(pl->lvl, en->lvl);
 	en->hp -= dmg;
 	char msg[LCD_MAX_TEXT];
 	if (dmg == 0) {

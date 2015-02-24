@@ -80,4 +80,15 @@ void loop(void) {
 		button2_wait();
 		break;
 	}
+
+	if (is_player_dead()) {
+		game_text(STR_TO_RAM(STR_WELCOME));
+
+		lcd_write(STR_TO_RAM(STR_START), 20, 4);
+		while (get_user_input() != B_SELECT);
+
+		setup_game();
+		setup_world();
+		game_intro();
+	}
 }

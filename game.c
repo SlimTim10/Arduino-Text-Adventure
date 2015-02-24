@@ -93,7 +93,7 @@ static void show_room_text(void) {
 	char loc[LCD_MAX_TEXT];
 	sprintf(loc, "[%d,%d]", player.xloc, player.yloc);
 	lcd_clear();
-	lcd_write_wrap_anim(loc, 0, 0);
+	lcd_write_wrap(loc, 0, 0);
 	lcd_write_wrap_anim(STR_TO_RAM(game.room[player.xloc][player.yloc].text), 0, 1);
 	delay(TEXT_DELAY);
 }
@@ -120,6 +120,11 @@ void add_enemy(uint8_t xloc, uint8_t yloc, char *name, int8_t hp, uint8_t lvl) {
 			break;
 		}
 	}
+}
+
+/* Has the player died? */
+boolean is_player_dead(void) {
+	return (player.hp <= 0);
 }
 
 /* Put the player in room [xloc,yloc] */
@@ -236,6 +241,9 @@ void travel(void) {
 		uint8_t i;
 		for (i = 0; i < MAX_ENEMIES_PER_ROOM && !player.run; i++) {
 			battle_enemy(&player, &game.room[player.xloc][player.yloc].enemies[i]);
+			if (player.hp <= 0) {
+				return;
+			}
 		}
 		if (player.run) {
 			player.xloc = player.prev_xloc;
