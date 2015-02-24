@@ -3,6 +3,10 @@
 
 #include <Arduino.h>
 
+extern char str_buffer[];
+
+#define STR_TO_RAM(S)	(strcpy_P(str_buffer, S))
+
 /* General */
 extern const char STR_WELCOME[];
 extern const char STR_START[];
@@ -19,15 +23,9 @@ extern const char STR_TRAVEL_SCREEN[];
 extern const char STR_INVALID_TRAVEL[];
 
 /* Map */
-extern const char STR_ROOM_00[];
-extern const char STR_ROOM_10[];
-extern const char STR_ROOM_20[];
-extern const char STR_ROOM_01[];
-extern const char STR_ROOM_11[];
-extern const char STR_ROOM_21[];
-extern const char STR_ROOM_02[];
-extern const char STR_ROOM_12[];
-extern const char STR_ROOM_22[];
+extern const char STR_ROOM_LOC[];
+extern const char *STR_ROOM_TEXT[];
+enum { STR_ROOM_TEXT_NUM = 20 };
 
 /* Battle */
 extern const char STR_ENEMY[];
@@ -49,9 +47,5 @@ extern const char STR_HP[];
 extern const char STR_XP[];
 extern const char STR_NEXT[];
 extern const char STR_PLAYER_DEATH[];
-
-/* Enemies */
-extern const char STR_SNAIL[];
-extern const char STR_RAT[];
 
 #endif

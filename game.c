@@ -39,6 +39,7 @@ static struct player player;
 
 static struct room {
 	char *text;
+	boolean iswall;
 	struct enemy enemies[MAX_ENEMIES_PER_ROOM];
 };
 
@@ -50,38 +51,38 @@ static enum direction_choices direction_choice;
 
 /* Show the available direction choices */
 static void show_dir_choices(void) {
-	lcd_write(STR_NORTH, NORTH_X, NORTH_Y);
-	lcd_write(STR_EAST, EAST_X, EAST_Y);
-	lcd_write(STR_SOUTH, SOUTH_X, SOUTH_Y);
-	lcd_write(STR_WEST, WEST_X, WEST_Y);
+	lcd_write(STR_TO_RAM(STR_NORTH), NORTH_X, NORTH_Y);
+	lcd_write(STR_TO_RAM(STR_EAST), EAST_X, EAST_Y);
+	lcd_write(STR_TO_RAM(STR_SOUTH), SOUTH_X, SOUTH_Y);
+	lcd_write(STR_TO_RAM(STR_WEST), WEST_X, WEST_Y);
 }
 
 /* Draw the cursor at the current direction choice */
 static void curs_dir_choice(void) {
-	lcd_write(STR_SPACE, CURS_NORTH_X, CURS_NORTH_Y);
-	lcd_write(STR_SPACE, CURS_EAST_X, CURS_EAST_Y);
-	lcd_write(STR_SPACE, CURS_SOUTH_X, CURS_SOUTH_Y);
-	lcd_write(STR_SPACE, CURS_WEST_X, CURS_WEST_Y);
+	lcd_write(STR_TO_RAM(STR_SPACE), CURS_NORTH_X, CURS_NORTH_Y);
+	lcd_write(STR_TO_RAM(STR_SPACE), CURS_EAST_X, CURS_EAST_Y);
+	lcd_write(STR_TO_RAM(STR_SPACE), CURS_SOUTH_X, CURS_SOUTH_Y);
+	lcd_write(STR_TO_RAM(STR_SPACE), CURS_WEST_X, CURS_WEST_Y);
 
 	switch (direction_choice) {
 	case NORTH:
-		lcd_write(STR_CURS, CURS_NORTH_X, CURS_NORTH_Y);
+		lcd_write(STR_TO_RAM(STR_CURS), CURS_NORTH_X, CURS_NORTH_Y);
 		break;
 	case EAST:
-		lcd_write(STR_CURS, CURS_EAST_X, CURS_EAST_Y);
+		lcd_write(STR_TO_RAM(STR_CURS), CURS_EAST_X, CURS_EAST_Y);
 		break;
 	case SOUTH:
-		lcd_write(STR_CURS, CURS_SOUTH_X, CURS_SOUTH_Y);
+		lcd_write(STR_TO_RAM(STR_CURS), CURS_SOUTH_X, CURS_SOUTH_Y);
 		break;
 	case WEST:
-		lcd_write(STR_CURS, CURS_WEST_X, CURS_WEST_Y);
+		lcd_write(STR_TO_RAM(STR_CURS), CURS_WEST_X, CURS_WEST_Y);
 		break;
 	}
 }
 
 /* Display message asking which direction to go and show options */
 static void travel_screen(void) {
-	game_text(STR_TRAVEL_SCREEN);
+	game_text(STR_TO_RAM(STR_TRAVEL_SCREEN));
 	show_dir_choices();
 	direction_choice = NORTH;
 	curs_dir_choice();
@@ -89,17 +90,27 @@ static void travel_screen(void) {
 
 /* Display text for the current room */
 static void show_room_text(void) {
-	game_text_anim(game.room[player.xloc][player.yloc].text);
+	char loc[LCD_MAX_TEXT];
+	sprintf(loc, "[%d,%d]", player.xloc, player.yloc);
+	lcd_clear();
+	lcd_write_wrap_anim(loc, 0, 0);
+	lcd_write_wrap_anim(STR_TO_RAM(game.room[player.xloc][player.yloc].text), 0, 1);
 	delay(TEXT_DELAY);
 }
 
 /* The player cannot move in the current chosen direction */
 static void invalid_travel(void) {
-	game_text(STR_INVALID_TRAVEL);
+	game_text(STR_TO_RAM(STR_INVALID_TRAVEL));
 	delay(TEXT_DELAY);
 }
 
-static void add_enemy(uint8_t xloc, uint8_t yloc, char *name, int8_t hp, uint8_t lvl) {
+/* Make a room into a wall */
+void make_wall(uint8_t xloc, uint8_t yloc) {
+	game.room[xloc][yloc].iswall = true;
+}
+
+/* Add an enemy in room at [xloc,yloc] with name, HP, and level */
+void add_enemy(uint8_t xloc, uint8_t yloc, char *name, int8_t hp, uint8_t lvl) {
 	uint8_t i;
 	for (i = 0; i < MAX_ENEMIES_PER_ROOM; i++) {
 		if (game.room[xloc][yloc].enemies[i].hp == 0) {
@@ -109,6 +120,24 @@ static void add_enemy(uint8_t xloc, uint8_t yloc, char *name, int8_t hp, uint8_t
 			break;
 		}
 	}
+}
+
+/* Put the player in room [xloc,yloc] */
+void set_player_location(uint8_t xloc, uint8_t yloc) {
+	player.xloc = xloc;
+	player.yloc = yloc;
+	player.prev_xloc = player.xloc;
+	player.prev_yloc = player.yloc;
+}
+
+/* Set the player's HP */
+void set_player_hp(int8_t hp) {
+	player.hp  = hp;
+}
+
+/* Set the player's level */
+void set_player_level(uint8_t lvl) {
+	player.lvl = lvl;
 }
 
 /* Display text on the screen starting from the top */
@@ -125,18 +154,14 @@ void game_text_anim(char const *str) {
 
 /* Initialize the game settings */
 void setup_game(void) {
-	game.room[0][0].text = STR_ROOM_00;
-	game.room[1][0].text = STR_ROOM_10;
-	game.room[2][0].text = STR_ROOM_20;
-	game.room[0][1].text = STR_ROOM_01;
-	game.room[1][1].text = STR_ROOM_11;
-	game.room[2][1].text = STR_ROOM_21;
-	game.room[0][2].text = STR_ROOM_02;
-	game.room[1][2].text = STR_ROOM_12;
-	game.room[2][2].text = STR_ROOM_22;
-
-	add_enemy(2, 1, STR_SNAIL, 3, 1);
-	add_enemy(2, 1, STR_RAT, 5, 1);
+	uint8_t x, y;
+	char text[LCD_MAX_TEXT];
+	for (y = 0; y < MAP_HEIGHT; y++) {
+		for (x = 0; x < MAP_WIDTH; x++) {
+			game.room[x][y].text = pgm_read_word(&STR_ROOM_TEXT[rand() % STR_ROOM_TEXT_NUM]);
+			game.room[x][y].iswall = false;
+		}
+	}
 
 	player.xloc = 1;
 	player.yloc = 1;
@@ -151,14 +176,7 @@ void setup_game(void) {
 
 /* Intro for the game */
 void game_intro(void) {
-	game_text(STR_WELCOME);
-	lcd_write(STR_START, 20, 4);
-
-	while (get_user_input() != B_SELECT);
-
-	srand(millis());
-
-	game_text_anim(STR_INTRO);
+	game_text_anim(STR_TO_RAM(STR_INTRO));
 	delay(TEXT_DELAY);
 
 	show_room_text();
@@ -204,6 +222,12 @@ void travel(void) {
 		}
 		player.xloc--;
 		break;
+	}
+
+	if (game.room[player.xloc][player.yloc].iswall) {
+		valid = false;
+		player.xloc = player.prev_xloc;
+		player.yloc = player.prev_yloc;
 	}
 
 	if (valid) {

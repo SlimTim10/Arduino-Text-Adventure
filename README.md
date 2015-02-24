@@ -32,3 +32,7 @@ A text adventure game for the Arduino Uno.
 | Arduino Uno | Potentiometer |
 | ---: | :--- |
 | Analog 0 | Potentiometer |
+
+## Development
+
+To customize the game, edit the setup_world() function in arduinotextadventure.ino.
