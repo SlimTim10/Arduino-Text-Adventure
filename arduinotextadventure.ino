@@ -7,7 +7,7 @@
 
 /* Edit this function to customize the game */
 void setup_world(void) {
-	/* Set map dimensions */
+	/* Set map dimensions (maximum 8 by 8) */
 	set_map_width(4);
 	set_map_height(4);
 
