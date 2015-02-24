@@ -63,8 +63,11 @@ For example: a level 3 player attacking a level 4 enemy can do 10 to 20 damage. 
 To customize the game, edit the `setup_world()` function in `arduinotextadventure.ino`.
 
 * Set the map dimensions (maximum 8 by 8)
-  * `set_map_width(4);`
-  * `set_map_height(4);`
+
+```C
+set_map_width(4);
+set_map_height(4);
+```
 
 * Make walls (rooms that the player can't enter)
   * Make room [1,0] into a wall
