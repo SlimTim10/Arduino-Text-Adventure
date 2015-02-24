@@ -68,13 +68,11 @@ To customize the game, edit the `setup_world()` function in `arduinotextadventur
 
 * Make walls (rooms that the player can't enter)
   * Make room [1,0] into a wall
-`make_wall(1, 0);`
+    * `make_wall(1, 0);`
   * Make room [2,2] into a wall
-`make_wall(2, 2);`
+    * `make_wall(2, 2);`
   * Make room [3,2] into a wall
-```
-make_wall(3, 2);
-```
+    * make_wall(3, 2);
 
 * Add enemies (there can be at most 3 enemies in a room)
   * Add a level 1 snail to room [2,1] with 3 HP
