@@ -155,10 +155,8 @@ static void battle_win(struct player *pl, struct enemy *en) {
 	game_text(msg);
 	delay(TEXT_DELAY);
 
-	if (pl->xp >= pl->xp_next_lvl) {
-		if (pl->lvl < MAX_LVL) {
-			pl->lvl++;
-		}
+	if (pl->xp >= pl->xp_next_lvl && pl->lvl < MAX_LVL) {
+		pl->lvl++;
 		pl->hp = MAX_HP;
 		pl->xp_next_lvl += XP_NEXT_INC;
 		game_text_anim(STR_TO_RAM(STR_LVL_GAIN));
