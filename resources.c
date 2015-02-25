@@ -11,6 +11,7 @@ RSRC STR_START[] PROGMEM = ">Start";
 RSRC STR_INTRO[] PROGMEM = "You wake up in a dungeon.";
 RSRC STR_SPACE[] PROGMEM = " ";
 RSRC STR_CURS[] PROGMEM = ">";
+RSRC STR_WIN[] PROGMEM = "You win!";
 
 /* Travel */
 RSRC STR_NORTH[] PROGMEM = "North";
@@ -85,3 +86,4 @@ RSRC STR_HP[] PROGMEM = "HP: %d";
 RSRC STR_XP[] PROGMEM = "XP: %d";
 RSRC STR_NEXT[] PROGMEM = "Next: %dXP";
 RSRC STR_PLAYER_DEATH[] PROGMEM = "You died.";
+RSRC STR_OK[] PROGMEM = "OK";

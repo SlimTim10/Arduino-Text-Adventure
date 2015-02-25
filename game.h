@@ -13,7 +13,7 @@ enum game_constants {
 	MAX_ENEMIES_PER_ROOM = 3,
 	MAX_HP = 100,
 	MAX_LVL = 10,
-	XP_NEXT_INC = 20,			/* XP to next level increase */
+	XP_LVL2 = 20,				/* Player needs this XP to reach level 2 */
 	XP_GAIN = 10,				/* Multiply enemy level by this for player XP gain */
 };
 
@@ -43,10 +43,12 @@ boolean is_player_dead(void);
 void set_player_location(uint8_t, uint8_t);
 void set_player_hp(int8_t);
 void set_player_level(uint8_t);
+void set_goal(uint8_t, uint8_t);
 void game_text(char const *);
 void game_text_anim(char const *);
 void game_init(void);
 void game_intro(void);
+boolean game_won(void);
 void next_dir_choice(void);
 void travel(void);
 

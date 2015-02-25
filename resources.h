@@ -13,6 +13,7 @@ extern const char STR_START[];
 extern const char STR_INTRO[];
 extern const char STR_SPACE[];
 extern const char STR_CURS[];
+extern const char STR_WIN[];
 
 /* Travel */
 extern const char STR_NORTH[];
@@ -47,5 +48,6 @@ extern const char STR_HP[];
 extern const char STR_XP[];
 extern const char STR_NEXT[];
 extern const char STR_PLAYER_DEATH[];
+extern const char STR_OK[];
 
 #endif

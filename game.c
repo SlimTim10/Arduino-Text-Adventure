@@ -44,9 +44,11 @@ static struct room {
 };
 
 static struct game {
-	struct room room[MAX_MAP_WIDTH][MAX_MAP_HEIGHT];
 	uint8_t map_width;
 	uint8_t map_height;
+	uint8_t xgoal;
+	uint8_t ygoal;
+	struct room room[MAX_MAP_WIDTH][MAX_MAP_HEIGHT];
 } game;
 
 static enum direction_choices direction_choice;
@@ -157,6 +159,12 @@ void set_player_level(uint8_t lvl) {
 	player.lvl = lvl;
 }
 
+/* Set the goal location */
+void set_goal(uint8_t x, uint8_t y) {
+	game.xgoal = x;
+	game.ygoal = y;
+}
+
 /* Display text on the screen starting from the top */
 void game_text(char const *str) {
 	lcd_clear();
@@ -180,7 +188,7 @@ void game_init(void) {
 	}
 
 	player.run = false;
-	player.xp_next_lvl = XP_NEXT_INC;
+	player.xp_next_lvl = XP_LVL2;
 }
 
 /* Intro for the game */
@@ -190,6 +198,26 @@ void game_intro(void) {
 
 	show_room_text();
 	travel_screen();
+}
+
+/* Check if the player has won and display information if so */
+boolean game_won(void) {
+	if (player.xloc == game.xgoal && player.yloc == game.ygoal) {
+		char msg[LCD_MAX_TEXT];
+		lcd_clear();
+		lcd_write(STR_TO_RAM(STR_WIN), 0, 0);
+		sprintf(msg, STR_TO_RAM(STR_LVL), player.lvl);
+		lcd_write(msg, 0, 2);
+		sprintf(msg, STR_TO_RAM(STR_HP), player.hp);
+		lcd_write(msg, 0, 3);
+		sprintf(msg, STR_TO_RAM(STR_XP), player.xp);
+		lcd_write(msg, 0, 4);
+		sprintf(msg, STR_TO_RAM(STR_NEXT), player.xp_next_lvl);
+		lcd_write(msg, 0, 5);
+		while (get_user_input() != B_SELECT);
+		return true;
+	}
+	return false;
 }
 
 /* Move the cursor to the next direction option */
@@ -248,6 +276,9 @@ void travel(void) {
 			if (player.hp <= 0) {
 				return;
 			}
+		}
+		if (game_won()) {
+			return;
 		}
 		if (player.run) {
 			player.xloc = player.prev_xloc;

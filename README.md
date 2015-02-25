@@ -2,7 +2,7 @@
 
 ## Description
 
-A text adventure game for the Arduino Uno.
+A text adventure game for the Arduino Uno. The goal is to reach a specific room in the map.
 
 #### Controls
 
@@ -35,7 +35,7 @@ Examples:
 * A level 3 player attacking a level 3-or-below enemy can do 20 to 30 damage.
 * A level 3 player attacking a level 4 enemy can do 10 to 20 damage. The enemy can do 30 to 40 damage.
 
-When a battle is won, the player gains XP (experience) equal to `enemy's level * 10`. The player's level increases when their XP reaches a certain number (20 for level 1 -> level 2, 40 for level 2 -> level 3, 60 for level 3 -> level 4, ...). The maximum level is 10 (for enemies too).
+When a battle is won, the player gains XP (experience) equal to `enemy's level * 10`. The player becomes level 2 when their XP reaches 20. For each subsequent level, the required XP increases by `player's level * 10 * 2`. The maximum level is 10 (for enemies too).
 
 ## Hardware
 
@@ -68,7 +68,7 @@ When a battle is won, the player gains XP (experience) equal to `enemy's level *
 
 ## Development
 
-To customize the game, edit the `setup_world()` function in `arduinotextadventure.ino`. You can set the map dimensions, make walls, add enemies, and set up the player.
+To customize the game, edit the `setup_world()` function in `arduinotextadventure.ino`. You can set the map dimensions, set the goal location, make walls, add enemies, and set up the player.
 
 Example:
 
@@ -77,6 +77,9 @@ void setup_world(void) {
 	/* Set map dimensions (maximum 8 by 8) */
 	set_map_width(4);
 	set_map_height(4);
+
+	/* Set the goal at [3,3] */
+	set_goal(3, 3);
 
 	/* Map */
 	/* [0,0] [1,0] [2,0] [3,0] */
