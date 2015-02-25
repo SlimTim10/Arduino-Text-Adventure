@@ -2,7 +2,7 @@
 
 ## Description
 
-A text adventure game for the Arduino Uno.
+A text adventure game for the Arduino Uno. The goal is to reach a specific room in the map.
 
 #### Controls
 
@@ -68,7 +68,7 @@ When a battle is won, the player gains XP (experience) equal to `enemy's level *
 
 ## Development
 
-To customize the game, edit the `setup_world()` function in `arduinotextadventure.ino`. You can set the map dimensions, make walls, add enemies, and set up the player.
+To customize the game, edit the `setup_world()` function in `arduinotextadventure.ino`. You can set the map dimensions, set the goal location, make walls, add enemies, and set up the player.
 
 Example:
 
@@ -77,6 +77,9 @@ void setup_world(void) {
 	/* Set map dimensions (maximum 8 by 8) */
 	set_map_width(4);
 	set_map_height(4);
+
+	/* Set the goal at [3,3] */
+	set_goal(3, 3);
 
 	/* Map */
 	/* [0,0] [1,0] [2,0] [3,0] */

@@ -13,6 +13,7 @@ extern const char STR_START[];
 extern const char STR_INTRO[];
 extern const char STR_SPACE[];
 extern const char STR_CURS[];
+extern const char STR_WIN[];
 
 /* Travel */
 extern const char STR_NORTH[];

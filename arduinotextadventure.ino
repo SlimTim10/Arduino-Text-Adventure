@@ -11,6 +11,9 @@ void setup_world(void) {
 	set_map_width(4);
 	set_map_height(4);
 
+	/* Set the goal at [3,3] */
+	set_goal(3, 3);
+
 	/* Map */
 	/* [0,0] [1,0] [2,0] [3,0] */
 	/* [0,1] [1,1] [2,1] [3,1]  */
@@ -30,11 +33,11 @@ void setup_world(void) {
 	/* Add a level 1 rat to room [2,1] with 5 HP */
 	add_enemy(2, 1, "rat", 5, 1);
 	/* Add a level 4 Tim to room [2,3] with 20 HP */
-	add_enemy(2, 3, "Tim", 20, 4);
+	add_enemy(2, 3, "Tim", 20, 2);
 	/* Add a level 5 Chris to room [2,3] with 30 HP */
-	add_enemy(2, 3, "Chris", 30, 5);
-	/* Add a level 10 David to room [3,3] with 20 HP */
-	add_enemy(3, 3, "David", 50, 10);
+	add_enemy(2, 3, "Chris", 30, 3);
+	/* Add a level 10 David to room [3,3] with 50 HP */
+	add_enemy(3, 3, "David", 50, 4);
 
 	/* Start the player in room [0,0] */
 	set_player_location(0, 0);
@@ -95,4 +98,15 @@ void loop(void) {
 		game_init();
 		game_intro();
 	}
+
+	if (game_won()) {
+		game_text(STR_TO_RAM(STR_WELCOME));
+
+		lcd_write(STR_TO_RAM(STR_START), 20, 4);
+		while (get_user_input() != B_SELECT);
+
+		setup_world();
+		game_init();
+		game_intro();
+	}		
 }
