@@ -25,9 +25,15 @@ The map width and height can be customized (maximum 8 by 8). The text that accom
 
 #### Battle
 
-The damage range when attacking is from `(attacker's level * 10) - ((attacker's level - opponent's level) * 10)` to `(attacker's level * 10) - ((attacker's level - opponent's level) * 10) + 10`. An attack of 0 damage is a miss. Damage cannot be negative.
+The damage range when attacking is from `(attacker's level * 10) - ((attacker's level - opponent's level) * 10)` to `(attacker's level * 10) - ((attacker's level - opponent's level) * 10) + 10`. In other words, the damage range is from `(attacker's level - 10) * 10` to `attacker's level * 10` minus 10 for every level the opponent is higher than the attacker.
 
-For example: a level 3 player attacking a level 4 enemy can do 10 to 20 damage. A level 3 player attacking a level 3-or-below enemy can do 20 to 30 damage.
+An attack of 0 damage is a miss. Damage cannot be negative.
+
+Examples:
+
+* A level 1 player and a level 1 enemy can do 0 to 10 damage to each other.
+* A level 3 player attacking a level 3-or-below enemy can do 20 to 30 damage.
+* A level 3 player attacking a level 4 enemy can do 10 to 20 damage. The enemy can do 30 to 40 damage.
 
 ## Hardware
 
