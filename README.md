@@ -35,6 +35,8 @@ Examples:
 * A level 3 player attacking a level 3-or-below enemy can do 20 to 30 damage.
 * A level 3 player attacking a level 4 enemy can do 10 to 20 damage. The enemy can do 30 to 40 damage.
 
+When a battle is won, the player gains XP (experience) equal to `enemy's level * 10`. The player's level increases when their XP reaches a certain number (20 for level 1 -> level 2, 40 for level 2 -> level 3, 60 for level 3 -> level 4, ...). The maximum level is 10 (for enemies too).
+
 ## Hardware
 
 - [Arduino Uno](http://arduino.cc/en/Main/arduinoBoardUno)
