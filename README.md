@@ -8,7 +8,7 @@ A text adventure game for the Arduino Uno.
 
 | Input | Function |
 | :--- | :--- |
-| Button 1 | Change selection |
+| Button 1 | Move cursor |
 | Button 2 | Make selection |
 | Potentiometer | Change LCD contrast (only works while waiting for button press) |
 
