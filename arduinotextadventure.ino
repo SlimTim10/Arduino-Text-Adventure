@@ -32,6 +32,8 @@ void setup_world(void) {
 	add_enemy(2, 1, "snail", 3, 1);
 	/* Add a level 1 rat to room [2,1] with 5 HP */
 	add_enemy(2, 1, "rat", 5, 1);
+	/* Add a level 3 bee to room [3,0] with 5 HP */
+	add_enemy(3, 0, "bee", 5, 3);
 	/* Add a level 4 Tim to room [2,3] with 20 HP */
 	add_enemy(2, 3, "Tim", 20, 2);
 	/* Add a level 5 Chris to room [2,3] with 30 HP */
