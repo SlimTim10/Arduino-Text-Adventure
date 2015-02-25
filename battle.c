@@ -20,6 +20,8 @@ enum text_loc {
 	PLAYER_HP_Y = 0,
 	ENEMY_HP_X = 0,
 	ENEMY_HP_Y = 1,
+	OK_X = 36,
+	OK_Y = 5,
 };
 
 enum curs_loc {
@@ -27,6 +29,8 @@ enum curs_loc {
 	CURS_ATTACK_Y = ATTACK_Y,
 	CURS_RUN_X = RUN_X - 6,
 	CURS_RUN_Y = RUN_Y,
+	CURS_OK_X = OK_X - 6,
+	CURS_OK_Y = OK_Y,
 };
 
 static enum battle_choices battle_choice;
@@ -158,7 +162,7 @@ static void battle_win(struct player *pl, struct enemy *en) {
 	if (pl->xp >= pl->xp_next_lvl && pl->lvl < MAX_LVL) {
 		pl->lvl++;
 		pl->hp = MAX_HP;
-		pl->xp_next_lvl += XP_NEXT_INC;
+		pl->xp_next_lvl += pl->lvl * XP_GAIN * 2;
 		game_text_anim(STR_TO_RAM(STR_LVL_GAIN));
 		delay(TEXT_DELAY);
 	}
@@ -172,6 +176,8 @@ static void battle_win(struct player *pl, struct enemy *en) {
 	lcd_write(msg, 0, 2);
 	sprintf(msg, STR_TO_RAM(STR_NEXT), pl->xp_next_lvl);
 	lcd_write(msg, 0, 3);
+	lcd_write(STR_TO_RAM(STR_OK), OK_X, OK_Y);
+	lcd_write(STR_TO_RAM(STR_CURS), CURS_OK_X, CURS_OK_Y);
 	while (get_user_input() != B_SELECT);
 }
 

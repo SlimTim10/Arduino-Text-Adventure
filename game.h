@@ -13,7 +13,7 @@ enum game_constants {
 	MAX_ENEMIES_PER_ROOM = 3,
 	MAX_HP = 100,
 	MAX_LVL = 10,
-	XP_NEXT_INC = 20,			/* XP to next level increase */
+	XP_LVL2 = 20,				/* Player needs this XP to reach level 2 */
 	XP_GAIN = 10,				/* Multiply enemy level by this for player XP gain */
 };
 

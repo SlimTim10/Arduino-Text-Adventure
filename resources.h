@@ -48,5 +48,6 @@ extern const char STR_HP[];
 extern const char STR_XP[];
 extern const char STR_NEXT[];
 extern const char STR_PLAYER_DEATH[];
+extern const char STR_OK[];
 
 #endif

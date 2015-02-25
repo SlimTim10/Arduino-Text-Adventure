@@ -188,7 +188,7 @@ void game_init(void) {
 	}
 
 	player.run = false;
-	player.xp_next_lvl = XP_NEXT_INC;
+	player.xp_next_lvl = XP_LVL2;
 }
 
 /* Intro for the game */
