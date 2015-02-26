@@ -3,6 +3,10 @@
 
 #include <Arduino.h>
 
+#ifdef __cplusplus
+extern "C" {	/* Use C library with Arduino */
+#endif
+
 extern char str_buffer[];
 
 #define STR_TO_RAM(S)	(strcpy_P(str_buffer, S))
@@ -25,8 +29,8 @@ extern const char STR_INVALID_TRAVEL[];
 
 /* Map */
 extern const char STR_ROOM_LOC[];
-extern const char *STR_ROOM_TEXT[];
 enum { STR_ROOM_TEXT_NUM = 20 };
+extern PGM_P const STR_ROOM_TEXT[STR_ROOM_TEXT_NUM];
 
 /* Battle */
 extern const char STR_ENEMY[];
@@ -49,5 +53,9 @@ extern const char STR_XP[];
 extern const char STR_NEXT[];
 extern const char STR_PLAYER_DEATH[];
 extern const char STR_OK[];
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

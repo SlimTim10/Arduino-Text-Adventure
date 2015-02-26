@@ -43,7 +43,7 @@ RSRC STR_ROOM_TEXT16[] PROGMEM = "You hear laughter in the distance.";
 RSRC STR_ROOM_TEXT17[] PROGMEM = "You hear chains clanging.";
 RSRC STR_ROOM_TEXT18[] PROGMEM = "The wind is moaning.";
 RSRC STR_ROOM_TEXT19[] PROGMEM = "Where are you going?";
-RSRC  *STR_ROOM_TEXT[STR_ROOM_TEXT_NUM] PROGMEM = {
+PGM_P const STR_ROOM_TEXT[STR_ROOM_TEXT_NUM] PROGMEM = {
 	STR_ROOM_TEXT00,
 	STR_ROOM_TEXT01,
 	STR_ROOM_TEXT02,
