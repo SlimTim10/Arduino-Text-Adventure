@@ -6,6 +6,8 @@
 #include "battle.h"
 
 enum text_loc {
+	STATUS_X = 30,
+	STATUS_Y = 2,
 	NORTH_X = 30,
 	NORTH_Y = 3,
 	EAST_X = 60,
@@ -16,7 +18,30 @@ enum text_loc {
 	WEST_Y = 4,
 };
 
+enum map_text_loc {
+	MAP_ROOM00_X = 0,
+	MAP_ROOM00_Y = 3,
+	MAP_ROOM10_X = 33,
+	MAP_ROOM10_Y = 3,
+	MAP_ROOM20_X = 66,
+	MAP_ROOM20_Y = 3,
+	MAP_ROOM01_X = 0,
+	MAP_ROOM01_Y = 4,
+	MAP_ROOM_LOC_X = 27,
+	MAP_ROOM_LOC_Y = 4,
+	MAP_ROOM21_X = 66,
+	MAP_ROOM21_Y = 4,
+	MAP_ROOM02_X = 0,
+	MAP_ROOM02_Y = 5,
+	MAP_ROOM12_X = 33,
+	MAP_ROOM12_Y = 5,
+	MAP_ROOM22_X = 66,
+	MAP_ROOM22_Y = 5,
+};
+
 enum curs_loc {
+	CURS_STATUS_X = STATUS_X - 6,
+	CURS_STATUS_Y = STATUS_Y,
 	CURS_NORTH_X = NORTH_X - 6,
 	CURS_NORTH_Y = NORTH_Y,
 	CURS_EAST_X = EAST_X - 6,
@@ -27,12 +52,13 @@ enum curs_loc {
 	CURS_WEST_Y = WEST_Y,
 };
 
-enum direction_choices {
+enum travel_choices {
+	STATUS,
 	NORTH,
 	EAST,
 	SOUTH,
 	WEST,
-	MAX_DIRECTION_CHOICE,
+	MAX_TRAVEL_CHOICE,
 };
 
 static struct player player;
@@ -51,24 +77,29 @@ static struct game {
 	struct room room[MAX_MAP_WIDTH][MAX_MAP_HEIGHT];
 } game;
 
-static enum direction_choices direction_choice;
+static enum travel_choices travel_choice;
 
-/* Show the available direction choices */
-static void show_dir_choices(void) {
+/* Show the available travel choices */
+static void show_travel_choices(void) {
+	lcd_write(STR_TO_RAM(STR_STATUS), STATUS_X, STATUS_Y);
 	lcd_write(STR_TO_RAM(STR_NORTH), NORTH_X, NORTH_Y);
 	lcd_write(STR_TO_RAM(STR_EAST), EAST_X, EAST_Y);
 	lcd_write(STR_TO_RAM(STR_SOUTH), SOUTH_X, SOUTH_Y);
 	lcd_write(STR_TO_RAM(STR_WEST), WEST_X, WEST_Y);
 }
 
-/* Draw the cursor at the current direction choice */
-static void curs_dir_choice(void) {
+/* Draw the cursor at the current travel choice */
+static void curs_travel_choice(void) {
+	lcd_write(STR_TO_RAM(STR_SPACE), CURS_STATUS_X, CURS_STATUS_Y);
 	lcd_write(STR_TO_RAM(STR_SPACE), CURS_NORTH_X, CURS_NORTH_Y);
 	lcd_write(STR_TO_RAM(STR_SPACE), CURS_EAST_X, CURS_EAST_Y);
 	lcd_write(STR_TO_RAM(STR_SPACE), CURS_SOUTH_X, CURS_SOUTH_Y);
 	lcd_write(STR_TO_RAM(STR_SPACE), CURS_WEST_X, CURS_WEST_Y);
 
-	switch (direction_choice) {
+	switch (travel_choice) {
+	case STATUS:
+		lcd_write(STR_TO_RAM(STR_CURS), CURS_STATUS_X, CURS_STATUS_Y);
+		break;
 	case NORTH:
 		lcd_write(STR_TO_RAM(STR_CURS), CURS_NORTH_X, CURS_NORTH_Y);
 		break;
@@ -87,9 +118,9 @@ static void curs_dir_choice(void) {
 /* Display message asking which direction to go and show options */
 static void travel_screen(void) {
 	game_text(STR_TO_RAM(STR_TRAVEL_SCREEN));
-	show_dir_choices();
-	direction_choice = NORTH;
-	curs_dir_choice();
+	show_travel_choices();
+	travel_choice = STATUS;
+	curs_travel_choice();
 }
 
 /* Display text for the current room */
@@ -106,6 +137,17 @@ static void show_room_text(void) {
 static void invalid_travel(void) {
 	game_text(STR_TO_RAM(STR_INVALID_TRAVEL));
 	delay(TEXT_DELAY);
+}
+
+/* Return true iff the room at [x,y] exists and is not a wall */
+static boolean valid_room(uint8_t x, uint8_t y) {
+	if (x < game.map_width && y < game.map_height) {
+		if (!game.room[x][y].iswall) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /* Set the width of the map */
@@ -220,54 +262,41 @@ boolean game_won(void) {
 	return false;
 }
 
-/* Move the cursor to the next direction option */
-void next_dir_choice(void) {
-	direction_choice = (direction_choice + 1) % MAX_DIRECTION_CHOICE;
-	curs_dir_choice();
+/* Move the cursor to the next travel option */
+void next_travel_choice(void) {
+	travel_choice = (travel_choice + 1) % MAX_TRAVEL_CHOICE;
+	curs_travel_choice();
 }
 
-/* Walk in the direction of the current choice and display the new room's text */
-void travel(void) {
-	boolean valid = true;
+/* Execute the selected travel choice */
+void travel_select(void) {
+	uint8_t xloc = player.xloc;
+	uint8_t yloc = player.yloc;
 
-	switch (direction_choice) {
+	switch (travel_choice) {
+	case STATUS:
+		show_status();
+		travel_screen();
+		return;
+		break;
 	case NORTH:
-		if (player.yloc == 0) {
-			valid = false;
-			break;
-		}
-		player.yloc--;
+		yloc--;
 		break;
 	case EAST:
-		if (player.xloc >= game.map_width - 1) {
-			valid = false;
-			break;
-		}
-		player.xloc++;
+		xloc++;
 		break;
 	case SOUTH:
-		if (player.yloc >= game.map_height - 1) {
-			valid = false;
-			break;
-		}
-		player.yloc++;
+		yloc++;
 		break;
 	case WEST:
-		if (player.xloc == 0) {
-			valid = false;
-			break;
-		}
-		player.xloc--;
+		xloc--;
 		break;
 	}
 
-	if (game.room[player.xloc][player.yloc].iswall) {
-		valid = false;
-		player.xloc = player.prev_xloc;
-		player.yloc = player.prev_yloc;
-	}
+	if (valid_room(xloc, yloc)) {
+		player.xloc = xloc;
+		player.yloc = yloc;
 
-	if (valid) {
 		show_room_text();
 		/* Battle all the enemies in the current room before moving on */
 		uint8_t i;
@@ -293,4 +322,61 @@ void travel(void) {
 	}
 
 	travel_screen();
+}
+
+void show_status(void) {
+	char msg[LCD_MAX_TEXT];
+	lcd_clear();
+
+	/* Show player level, HP, and XP */
+	sprintf(msg, STR_TO_RAM(STR_LVL), player.lvl);
+	lcd_write(msg, 0, 0);
+	sprintf(msg, STR_TO_RAM(STR_HP), player.hp);
+	lcd_write(msg, 0, 1);
+	sprintf(msg, STR_TO_RAM(STR_XP), player.xp);
+	lcd_write(msg, 0, 2);
+
+	/* Show 3x3 minimap (including only valid rooms) */
+	uint8_t xloc = player.xloc - 1;
+	uint8_t yloc = player.yloc - 1;
+	if (valid_room(xloc, yloc)) {
+		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
+		lcd_write(msg, MAP_ROOM00_X, MAP_ROOM00_Y);
+	}
+	if (valid_room(++xloc, yloc)) {
+		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
+		lcd_write(msg, MAP_ROOM10_X, MAP_ROOM10_Y);
+	}
+	if (valid_room(++xloc, yloc)) {
+		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
+		lcd_write(msg, MAP_ROOM20_X, MAP_ROOM20_Y);
+	}
+	xloc = player.xloc - 1;
+	if (valid_room(xloc, ++yloc)) {
+		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
+		lcd_write(msg, MAP_ROOM01_X, MAP_ROOM01_Y);
+	}
+	if (valid_room(++xloc, yloc)) {
+		sprintf(msg, STR_TO_RAM(STR_ROOM_LOC), xloc, yloc);
+		lcd_write(msg, MAP_ROOM_LOC_X, MAP_ROOM_LOC_Y);
+	}
+	if (valid_room(++xloc, yloc)) {
+		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
+		lcd_write(msg, MAP_ROOM21_X, MAP_ROOM21_Y);
+	}
+	xloc = player.xloc - 1;
+	if (valid_room(xloc, ++yloc)) {
+		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
+		lcd_write(msg, MAP_ROOM02_X, MAP_ROOM02_Y);
+	}
+	if (valid_room(++xloc, yloc)) {
+		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
+		lcd_write(msg, MAP_ROOM12_X, MAP_ROOM12_Y);
+	}
+	if (valid_room(++xloc, yloc)) {
+		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
+		lcd_write(msg, MAP_ROOM22_X, MAP_ROOM22_Y);
+	}
+
+	while (get_user_input() != B_SELECT);
 }

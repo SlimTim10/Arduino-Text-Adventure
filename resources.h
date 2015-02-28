@@ -20,6 +20,7 @@ extern const char STR_CURS[];
 extern const char STR_WIN[];
 
 /* Travel */
+extern const char STR_STATUS[];
 extern const char STR_NORTH[];
 extern const char STR_EAST[];
 extern const char STR_SOUTH[];
@@ -28,6 +29,7 @@ extern const char STR_TRAVEL_SCREEN[];
 extern const char STR_INVALID_TRAVEL[];
 
 /* Map */
+extern const char STR_ROOM_MAP[];
 extern const char STR_ROOM_LOC[];
 enum { STR_ROOM_TEXT_NUM = 20 };
 extern PGM_P const STR_ROOM_TEXT[STR_ROOM_TEXT_NUM];

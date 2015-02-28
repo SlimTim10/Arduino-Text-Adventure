@@ -49,8 +49,8 @@ void game_text_anim(char const *);
 void game_init(void);
 void game_intro(void);
 boolean game_won(void);
-void next_dir_choice(void);
-void travel(void);
+void next_travel_choice(void);
+void travel_select(void);
 
 #ifdef __cplusplus
 }

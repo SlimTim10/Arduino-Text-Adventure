@@ -81,11 +81,11 @@ void setup(void) {
 void loop(void) {
 	switch (get_user_input()) {
 	case B_CHANGE:
-		next_dir_choice();
+		next_travel_choice();
 		button1_wait();
 		break;
 	case B_SELECT:
-		travel();
+		travel_select();
 		button2_wait();
 		break;
 	}
