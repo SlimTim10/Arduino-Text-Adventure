@@ -18,40 +18,6 @@ enum text_loc {
 	WEST_Y = 4,
 };
 
-enum map_text_loc {
-	MAP_ROOM00_X = 0,
-	MAP_ROOM00_Y = 3,
-	MAP_ROOM10_X = 33,
-	MAP_ROOM10_Y = 3,
-	MAP_ROOM20_X = 66,
-	MAP_ROOM20_Y = 3,
-	MAP_ROOM01_X = 0,
-	MAP_ROOM01_Y = 4,
-	MAP_ROOM_LOC_X = 27,
-	MAP_ROOM_LOC_Y = 4,
-	MAP_ROOM21_X = 66,
-	MAP_ROOM21_Y = 4,
-	MAP_ROOM02_X = 0,
-	MAP_ROOM02_Y = 5,
-	MAP_ROOM12_X = 33,
-	MAP_ROOM12_Y = 5,
-	MAP_ROOM22_X = 66,
-	MAP_ROOM22_Y = 5,
-};
-
-enum curs_loc {
-	CURS_STATUS_X = STATUS_X - 6,
-	CURS_STATUS_Y = STATUS_Y,
-	CURS_NORTH_X = NORTH_X - 6,
-	CURS_NORTH_Y = NORTH_Y,
-	CURS_EAST_X = EAST_X - 6,
-	CURS_EAST_Y = EAST_Y,
-	CURS_SOUTH_X = SOUTH_X - 6,
-	CURS_SOUTH_Y = SOUTH_Y,
-	CURS_WEST_X = WEST_X - 6,
-	CURS_WEST_Y = WEST_Y,
-};
-
 enum travel_choices {
 	STATUS,
 	NORTH,
@@ -90,6 +56,19 @@ static void show_travel_choices(void) {
 
 /* Draw the cursor at the current travel choice */
 static void curs_travel_choice(void) {
+	enum curs_loc {
+		CURS_STATUS_X = STATUS_X - 6,
+		CURS_STATUS_Y = STATUS_Y,
+		CURS_NORTH_X = NORTH_X - 6,
+		CURS_NORTH_Y = NORTH_Y,
+		CURS_EAST_X = EAST_X - 6,
+		CURS_EAST_Y = EAST_Y,
+		CURS_SOUTH_X = SOUTH_X - 6,
+		CURS_SOUTH_Y = SOUTH_Y,
+		CURS_WEST_X = WEST_X - 6,
+		CURS_WEST_Y = WEST_Y,
+	};
+
 	lcd_write(STR_TO_RAM(STR_SPACE), CURS_STATUS_X, CURS_STATUS_Y);
 	lcd_write(STR_TO_RAM(STR_SPACE), CURS_NORTH_X, CURS_NORTH_Y);
 	lcd_write(STR_TO_RAM(STR_SPACE), CURS_EAST_X, CURS_EAST_Y);
@@ -325,6 +304,27 @@ void travel_select(void) {
 }
 
 void show_status(void) {
+	enum map_text_loc {
+		MAP_ROOM00_X = 0,
+		MAP_ROOM00_Y = 3,
+		MAP_ROOM10_X = 33,
+		MAP_ROOM10_Y = 3,
+		MAP_ROOM20_X = 66,
+		MAP_ROOM20_Y = 3,
+		MAP_ROOM01_X = 0,
+		MAP_ROOM01_Y = 4,
+		MAP_ROOM_LOC_X = 27,
+		MAP_ROOM_LOC_Y = 4,
+		MAP_ROOM21_X = 66,
+		MAP_ROOM21_Y = 4,
+		MAP_ROOM02_X = 0,
+		MAP_ROOM02_Y = 5,
+		MAP_ROOM12_X = 33,
+		MAP_ROOM12_Y = 5,
+		MAP_ROOM22_X = 66,
+		MAP_ROOM22_Y = 5,
+	};
+
 	char msg[LCD_MAX_TEXT];
 	lcd_clear();
 
@@ -342,19 +342,27 @@ void show_status(void) {
 	if (valid_room(xloc, yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
 		lcd_write(msg, MAP_ROOM00_X, MAP_ROOM00_Y);
+	} else {
+		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM00_X, MAP_ROOM00_Y);
 	}
 	if (valid_room(++xloc, yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
 		lcd_write(msg, MAP_ROOM10_X, MAP_ROOM10_Y);
+	} else {
+		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM10_X, MAP_ROOM10_Y);
 	}
 	if (valid_room(++xloc, yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
 		lcd_write(msg, MAP_ROOM20_X, MAP_ROOM20_Y);
+	} else {
+		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM20_X, MAP_ROOM20_Y);
 	}
 	xloc = player.xloc - 1;
 	if (valid_room(xloc, ++yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
 		lcd_write(msg, MAP_ROOM01_X, MAP_ROOM01_Y);
+	} else {
+		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM01_X, MAP_ROOM01_Y);
 	}
 	if (valid_room(++xloc, yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_LOC), xloc, yloc);
@@ -363,19 +371,27 @@ void show_status(void) {
 	if (valid_room(++xloc, yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
 		lcd_write(msg, MAP_ROOM21_X, MAP_ROOM21_Y);
+	} else {
+		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM21_X, MAP_ROOM21_Y);
 	}
 	xloc = player.xloc - 1;
 	if (valid_room(xloc, ++yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
 		lcd_write(msg, MAP_ROOM02_X, MAP_ROOM02_Y);
+	} else {
+		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM02_X, MAP_ROOM02_Y);
 	}
 	if (valid_room(++xloc, yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
 		lcd_write(msg, MAP_ROOM12_X, MAP_ROOM12_Y);
+	} else {
+		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM12_X, MAP_ROOM12_Y);
 	}
 	if (valid_room(++xloc, yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
 		lcd_write(msg, MAP_ROOM22_X, MAP_ROOM22_Y);
+	} else {
+		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM22_X, MAP_ROOM22_Y);
 	}
 
 	while (get_user_input() != B_SELECT);
