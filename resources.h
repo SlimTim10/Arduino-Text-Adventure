@@ -31,6 +31,7 @@ extern const char STR_INVALID_TRAVEL[];
 /* Map */
 extern const char STR_ROOM_MAP[];
 extern const char STR_ROOM_LOC[];
+extern const char STR_ROOM_INVALID[];
 enum { STR_ROOM_TEXT_NUM = 20 };
 extern PGM_P const STR_ROOM_TEXT[STR_ROOM_TEXT_NUM];
 

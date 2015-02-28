@@ -25,6 +25,7 @@ RSRC STR_INVALID_TRAVEL[] PROGMEM = "You can't go that way.";
 /* Map */
 RSRC STR_ROOM_MAP[] PROGMEM = "%d,%d";
 RSRC STR_ROOM_LOC[] PROGMEM = "[%d,%d]";
+RSRC STR_ROOM_INVALID[] PROGMEM = "---";
 RSRC STR_ROOM_TEXT00[] PROGMEM = "There's a strange smell.";
 RSRC STR_ROOM_TEXT01[] PROGMEM = "It's hard to breathe in here.";
 RSRC STR_ROOM_TEXT02[] PROGMEM = "It's cold in here.";
