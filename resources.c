@@ -14,6 +14,7 @@ RSRC STR_CURS[] PROGMEM = ">";
 RSRC STR_WIN[] PROGMEM = "You win!";
 
 /* Travel */
+RSRC STR_STATUS[] PROGMEM = "Status";
 RSRC STR_NORTH[] PROGMEM = "North";
 RSRC STR_EAST[] PROGMEM = "East";
 RSRC STR_SOUTH[] PROGMEM = "South";
@@ -22,6 +23,7 @@ RSRC STR_TRAVEL_SCREEN[] PROGMEM = "Where do you want to walk?";
 RSRC STR_INVALID_TRAVEL[] PROGMEM = "You can't go that way.";
 
 /* Map */
+RSRC STR_ROOM_MAP[] PROGMEM = "%d,%d";
 RSRC STR_ROOM_LOC[] PROGMEM = "[%d,%d]";
 RSRC STR_ROOM_TEXT00[] PROGMEM = "There's a strange smell.";
 RSRC STR_ROOM_TEXT01[] PROGMEM = "It's hard to breathe in here.";
