@@ -55,6 +55,7 @@ void setup_pins(void) {
 	pinMode(LCD_PIN_DC, OUTPUT);
 	pinMode(LCD_PIN_SDIN, OUTPUT);
 	pinMode(LCD_PIN_SCLK, OUTPUT);
+	pinMode(LCD_PIN_LIGHT, OUTPUT);
 	pinMode(BUTTON1_PIN, INPUT);
 	pinMode(BUTTON2_PIN, INPUT);
 }
