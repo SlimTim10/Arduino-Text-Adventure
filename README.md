@@ -121,7 +121,7 @@ void setup_world(void) {
 
 This project is bundled with the [PCD8544 library](https://github.com/Icewire-Makerspace/PCD8544).
 
-#### Strings
+#### Resource Strings
 
 The strings in the `resources` library are stored in flash memory due to RAM being only 2 kB on the Arduino Uno. The following macro is for using the strings.
 
