@@ -1,6 +1,7 @@
 #include "control.h"
 #include "simple_buttons.h"
 #include "hal.h"
+#include "PCD8544.h"
 
 static volatile boolean button1_pressed;
 static volatile boolean button2_pressed;

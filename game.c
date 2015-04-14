@@ -1,7 +1,7 @@
 #include "game.h"
 #include "resources.h"
 #include "const.h"
-#include "nokia5110.h"
+#include "PCD8544.h"
 #include "control.h"
 #include "battle.h"
 
@@ -47,11 +47,11 @@ static enum travel_choices travel_choice;
 
 /* Show the available travel choices */
 static void show_travel_choices(void) {
-	lcd_write(STR_TO_RAM(STR_STATUS), STATUS_X, STATUS_Y);
-	lcd_write(STR_TO_RAM(STR_NORTH), NORTH_X, NORTH_Y);
-	lcd_write(STR_TO_RAM(STR_EAST), EAST_X, EAST_Y);
-	lcd_write(STR_TO_RAM(STR_SOUTH), SOUTH_X, SOUTH_Y);
-	lcd_write(STR_TO_RAM(STR_WEST), WEST_X, WEST_Y);
+	lcd_printat(STR_TO_RAM(STR_STATUS), STATUS_X, STATUS_Y);
+	lcd_printat(STR_TO_RAM(STR_NORTH), NORTH_X, NORTH_Y);
+	lcd_printat(STR_TO_RAM(STR_EAST), EAST_X, EAST_Y);
+	lcd_printat(STR_TO_RAM(STR_SOUTH), SOUTH_X, SOUTH_Y);
+	lcd_printat(STR_TO_RAM(STR_WEST), WEST_X, WEST_Y);
 }
 
 /* Draw the cursor at the current travel choice */
@@ -69,27 +69,27 @@ static void curs_travel_choice(void) {
 		CURS_WEST_Y = WEST_Y,
 	};
 
-	lcd_write(STR_TO_RAM(STR_SPACE), CURS_STATUS_X, CURS_STATUS_Y);
-	lcd_write(STR_TO_RAM(STR_SPACE), CURS_NORTH_X, CURS_NORTH_Y);
-	lcd_write(STR_TO_RAM(STR_SPACE), CURS_EAST_X, CURS_EAST_Y);
-	lcd_write(STR_TO_RAM(STR_SPACE), CURS_SOUTH_X, CURS_SOUTH_Y);
-	lcd_write(STR_TO_RAM(STR_SPACE), CURS_WEST_X, CURS_WEST_Y);
+	lcd_printat(STR_TO_RAM(STR_SPACE), CURS_STATUS_X, CURS_STATUS_Y);
+	lcd_printat(STR_TO_RAM(STR_SPACE), CURS_NORTH_X, CURS_NORTH_Y);
+	lcd_printat(STR_TO_RAM(STR_SPACE), CURS_EAST_X, CURS_EAST_Y);
+	lcd_printat(STR_TO_RAM(STR_SPACE), CURS_SOUTH_X, CURS_SOUTH_Y);
+	lcd_printat(STR_TO_RAM(STR_SPACE), CURS_WEST_X, CURS_WEST_Y);
 
 	switch (travel_choice) {
 	case STATUS:
-		lcd_write(STR_TO_RAM(STR_CURS), CURS_STATUS_X, CURS_STATUS_Y);
+		lcd_printat(STR_TO_RAM(STR_CURS), CURS_STATUS_X, CURS_STATUS_Y);
 		break;
 	case NORTH:
-		lcd_write(STR_TO_RAM(STR_CURS), CURS_NORTH_X, CURS_NORTH_Y);
+		lcd_printat(STR_TO_RAM(STR_CURS), CURS_NORTH_X, CURS_NORTH_Y);
 		break;
 	case EAST:
-		lcd_write(STR_TO_RAM(STR_CURS), CURS_EAST_X, CURS_EAST_Y);
+		lcd_printat(STR_TO_RAM(STR_CURS), CURS_EAST_X, CURS_EAST_Y);
 		break;
 	case SOUTH:
-		lcd_write(STR_TO_RAM(STR_CURS), CURS_SOUTH_X, CURS_SOUTH_Y);
+		lcd_printat(STR_TO_RAM(STR_CURS), CURS_SOUTH_X, CURS_SOUTH_Y);
 		break;
 	case WEST:
-		lcd_write(STR_TO_RAM(STR_CURS), CURS_WEST_X, CURS_WEST_Y);
+		lcd_printat(STR_TO_RAM(STR_CURS), CURS_WEST_X, CURS_WEST_Y);
 		break;
 	}
 }
@@ -104,11 +104,11 @@ static void travel_screen(void) {
 
 /* Display text for the current room */
 static void show_room_text(void) {
-	char loc[LCD_MAX_TEXT];
+	char loc[LCD_MAX_CHARS];
 	sprintf(loc, "[%d,%d]", player.xloc, player.yloc);
 	lcd_clear();
-	lcd_write_wrap(loc, 0, 0);
-	lcd_write_wrap_anim(STR_TO_RAM(game.room[player.xloc][player.yloc].text), 0, 1);
+	lcd_printwrap(loc, 0, 0);
+	lcd_printwrap_anim(STR_TO_RAM(game.room[player.xloc][player.yloc].text), 0, 1);
 	delay(TEXT_DELAY);
 }
 
@@ -189,19 +189,19 @@ void set_goal(uint8_t x, uint8_t y) {
 /* Display text on the screen starting from the top */
 void game_text(char const *str) {
 	lcd_clear();
-	lcd_write_wrap(str, 0, 0);
+	lcd_printwrap(str, 0, 0);
 }
 
 /* Display text on the screen starting from the top, with writing animation */
 void game_text_anim(char const *str) {
 	lcd_clear();
-	lcd_write_wrap_anim(str, 0, 0);
+	lcd_printwrap_anim(str, 0, 0);
 }
 
 /* Initialize the game settings */
 void game_init(void) {
 	uint8_t x, y;
-	char text[LCD_MAX_TEXT];
+	char text[LCD_MAX_CHARS];
 	for (y = 0; y < game.map_height; y++) {
 		for (x = 0; x < game.map_width; x++) {
 			game.room[x][y].text = pgm_read_word(&STR_ROOM_TEXT[rand() % STR_ROOM_TEXT_NUM]);
@@ -224,17 +224,17 @@ void game_intro(void) {
 /* Check if the player has won and display information if so */
 boolean game_won(void) {
 	if (player.xloc == game.xgoal && player.yloc == game.ygoal) {
-		char msg[LCD_MAX_TEXT];
+		char msg[LCD_MAX_CHARS];
 		lcd_clear();
-		lcd_write(STR_TO_RAM(STR_WIN), 0, 0);
+		lcd_printat(STR_TO_RAM(STR_WIN), 0, 0);
 		sprintf(msg, STR_TO_RAM(STR_LVL), player.lvl);
-		lcd_write(msg, 0, 2);
+		lcd_printat(msg, 0, 2);
 		sprintf(msg, STR_TO_RAM(STR_HP), player.hp);
-		lcd_write(msg, 0, 3);
+		lcd_printat(msg, 0, 3);
 		sprintf(msg, STR_TO_RAM(STR_XP), player.xp);
-		lcd_write(msg, 0, 4);
+		lcd_printat(msg, 0, 4);
 		sprintf(msg, STR_TO_RAM(STR_NEXT), player.xp_next_lvl);
-		lcd_write(msg, 0, 5);
+		lcd_printat(msg, 0, 5);
 		while (get_user_input() != B_SELECT);
 		return true;
 	}
@@ -325,73 +325,73 @@ void show_status(void) {
 		MAP_ROOM22_Y = 5,
 	};
 
-	char msg[LCD_MAX_TEXT];
+	char msg[LCD_MAX_CHARS];
 	lcd_clear();
 
 	/* Show player level, HP, and XP */
 	sprintf(msg, STR_TO_RAM(STR_LVL), player.lvl);
-	lcd_write(msg, 0, 0);
+	lcd_printat(msg, 0, 0);
 	sprintf(msg, STR_TO_RAM(STR_HP), player.hp);
-	lcd_write(msg, 0, 1);
+	lcd_printat(msg, 0, 1);
 	sprintf(msg, STR_TO_RAM(STR_XP), player.xp);
-	lcd_write(msg, 0, 2);
+	lcd_printat(msg, 0, 2);
 
 	/* Show 3x3 minimap (including only valid rooms) */
 	uint8_t xloc = player.xloc - 1;
 	uint8_t yloc = player.yloc - 1;
 	if (valid_room(xloc, yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
-		lcd_write(msg, MAP_ROOM00_X, MAP_ROOM00_Y);
+		lcd_printat(msg, MAP_ROOM00_X, MAP_ROOM00_Y);
 	} else {
-		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM00_X, MAP_ROOM00_Y);
+		lcd_printat(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM00_X, MAP_ROOM00_Y);
 	}
 	if (valid_room(++xloc, yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
-		lcd_write(msg, MAP_ROOM10_X, MAP_ROOM10_Y);
+		lcd_printat(msg, MAP_ROOM10_X, MAP_ROOM10_Y);
 	} else {
-		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM10_X, MAP_ROOM10_Y);
+		lcd_printat(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM10_X, MAP_ROOM10_Y);
 	}
 	if (valid_room(++xloc, yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
-		lcd_write(msg, MAP_ROOM20_X, MAP_ROOM20_Y);
+		lcd_printat(msg, MAP_ROOM20_X, MAP_ROOM20_Y);
 	} else {
-		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM20_X, MAP_ROOM20_Y);
+		lcd_printat(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM20_X, MAP_ROOM20_Y);
 	}
 	xloc = player.xloc - 1;
 	if (valid_room(xloc, ++yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
-		lcd_write(msg, MAP_ROOM01_X, MAP_ROOM01_Y);
+		lcd_printat(msg, MAP_ROOM01_X, MAP_ROOM01_Y);
 	} else {
-		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM01_X, MAP_ROOM01_Y);
+		lcd_printat(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM01_X, MAP_ROOM01_Y);
 	}
 	if (valid_room(++xloc, yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_LOC), xloc, yloc);
-		lcd_write(msg, MAP_ROOM_LOC_X, MAP_ROOM_LOC_Y);
+		lcd_printat(msg, MAP_ROOM_LOC_X, MAP_ROOM_LOC_Y);
 	}
 	if (valid_room(++xloc, yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
-		lcd_write(msg, MAP_ROOM21_X, MAP_ROOM21_Y);
+		lcd_printat(msg, MAP_ROOM21_X, MAP_ROOM21_Y);
 	} else {
-		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM21_X, MAP_ROOM21_Y);
+		lcd_printat(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM21_X, MAP_ROOM21_Y);
 	}
 	xloc = player.xloc - 1;
 	if (valid_room(xloc, ++yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
-		lcd_write(msg, MAP_ROOM02_X, MAP_ROOM02_Y);
+		lcd_printat(msg, MAP_ROOM02_X, MAP_ROOM02_Y);
 	} else {
-		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM02_X, MAP_ROOM02_Y);
+		lcd_printat(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM02_X, MAP_ROOM02_Y);
 	}
 	if (valid_room(++xloc, yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
-		lcd_write(msg, MAP_ROOM12_X, MAP_ROOM12_Y);
+		lcd_printat(msg, MAP_ROOM12_X, MAP_ROOM12_Y);
 	} else {
-		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM12_X, MAP_ROOM12_Y);
+		lcd_printat(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM12_X, MAP_ROOM12_Y);
 	}
 	if (valid_room(++xloc, yloc)) {
 		sprintf(msg, STR_TO_RAM(STR_ROOM_MAP), xloc, yloc);
-		lcd_write(msg, MAP_ROOM22_X, MAP_ROOM22_Y);
+		lcd_printat(msg, MAP_ROOM22_X, MAP_ROOM22_Y);
 	} else {
-		lcd_write(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM22_X, MAP_ROOM22_Y);
+		lcd_printat(STR_TO_RAM(STR_ROOM_INVALID), MAP_ROOM22_X, MAP_ROOM22_Y);
 	}
 
 	while (get_user_input() != B_SELECT);
