@@ -1,7 +1,7 @@
 #include "battle.h"
 #include "resources.h"
 #include "const.h"
-#include "nokia5110.h"
+#include "PCD8544.h"
 #include "control.h"
 #include "game.h"
 
@@ -37,21 +37,21 @@ static enum battle_choices battle_choice;
 
 /* Show the available battle choices */
 static void show_battle_choices(void) {
-	lcd_write(STR_TO_RAM(STR_ATTACK), ATTACK_X, ATTACK_Y);
-	lcd_write(STR_TO_RAM(STR_RUN), RUN_X, RUN_Y);
+	lcd_printat(STR_TO_RAM(STR_ATTACK), ATTACK_X, ATTACK_Y);
+	lcd_printat(STR_TO_RAM(STR_RUN), RUN_X, RUN_Y);
 }
 
 /* Draw the cursor at the current battle choice */
 static void curs_battle_choice(void) {
-	lcd_write(STR_TO_RAM(STR_SPACE), CURS_ATTACK_X, CURS_ATTACK_Y);
-	lcd_write(STR_TO_RAM(STR_SPACE), CURS_RUN_X, CURS_RUN_Y);
+	lcd_printat(STR_TO_RAM(STR_SPACE), CURS_ATTACK_X, CURS_ATTACK_Y);
+	lcd_printat(STR_TO_RAM(STR_SPACE), CURS_RUN_X, CURS_RUN_Y);
 
 	switch (battle_choice) {
 	case ATTACK:
-		lcd_write(STR_TO_RAM(STR_CURS), CURS_ATTACK_X, CURS_ATTACK_Y);
+		lcd_printat(STR_TO_RAM(STR_CURS), CURS_ATTACK_X, CURS_ATTACK_Y);
 		break;
 	case RUN:
-		lcd_write(STR_TO_RAM(STR_CURS), CURS_RUN_X, CURS_RUN_Y);
+		lcd_printat(STR_TO_RAM(STR_CURS), CURS_RUN_X, CURS_RUN_Y);
 		break;
 	}
 }
@@ -64,11 +64,11 @@ static void next_battle_choice(void) {
 
 /* Show health of player and enemy */
 static void show_healths(struct player *pl, struct enemy *en) {
-	char msg[LCD_MAX_TEXT];
+	char msg[LCD_MAX_CHARS];
 	sprintf(msg, STR_TO_RAM(STR_PLAYER_HP), pl->hp);
-	lcd_write(msg, PLAYER_HP_X, PLAYER_HP_Y);
+	lcd_printat(msg, PLAYER_HP_X, PLAYER_HP_Y);
 	sprintf(msg, STR_TO_RAM(STR_ENEMY_HP), en->name, en->hp);
-	lcd_write(msg, ENEMY_HP_X, ENEMY_HP_Y);
+	lcd_printat(msg, ENEMY_HP_X, ENEMY_HP_Y);
 }
 
 /* Given attacker level and opponent level, calculate damage made by attacker */
@@ -85,7 +85,7 @@ static uint8_t calc_dmg(uint8_t attacker_lvl, uint8_t opponent_lvl) {
 static void enemy_attacks(struct player *pl, struct enemy *en) {
 	uint8_t dmg = calc_dmg(en->lvl, pl->lvl);
 	pl->hp -= dmg;
-	char msg[LCD_MAX_TEXT];
+	char msg[LCD_MAX_CHARS];
 	if (dmg == 0) {
 		sprintf(msg, STR_TO_RAM(STR_ENEMY_MISS), en->name);
 	} else {
@@ -99,7 +99,7 @@ static void enemy_attacks(struct player *pl, struct enemy *en) {
 static void player_attacks(struct player *pl, struct enemy *en) {
 	uint8_t dmg = calc_dmg(pl->lvl, en->lvl);
 	en->hp -= dmg;
-	char msg[LCD_MAX_TEXT];
+	char msg[LCD_MAX_CHARS];
 	if (dmg == 0) {
 		sprintf(msg, STR_TO_RAM(STR_PLAYER_MISS));
 	} else {
@@ -148,7 +148,7 @@ static void battle_screen(struct player *pl, struct enemy *en) {
 
 /* Player wins the battle */
 static void battle_win(struct player *pl, struct enemy *en) {
-	char msg[LCD_MAX_TEXT];
+	char msg[LCD_MAX_CHARS];
 	sprintf(msg, STR_TO_RAM(STR_BATTLE_WIN), en->name);
 	game_text(msg);
 	delay(TEXT_DELAY);
@@ -169,15 +169,15 @@ static void battle_win(struct player *pl, struct enemy *en) {
 
 	lcd_clear();
 	sprintf(msg, STR_TO_RAM(STR_LVL), pl->lvl);
-	lcd_write(msg, 0, 0);
+	lcd_printat(msg, 0, 0);
 	sprintf(msg, STR_TO_RAM(STR_HP), pl->hp);
-	lcd_write(msg, 0, 1);
+	lcd_printat(msg, 0, 1);
 	sprintf(msg, STR_TO_RAM(STR_XP), pl->xp);
-	lcd_write(msg, 0, 2);
+	lcd_printat(msg, 0, 2);
 	sprintf(msg, STR_TO_RAM(STR_NEXT), pl->xp_next_lvl);
-	lcd_write(msg, 0, 3);
-	lcd_write(STR_TO_RAM(STR_OK), OK_X, OK_Y);
-	lcd_write(STR_TO_RAM(STR_CURS), CURS_OK_X, CURS_OK_Y);
+	lcd_printat(msg, 0, 3);
+	lcd_printat(STR_TO_RAM(STR_OK), OK_X, OK_Y);
+	lcd_printat(STR_TO_RAM(STR_CURS), CURS_OK_X, CURS_OK_Y);
 	while (get_user_input() != B_SELECT);
 }
 
@@ -216,7 +216,7 @@ static void battle(struct player *pl, struct enemy *en) {
 ///TODO fix this
 /* Battle all the enemies in the current room before moving on */
 void battle_enemies(struct player *pl, struct enemy *enemies[]) {
-	char msg[LCD_MAX_TEXT];
+	char msg[LCD_MAX_CHARS];
 	uint8_t i;
 	for (i = 0; i < MAX_ENEMIES_PER_ROOM; i++) {
 		if (enemies[i]->hp > 0) {
@@ -230,7 +230,7 @@ void battle_enemies(struct player *pl, struct enemy *enemies[]) {
 
 /* Engage in battle with an enemy */
 void battle_enemy(struct player *pl, struct enemy *en) {
-	char msg[LCD_MAX_TEXT];
+	char msg[LCD_MAX_CHARS];
 	uint8_t i;
 	if (en->hp > 0) {
 		sprintf(msg, STR_TO_RAM(STR_ENEMY), en->lvl, en->name);

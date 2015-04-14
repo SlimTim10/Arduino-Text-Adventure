@@ -1,9 +1,12 @@
 #include "const.h"
 #include "resources.h"
 #include "hal.h"
-#include "nokia5110.h"
+#include "PCD8544.h"
+#include "lcd_extra.h"
 #include "game.h"
 #include "control.h"
+
+struct lcd_pins lcd;
 
 /* Edit this function to customize the game */
 void setup_world(void) {
@@ -32,13 +35,13 @@ void setup_world(void) {
 	add_enemy(2, 1, "snail", 3, 1);
 	/* Add a level 1 rat to room [2,1] with 5 HP */
 	add_enemy(2, 1, "rat", 5, 1);
-	/* Add a level 3 bee to room [3,0] with 5 HP */
-	add_enemy(3, 0, "bee", 5, 3);
-	/* Add a level 4 Tim to room [2,3] with 20 HP */
+	/* Add a level 2 bee to room [3,0] with 5 HP */
+	add_enemy(3, 0, "bee", 5, 2);
+	/* Add a level 2 Tim to room [2,3] with 20 HP */
 	add_enemy(2, 3, "Tim", 20, 2);
-	/* Add a level 5 Chris to room [2,3] with 30 HP */
+	/* Add a level 3 Chris to room [2,3] with 30 HP */
 	add_enemy(2, 3, "Chris", 30, 3);
-	/* Add a level 10 David to room [3,3] with 50 HP */
+	/* Add a level 4 David to room [3,3] with 50 HP */
 	add_enemy(3, 3, "David", 50, 4);
 
 	/* Start the player in room [0,0] */
@@ -50,12 +53,14 @@ void setup_world(void) {
 }
 
 void setup_pins(void) {
-	pinMode(LCD_PIN_SCE, OUTPUT);
-	pinMode(LCD_PIN_RESET, OUTPUT);
-	pinMode(LCD_PIN_DC, OUTPUT);
-	pinMode(LCD_PIN_SDIN, OUTPUT);
-	pinMode(LCD_PIN_SCLK, OUTPUT);
+	lcd.res = LCD_PIN_RESET;
+	lcd.sce = LCD_PIN_SCE;
+	lcd.dc = LCD_PIN_DC;
+	lcd.sdin = LCD_PIN_SDIN;
+	lcd.sclk = LCD_PIN_SCLK;
+	
 	pinMode(LCD_PIN_LIGHT, OUTPUT);
+
 	pinMode(BUTTON1_PIN, INPUT);
 	pinMode(BUTTON2_PIN, INPUT);
 }
@@ -64,12 +69,12 @@ void setup(void) {
 	setup_pins();
 	setup_control();
 
-	lcd_init();
+	lcd_init(&lcd);
    	lcd_light(5);
 
 	game_text(STR_TO_RAM(STR_WELCOME));
 
-	lcd_write(STR_TO_RAM(STR_START), 20, 4);
+	lcd_printat(STR_TO_RAM(STR_START), 20, 4);
 	while (get_user_input() != B_SELECT);
 
 	srand(millis());
@@ -94,7 +99,7 @@ void loop(void) {
 	if (is_player_dead()) {
 		game_text(STR_TO_RAM(STR_WELCOME));
 
-		lcd_write(STR_TO_RAM(STR_START), 20, 4);
+		lcd_printat(STR_TO_RAM(STR_START), 20, 4);
 		while (get_user_input() != B_SELECT);
 
 		setup_world();
@@ -105,7 +110,7 @@ void loop(void) {
 	if (game_won()) {
 		game_text(STR_TO_RAM(STR_WELCOME));
 
-		lcd_write(STR_TO_RAM(STR_START), 20, 4);
+		lcd_printat(STR_TO_RAM(STR_START), 20, 4);
 		while (get_user_input() != B_SELECT);
 
 		setup_world();

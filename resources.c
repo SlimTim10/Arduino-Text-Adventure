@@ -1,9 +1,9 @@
 #include "resources.h"
-#include "nokia5110.h"
+#include "PCD8544.h"
 
 typedef const char RSRC;
 
-char str_buffer[LCD_MAX_TEXT];
+char str_buffer[LCD_MAX_CHARS];
 
 /* General */
 RSRC STR_WELCOME[] PROGMEM = "Welcome to IcewireQuest";
