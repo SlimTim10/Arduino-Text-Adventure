@@ -23,7 +23,7 @@ A text adventure game for the Arduino Uno. The goal is to reach a specific room 
 
 The map width and height can be customized (maximum 8 by 8). The text that accompanies each room is chosen at random from a set list of strings in the `resources` library.
 
-#### Battle
+#### Battle System
 
 The damage range when attacking is from `(attacker's level * 10) - ((attacker's level - opponent's level) * 10)` to `(attacker's level * 10) - ((attacker's level - opponent's level) * 10) + 10`. In other words, the damage range is from `(attacker's level - 10) * 10` to `attacker's level * 10` minus 10 for every level the opponent is higher than the attacker.
 
@@ -116,6 +116,12 @@ void setup_world(void) {
 ```
 
 ## Notes
+
+#### LCD Library
+
+This project is bundled with the [PCD8544 library](https://github.com/Icewire-Makerspace/PCD8544).
+
+#### Strings
 
 The strings in the `resources` library are stored in flash memory due to RAM being only 2 kB on the Arduino Uno. The following macro is for using the strings.
 
