@@ -1,5 +1,7 @@
 # Arduino Text Adventure
 
+![alt text](http://i.imgur.com/UUFMrrV.gifv "Arduino Text Adventure")
+
 ## Description
 
 A text adventure game for the Arduino Uno. The goal is to reach a specific room in the map.
