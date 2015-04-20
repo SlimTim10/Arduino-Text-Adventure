@@ -2,8 +2,7 @@
 
 ## Description
 
-![Example](http://i.imgur.com/UUFMrrV.gif)
-![alt text](http://i.imgur.com/UUFMrrV.gif "PCD8544")
+[Animated example](http://i.imgur.com/UUFMrrV.gif)
 
 A text adventure game for the Arduino Uno. The goal is to reach a specific room in the map.
 
