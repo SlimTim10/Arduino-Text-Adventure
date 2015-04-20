@@ -1,6 +1,6 @@
 # Arduino Text Adventure
 
-![alt text](http://i.imgur.com/UUFMrrV.gif "Arduino Text Adventure")
+![alt tag](http://i.imgur.com/UUFMrrV.gif)
 
 ## Description
 
