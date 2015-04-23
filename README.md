@@ -45,6 +45,8 @@ When a battle is won, the player gains XP (experience) equal to `enemy's level *
 - [Nokia 5110 LCD](https://www.sparkfun.com/products/10168)
   - [Datasheet](http://www.sparkfun.com/datasheets/LCD/Monochrome/Nokia5110.pdf)
   - [Sample Code](http://playground.arduino.cc/Code/PCD8544)
+- 2 Pushbuttons
+- Potentiometer
 
 ## Pinout
 
