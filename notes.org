@@ -1,1 +1,30 @@
 * Tasks
+** TODO Add items. Each room can hold and/or require a specific item. The player can carry up to 3 items. If the player enters a room with an item, should it be picked up automatically?
+** DONE Refactor LCD library to PCD8544
+   CLOSED: [2015-04-23 Thu 20:24]
+** DONE Move battle functions into their own library
+   CLOSED: [2015-02-21 Sat 09:46]
+** DONE Add buttons to D2 and D3 (for external interrupts)
+   CLOSED: [2015-02-18 Wed 18:28]
+** DONE Add struct room_info (to be used in game struct)
+   CLOSED: [2015-02-18 Wed 18:09]
+** DONE Add struct player_info
+   CLOSED: [2015-02-18 Wed 18:09]
+** DONE Move LCD pin in D3 and update README
+   CLOSED: [2015-02-18 Wed 07:04]
+** DONE Create [[file:game.c::106][next_dir_choice()]] public function
+   CLOSED: [2015-02-17 Tue 20:05]
+** DONE Create [[file:game.c::106][walk()]] public function
+   CLOSED: [2015-02-17 Tue 20:05]
+** DONE Make sure each function has a description comment
+   CLOSED: [2015-02-12 Thu 09:26]
+** DONE Create game library
+   CLOSED: [2015-02-10 Tue 17:30]
+** DONE Create function lcdParagraph() to write a string with word wrapping
+   CLOSED: [2015-02-10 Tue 02:01]
+** DONE Write README
+   CLOSED: [2015-02-09 Mon 23:15]
+** DONE Create function to position the cursor on LCD
+   CLOSED: [2015-02-09 Mon 16:27]
+** DONE Add functionality to write string at a specified position
+   CLOSED: [2015-02-09 Mon 16:27]
