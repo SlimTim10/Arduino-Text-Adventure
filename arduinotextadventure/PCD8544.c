@@ -42,7 +42,7 @@ static void send_data(uint8_t data) {
 void send_char(char c) {
 	int i;
 	for (i = 0; i < FONT_WIDTH; i++) {
-		send_data(font5x8[c - ASCII_SPC][i]);
+		send_data(pgm_read_byte(&font5x8[c - ASCII_SPC][i]));
 	}
 	send_data(NULL);
 }
