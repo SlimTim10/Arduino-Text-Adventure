@@ -13,7 +13,7 @@ void lcd_light(uint8_t b) {
 void lcd_printat_anim(const char *str, uint8_t x, uint8_t y) {
 	lcd_setpos(x % LCD_MAX_X, y % LCD_MAX_Y);
 	while (*str) {
-		send_char(*str++);
+		lcd_send_char(*str++);
 		delay(TEXT_SPEED);
 	}
 }
@@ -39,7 +39,7 @@ void lcd_printwrap_anim(const char *str, uint8_t xpos, uint8_t ypos) {
 			lcd_setpos(xpos, ypos);
 			int i;
 			for (i = 0; i < wraploc; i++) {
-				send_char(*str++);
+				lcd_send_char(*str++);
 				delay(TEXT_SPEED);
 			}
 			/* Skip over trailing space */
@@ -50,7 +50,7 @@ void lcd_printwrap_anim(const char *str, uint8_t xpos, uint8_t ypos) {
 			lcd_setpos(xpos, ypos);
 			int i;
 			for (i = 0; i < LCD_MAX_X_CHARS; i++) {
-				send_char(*str++);
+				lcd_send_char(*str++);
 				delay(TEXT_SPEED);
 			}
 		}
